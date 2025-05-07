@@ -59,7 +59,7 @@ const UsersData = () => {
   });
 
   return (
-    <div className="px-10 pt-18 bg-[#d9cbb7]">
+    <div className="px-10 pt-18 ">
       <div className=" text-center font-[inter] pb-10 pt-5">
         <h2 className="text-3xl mb-2  text-cyan-500">
           -- <FaUserAstronaut className="inline" /> Users Data{" "}

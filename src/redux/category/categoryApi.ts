@@ -2,32 +2,32 @@
 import { TqueryParams, TResponseRedux } from "../../types/type";
 import { baseApi } from "../api/baseApi";
 
-const authApi = baseApi.injectEndpoints({
+const categoryApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    createbook: builder.mutation({
+    createcategory: builder.mutation({
       query: (data) => ({
-        url: "/book/create-book",
+        url: "/category/create-category",
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["book"],
+      invalidatesTags: ["category"],
     }),
-    updatebook: builder.mutation({
+    updatecategory: builder.mutation({
       query: ({ id, data }) => ({
-        url: `/book/get-book/${id}`,
-        method: "PUT",
+        url: `/category/update-category/${id}`,
+        method: "PATCH",
         body: data,
       }),
-      invalidatesTags: ["book"],
+      invalidatesTags: ["category"],
     }),
-    deletebook: builder.mutation({
+    deletecategory: builder.mutation({
       query: (id) => ({
-        url: `/book/delete-book/${id}`,
+        url: `/category/delete-category/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["book"],
+      invalidatesTags: ["category"],
     }),
-    getAllBooks: builder.query({
+    getAllcategory: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
         if (args) {
@@ -36,31 +36,29 @@ const authApi = baseApi.injectEndpoints({
           });
         }
         return {
-          url: "/book/get-book",
+          url: "/category/get-category",
           method: "GET",
           params: params,
         };
       },
-      providesTags: ["book"],
+      providesTags: ["category"],
 
       transformResponse: (response: TResponseRedux<any>) => ({
         data: response?.data,
         meta: response?.meta,
       }),
     }),
-    getSingleBook: builder.query({
-      query: (id) => ({
-        url: `/book/get-book/${id}`,
-        method: "GET",
-      }),
-      providesTags: ["book"],
-    }),
+    // getSingleBook: builder.query({
+    //   query: (id) => ({
+    //     url: `/book/get-book/${id}`,
+    //     method: "GET",
+    //   }),
+    //   providesTags: ["book"],
+    // }),
   }),
 });
 export const {
-  useGetAllBooksQuery,
-  useCreatebookMutation,
-  useGetSingleBookQuery,
-  useUpdatebookMutation,
-  useDeletebookMutation,
-} = authApi;
+  useCreatecategoryMutation,
+  useGetAllcategoryQuery,
+  useDeletecategoryMutation,
+} = categoryApi;

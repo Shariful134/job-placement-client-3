@@ -9,6 +9,7 @@ import { IoMdSettings } from "react-icons/io";
 import { FaBookMedical, FaHistory } from "react-icons/fa";
 import { AiOutlineLogin, AiOutlineLogout } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
+import { MdDashboardCustomize } from "react-icons/md";
 
 const NavBar = () => {
   const dispatch = useAppDispath();
@@ -77,42 +78,38 @@ const NavBar = () => {
         {/* Navbar Center (Only visible in large screen) */}
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1 text-black gap-5">
-            <li>
-              <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-cyan-600 font-bold border-b-2 border-cyan-600"
-                    : "hover:text-cyan-600"
-                }
-              >
-                Home
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/get-books"
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-cyan-600 font-bold border-b-2 border-cyan-600"
-                    : "hover:text-cyan-600"
-                }
-              >
-                Book
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/about"
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-cyan-600 font-bold border-b-2 border-cyan-600"
-                    : "hover:text-cyan-600"
-                }
-              >
-                About
-              </NavLink>
-            </li>
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-cyan-600 font-bold  border-cyan-600 underline text-lg"
+                  : "hover:text-cyan-600 hover:underline text-lg"
+              }
+            >
+              Home
+            </NavLink>
+
+            <NavLink
+              to="/get-books"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-cyan-600 font-bold underline text-lg border-cyan-600"
+                  : "hover:text-cyan-600 hover:underline text-lg"
+              }
+            >
+              Book
+            </NavLink>
+
+            <NavLink
+              to="/about"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-cyan-600 font-bold underline text-lg border-cyan-600"
+                  : "hover:text-cyan-600 hover:underline text-lg"
+              }
+            >
+              About
+            </NavLink>
           </ul>
         </div>
 
@@ -178,17 +175,22 @@ const NavBar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              className="menu  menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
-              <p className="font-bold">My Account</p>
+              <p className="font-bold ">My Account</p>
               <li>
-                <a>
+                <a className="text-sm">
                   <CgProfile /> Profile
                 </a>
               </li>
               <li>
-                <a>
+                <a className="text-sm">
                   <IoMdSettings /> Settings
+                </a>
+              </li>
+              <li>
+                <a href={`/${user?.role}/dashboard`} className="text-sm">
+                  <MdDashboardCustomize /> Dashboard
                 </a>
               </li>
 

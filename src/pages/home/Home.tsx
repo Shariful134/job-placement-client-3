@@ -7,9 +7,9 @@ import { useEffect } from "react";
 const Home = () => {
   const location = useLocation();
 
-  // useEffect(() => {
-  //   window.scrollTo({ top: 0, behavior: "smooth" });
-  // }, [location]);
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [location]);
 
   return (
     <div className="pt-16 bg-[#fafafa]">

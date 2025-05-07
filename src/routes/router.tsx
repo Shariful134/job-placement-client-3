@@ -18,6 +18,10 @@ import OrdersData from "@/pages/order/OrdersData";
 import OrderHistry from "@/pages/order/OrderHistry";
 import AllOrder from "@/pages/admin/AllOrder";
 import Contact from "@/pages/contact/Contact";
+import AdminLayout from "@/components/layout/AdminLayout";
+import DashboardPage from "@/components/dashboard/Dashboard";
+import CreateCategory from "@/pages/admin/CreateCategory";
+import CategoryData from "@/pages/admin/CategoryData";
 
 const router = createBrowserRouter([
   {
@@ -115,6 +119,55 @@ const router = createBrowserRouter([
       {
         path: "contact",
         element: <Contact></Contact>,
+      },
+    ],
+  },
+  // Admin layout based routes
+  {
+    path: "/admin",
+    element: (
+      <ProtectedRoutes role="admin">
+        <AdminLayout />
+      </ProtectedRoutes>
+    ),
+    children: [
+      {
+        path: "/admin/create-book",
+        element: <CreateBook />,
+      },
+
+      {
+        path: "/admin/order-history",
+        element: <AllOrder></AllOrder>,
+      },
+      {
+        path: "/admin/data-category",
+        element: <CategoryData />,
+      },
+      {
+        path: "/admin/user-history",
+        element: <UsersData></UsersData>,
+      },
+      {
+        path: "/admin/create-category",
+        element: <CreateCategory></CreateCategory>,
+      },
+
+      {
+        path: "dashboard",
+        element: <DashboardPage />, // <-- Dashboard Component
+      },
+      {
+        path: "update-book/:id",
+        element: <UpdateBooks />,
+      },
+      {
+        path: "all-orders",
+        element: <AllOrder />,
+      },
+      {
+        path: "users",
+        element: <UsersData />,
       },
     ],
   },

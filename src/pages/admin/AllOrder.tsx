@@ -54,7 +54,7 @@ const AllOrder = () => {
   });
 
   return (
-    <div className="px-10 pt-18 bg-[#fafafa]">
+    <div className="px-10 pt-18 ">
       {isLoading ? (
         <SkeletonDemo />
       ) : (
