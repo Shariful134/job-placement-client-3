@@ -7,26 +7,27 @@ import { useEffect } from "react";
 const Home = () => {
   const location = useLocation();
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [location]);
+  // useEffect(() => {
+  //   window.scrollTo({ top: 0, behavior: "smooth" });
+  // }, [location]);
 
   return (
     <div className="pt-16 bg-[#fafafa]">
-      <div className="relative ">
-        <img className=" h-96 w-full  " src={bannerImg} alt="" />
-        <div className="max-w-93 absolute top-20 left-8 bg-red-100/45 font-[inter] p-4 rounded-lg">
+      <div className="relative">
+        <img className="h-96 w-full" src={bannerImg} alt="" />
+        <div className="hidden sm:block absolute top-20 left-1/9 -translate-x-[6-%] bg-red-100/45 font-[inter] p-4 rounded-lg max-w-93 text-center">
           <h2 className="text-3xl mb-2 font-bold">Your Best Companion</h2>
           <p>
             Discover a vast collection of books from every genre. Whether you
             love fiction,
           </p>
-          <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gay-100 hover:bg-gray-200 sm:btn-sm md:btn-md mt-2 bg ">
+          <button className="btn border font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200 sm:btn-sm md:btn-md mt-2">
             Buy Now
           </button>
         </div>
       </div>
-      {/* ===============Best selling  sections =================== */}
+
+      {/* ===============Best selling sections =================== */}
       <section className="mt-8 px-10">
         <div className=" text-center font-[inter]">
           <h2 className="text-3xl mb-2 text-cyan-500">
@@ -41,7 +42,7 @@ const Home = () => {
           </p>
         </div>
         <div className="flex justify-center flex-wrap gap-4 my-2">
-          <div className="card  w-75 shadow-2xl ">
+          <div className="card w-75 shadow-sm ">
             <figure className="px-5 pt-5">
               <img
                 src="https://i.ibb.co.com/xScMg0jC/DALL-E-2025-02-16-00-51-24-A-high-quality-programming-book-with-a-visually-appealing-and-modern-fron.webp"
@@ -59,7 +60,7 @@ const Home = () => {
               </p>
             </div>
           </div>
-          <div className="card  w-75 shadow-2xl  ">
+          <div className="card w-75 shadow-sm">
             <figure className="px-5 pt-5">
               <img
                 src="https://i.ibb.co.com/8nn4P2XQ/DALL-E-2025-02-12-01-29-28-A-small-sized-realistic-and-visually-distinct-book-cover-titled-Dark-Psyc.webp"
@@ -76,7 +77,7 @@ const Home = () => {
               </p>
             </div>
           </div>
-          <div className="card  w-75 shadow-2xl">
+          <div className="card w-75 shadow-sm">
             <figure className="px-5 pt-5">
               <img
                 src="https://i.ibb.co.com/VcKNJg9d/DALL-E-2025-02-16-00-52-37-A-high-quality-programming-book-with-a-visually-appealing-front-cover-The.webp"
@@ -93,7 +94,7 @@ const Home = () => {
               </p>
             </div>
           </div>
-          <div className="card  w-75 shadow-2xl">
+          <div className="card w-75 shadow-sm">
             <figure className="px-5 pt-5">
               <img
                 src="https://i.ibb.co.com/QvhWrqXc/DALL-E-2025-02-12-01-32-21-A-small-sized-visually-distinct-book-cover-titled-Mind-Games-The-Science.webp"

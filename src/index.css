@@ -4,8 +4,9 @@
 @plugin "daisyui";
 
 @plugin "tailwindcss-animate";
-/* * {
-  background-color: #fafafa;
+/* body {
+  width: 1400px;
+  margin: auto;
 } */
 :root {
   --background: hsl(0 0% 100%);

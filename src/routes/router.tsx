@@ -17,6 +17,7 @@ import VerifyOrder from "@/pages/order/VerifyOrder";
 import OrdersData from "@/pages/order/OrdersData";
 import OrderHistry from "@/pages/order/OrderHistry";
 import AllOrder from "@/pages/admin/AllOrder";
+import Contact from "@/pages/contact/Contact";
 
 const router = createBrowserRouter([
   {
@@ -110,6 +111,10 @@ const router = createBrowserRouter([
       {
         path: "register",
         element: <Registration></Registration>,
+      },
+      {
+        path: "contact",
+        element: <Contact></Contact>,
       },
     ],
   },

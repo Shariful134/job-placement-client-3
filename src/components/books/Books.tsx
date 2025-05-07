@@ -22,7 +22,7 @@ const Books = () => {
   if (token) {
     user = verifyToken(token) as TUser;
   }
-  console.log(user);
+
   const admin = user?.role;
 
   const booksRef = useRef<HTMLDivElement | null>(null);
@@ -40,10 +40,10 @@ const Books = () => {
   const { data: booksData } = useGetAllBooksQuery(undefined);
   const allBooks = booksData?.data || [];
 
+  console.log("booksData: ", booksData);
   const categories = [
     ...new Set(allBooks.map((book: TBook) => book.category)),
   ] as string[];
-
   const authors = [
     ...new Set(allBooks.map((book: TBook) => book.author)),
   ] as string[];
@@ -94,7 +94,7 @@ const Books = () => {
       <div className=" text-center font-[inter]  px-10 pt-8 bg-[#fafafa]">
         <h2 className="text-3xl mb-2 text-cyan-500">
           -- <FaBook className="inline" /> Our Books{" "}
-          <FaBook className="inline" /> --{" "}
+          <FaBook className="inline" /> --
         </h2>
         <p className="max-w-3/6 mx-auto">
           {" "}
@@ -116,13 +116,10 @@ const Books = () => {
         <CategorySelect
           categories={categories}
           setCategoriesSelect={setCategoriesSelect}
-        ></CategorySelect>
-        <Authorselect
-          authors={authors}
-          setAuthorSelect={setAuthorSelect}
-        ></Authorselect>
-        <PriceSelect setPricesSelect={setPricesSelect}></PriceSelect>
-        <InStockSelect setInStockSelect={setInStockSelect}></InStockSelect>
+        />
+        <Authorselect authors={authors} setAuthorSelect={setAuthorSelect} />
+        <PriceSelect setPricesSelect={setPricesSelect} />
+        <InStockSelect setInStockSelect={setInStockSelect} />
       </div>
       <div className="flex justify-center flex-wrap gap-4 px-10 my-2 bg-[#fafafa]">
         {allFilteredBooks.length > 0 ? (
@@ -131,7 +128,7 @@ const Books = () => {
             return (
               <div
                 key={book?._id}
-                className="card  w-75 relative group shadow-2xl "
+                className="card w-75 relative group shadow-sm "
               >
                 <figure className="px-5 pt-5">
                   <img src={book.imageURL} alt="Shoes" className="rounded-xl" />
@@ -156,7 +153,7 @@ const Books = () => {
                           Update
                         </button>
                       </Link>
-                      <BookDelete id={book._id}></BookDelete>
+                      <BookDelete id={book._id} />
                     </div>
                   ) : (
                     <div className=" flex flex-wrap justify-center gap-2">
