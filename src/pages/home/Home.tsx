@@ -21,7 +21,7 @@ const Home = () => {
             Discover a vast collection of books from every genre. Whether you
             love fiction,
           </p>
-          <button className="btn border font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200 sm:btn-sm md:btn-md mt-2">
+          <button className="btn border font-[inter] rounded-md border-gray-600 bg-slate-200 hover:bg-slate-300 sm:btn-sm md:btn-md mt-2">
             Buy Now
           </button>
         </div>

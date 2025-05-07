@@ -22,6 +22,7 @@ import AdminLayout from "@/components/layout/AdminLayout";
 import DashboardPage from "@/components/dashboard/Dashboard";
 import CreateCategory from "@/pages/admin/CreateCategory";
 import CategoryData from "@/pages/admin/CategoryData";
+import AllBookData from "@/pages/admin/AllBooks";
 
 const router = createBrowserRouter([
   {
@@ -135,7 +136,10 @@ const router = createBrowserRouter([
         path: "/admin/create-book",
         element: <CreateBook />,
       },
-
+      {
+        path: "/admin/get-AllbooksData",
+        element: <AllBookData />,
+      },
       {
         path: "/admin/order-history",
         element: <AllOrder></AllOrder>,

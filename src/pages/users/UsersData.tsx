@@ -3,6 +3,7 @@ import UserBlockModal from "@/components/modal/UserBlockModal";
 import UserDeleteModal from "@/components/modal/UserDeleteModal";
 import UserUnblockedModal from "@/components/modal/UserUnblockedModal";
 import { SkeletonDemo } from "@/components/skeleton/SkeletonDemo";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -13,7 +14,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useGetAllUserQuery } from "@/redux/user/userApi";
+import {
+  useDeleteUserMutation,
+  useGetAllUserQuery,
+} from "@/redux/user/userApi";
 import { useState } from "react";
 import { FaUserAstronaut } from "react-icons/fa";
 
@@ -27,6 +31,7 @@ type User = {
 
 const UsersData = () => {
   const { data: allData, isLoading } = useGetAllUserQuery(undefined);
+  const [deleteUser] = useDeleteUserMutation();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
 
@@ -58,6 +63,13 @@ const UsersData = () => {
     }
   });
 
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteUser(id);
+    } catch (error) {
+      console.error("Delete failed:", error);
+    }
+  };
   return (
     <div className="px-10 pt-18 ">
       <div className=" text-center font-[inter] pb-10 pt-5">
@@ -113,7 +125,12 @@ const UsersData = () => {
                     </TableCell>
                     <TableCell>{user.email}</TableCell>
                     <TableCell className="flex flex-wrap  gap-2">
-                      <UserDeleteModal id={user._id}></UserDeleteModal>
+                      <Button
+                        onClick={() => handleDelete(user._id as string)}
+                        className="text-black border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200"
+                      >
+                        Delete
+                      </Button>
                       {user?.isBlocked ? (
                         <UserUnblockedModal id={user._id}></UserUnblockedModal>
                       ) : (

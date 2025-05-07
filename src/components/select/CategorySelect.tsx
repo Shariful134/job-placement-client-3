@@ -33,8 +33,8 @@ const CategorySelect: React.FC<SelectedProps> = ({
           <SelectItem key="All Category" value="All Category">
             All Category
           </SelectItem>
-          {categories.map((category: string) => (
-            <SelectItem key={category} value={category}>
+          {categories.map((category: string, index: number) => (
+            <SelectItem key={index} value={category}>
               {category}
             </SelectItem>
           ))}

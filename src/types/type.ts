@@ -83,4 +83,29 @@ export type TqueryParams = {
   name: string;
   value: boolean | React.Key;
 };
+
+export type TBookData = {
+  _id: string;
+  title: string;
+  author: string;
+  description: string;
+  price: number;
+  quantity: number;
+  inStock: boolean;
+  imageURL: string[];
+  publisher: string;
+  publicationDate: string;
+  categoryId: {
+    _id: string;
+    name: string;
+    imageURL: string;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+  };
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+};
+
 export type TResponseRedux<T> = TResponse<T> & BaseQueryApi;

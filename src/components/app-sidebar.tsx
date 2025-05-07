@@ -4,8 +4,8 @@ import {
   IconDatabase,
   IconFileAi,
   IconFileDescription,
-  IconFileWord,
-  IconReport,
+  // IconFileWord,
+  // IconReport,
 } from "@tabler/icons-react";
 
 import { NavDocuments } from "@/components/nav-documents";
@@ -101,6 +101,11 @@ const data = {
       icon: IconDatabase,
     },
     {
+      name: "All Books",
+      url: "/admin/get-AllbooksData",
+      icon: IconDatabase,
+    },
+    {
       name: "All Order History",
       url: "/admin/order-history",
       icon: IconDatabase,
@@ -110,16 +115,16 @@ const data = {
       url: "/admin/user-history",
       icon: IconDatabase,
     },
-    {
-      name: "Reports",
-      url: "#",
-      icon: IconReport,
-    },
-    {
-      name: "Word Assistant",
-      url: "#",
-      icon: IconFileWord,
-    },
+    // {
+    //   name: "Reports",
+    //   url: "#",
+    //   icon: IconReport,
+    // },
+    // {
+    //   name: "Word Assistant",
+    //   url: "#",
+    //   icon: IconFileWord,
+    // },
   ],
 };
 

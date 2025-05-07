@@ -9,16 +9,21 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useGetAllOrderQuery } from "@/redux/order/orderApi";
+import {
+  useDeleteOrderMutation,
+  useGetAllOrderQuery,
+} from "@/redux/order/orderApi";
 import { useState } from "react";
 import { FaBook } from "react-icons/fa";
 import { TAllOrder, TOrder } from "./AllOrder.type";
 
 import { SkeletonDemo } from "@/components/skeleton/SkeletonDemo";
-import OrderDelete from "@/components/modal/OrderDelete";
+
+import { Button } from "@/components/ui/button";
 
 const AllOrder = () => {
   const { data: allData, isLoading } = useGetAllOrderQuery(undefined);
+  const [deleteOrder] = useDeleteOrderMutation();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
   console.log(allData?.data);
@@ -53,8 +58,16 @@ const AllOrder = () => {
     }
   });
 
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteOrder(id);
+    } catch (error) {
+      console.error("Delete failed:", error);
+    }
+  };
+
   return (
-    <div className="px-10 pt-18 ">
+    <div className=" pt-18 ">
       {isLoading ? (
         <SkeletonDemo />
       ) : (
@@ -94,7 +107,7 @@ const AllOrder = () => {
               </div>
               <Table className="font-[inter]">
                 <TableCaption></TableCaption>
-                <TableHeader>
+                <TableHeader className="bg-gray-200">
                   <TableRow>
                     <TableHead className="max-w-5/6">Email</TableHead>
                     <TableHead>OrderId</TableHead>
@@ -123,7 +136,12 @@ const AllOrder = () => {
                         <TableCell>{order.totalAmount} BDT</TableCell>
                         <TableCell>{order.quantity}</TableCell>
                         <TableCell className="flex flex-wrap  gap-2">
-                          <OrderDelete id={order._id}></OrderDelete>
+                          <Button
+                            onClick={() => handleDelete(order._id)}
+                            className=" border-white border-2 bg-slate-200 hover:bg-slate-300 text-black cursor-pointer"
+                          >
+                            Delete
+                          </Button>
                         </TableCell>
                       </TableRow>
                     ))

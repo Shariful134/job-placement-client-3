@@ -13,6 +13,7 @@ import {
 import { useBlockUserMutation } from "@/redux/user/userApi";
 import { TResponse } from "@/types/type";
 import { toast } from "sonner";
+import { Button } from "../ui/button";
 
 const UserUnblockedModal = ({ id }: { id: string | undefined }) => {
   const [unBlock] = useBlockUserMutation();
@@ -32,8 +33,10 @@ const UserUnblockedModal = ({ id }: { id: string | undefined }) => {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
-        UnBlock
+      <AlertDialogTrigger>
+        <Button className=" border-1  rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
+          Unblock
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent className="font-serif">
         <AlertDialogHeader>

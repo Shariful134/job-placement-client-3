@@ -6,7 +6,7 @@ import { verifyToken } from "../../utils/verifyToken";
 import { TUser } from "../../types/type";
 import { toast } from "sonner";
 import { IoMdSettings } from "react-icons/io";
-import { FaBookMedical, FaHistory } from "react-icons/fa";
+import { LiaRegistered } from "react-icons/lia";
 import { AiOutlineLogin, AiOutlineLogout } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { MdDashboardCustomize } from "react-icons/md";
@@ -20,7 +20,6 @@ const NavBar = () => {
   if (token) {
     user = verifyToken(token) as TUser;
   }
-  const admin = user?.role;
 
   const handlLogOut = () => {
     dispatch(logout());
@@ -30,7 +29,7 @@ const NavBar = () => {
   };
 
   return (
-    <div className="  sticky top-0 z-10 w-full bg-gray-300">
+    <div className="  sticky top-0 z-10 w-full bg-slate-300">
       <div className="navbar container mx-auto px-4 font-serif ">
         {/* Navbar Start (Left Part) */}
         <div className="navbar-start">
@@ -179,55 +178,22 @@ const NavBar = () => {
             >
               <p className="font-bold ">My Account</p>
               <li>
-                <a className="text-sm">
+                <a href={`/${user?.role}/dashboard`} className="text-sm">
                   <CgProfile /> Profile
                 </a>
               </li>
-              <li>
-                <a className="text-sm">
-                  <IoMdSettings /> Settings
-                </a>
-              </li>
+
               <li>
                 <a href={`/${user?.role}/dashboard`} className="text-sm">
                   <MdDashboardCustomize /> Dashboard
                 </a>
               </li>
-
               {user ? (
-                <>
-                  {user.role === "user" && (
-                    <li>
-                      <a href="/get-order-histry">
-                        <FaHistory /> Order History
-                      </a>
-                    </li>
-                  )}
-                  {admin === "admin" && (
-                    <>
-                      <li>
-                        <a href="/users-all-orders">
-                          <FaHistory /> All Order History
-                        </a>
-                      </li>
-                      <li>
-                        <a href="/users">
-                          <FaHistory /> User History
-                        </a>
-                      </li>
-                      <li>
-                        <a href="/book-create">
-                          <FaBookMedical /> Create Book
-                        </a>
-                      </li>
-                    </>
-                  )}
-                  <li>
-                    <button onClick={handlLogOut}>
-                      <AiOutlineLogout /> LogOut
-                    </button>
-                  </li>
-                </>
+                <li>
+                  <button onClick={handlLogOut}>
+                    <AiOutlineLogout /> LogOut
+                  </button>
+                </li>
               ) : (
                 <>
                   <li>
@@ -236,10 +202,18 @@ const NavBar = () => {
                     </a>
                   </li>
                   <li>
-                    <a href="/register">Registration</a>
+                    <a href="/login">
+                      <LiaRegistered /> Registration
+                    </a>
                   </li>
                 </>
               )}
+
+              <li>
+                <a className="text-sm">
+                  <IoMdSettings /> Settings
+                </a>
+              </li>
             </ul>
           </div>
         </div>
