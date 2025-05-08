@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NavLink, useNavigate } from "react-router-dom";
 import logoImage from "../../assets/image/logo.png";
 import { useAppDispath, useAppSelector } from "../../redux/hooks";
@@ -11,8 +12,11 @@ import { AiOutlineLogin, AiOutlineLogout } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { MdDashboardCustomize } from "react-icons/md";
 import { Button } from "../ui/button";
+import { useGetAllcategoryQuery } from "@/redux/category/categoryApi";
+import { RiArrowDropDownLine } from "react-icons/ri";
 
 const NavBar = () => {
+  const { data: allData } = useGetAllcategoryQuery(undefined);
   const dispatch = useAppDispath();
   const navigate = useNavigate();
 
@@ -29,6 +33,8 @@ const NavBar = () => {
     window.scrollTo(0, 0);
   };
 
+  const categoryData = allData?.data?.map((name: any) => name.name);
+  console.log(categoryData);
   return (
     <div className="  sticky top-0 z-10 w-full bg-slate-300">
       <div className="navbar container mx-auto px-4 font-serif ">
@@ -111,6 +117,33 @@ const NavBar = () => {
             >
               About
             </NavLink>
+            <div className="dropdown dropdown-hover">
+              <label
+                tabIndex={0}
+                className="text-lg cursor-pointer hover:text-cyan-600 flex items-center justify-center"
+              >
+                Category <RiArrowDropDownLine className=" text-2xl" />
+              </label>
+              <ul
+                tabIndex={0}
+                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+              >
+                {categoryData?.map((category: any) => (
+                  <li>
+                    <NavLink
+                      to={`/category/details/${category}`}
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-cyan-600 font-bold underline text-lg"
+                          : "hover:text-cyan-600 text-lg"
+                      }
+                    >
+                      {category}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </ul>
         </div>
 

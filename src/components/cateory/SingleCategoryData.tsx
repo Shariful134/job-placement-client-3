@@ -4,7 +4,7 @@ import { useGetAllBooksQuery } from "../../redux/book/bookApi";
 import { TBook, TUser } from "../../types/type";
 
 import { IoMdCart } from "react-icons/io";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { FaBook } from "react-icons/fa";
 import { Input } from "../ui/input";
 import CategorySelect from "../select/CategorySelect";
@@ -17,7 +17,9 @@ import { verifyToken } from "@/utils/verifyToken";
 import { useGetAllcategoryQuery } from "@/redux/category/categoryApi";
 import { TCategory } from "@/pages/admin/CreateCategory";
 
-const Books = () => {
+const SingleCategoryData = () => {
+  const { category } = useParams();
+
   const navigate = useNavigate();
   const token = useAppSelector(useCurrentToken);
   let user;
@@ -40,8 +42,12 @@ const Books = () => {
   >("all");
 
   const { data: booksData } = useGetAllBooksQuery(undefined);
-  const allBooks = booksData?.data || [];
+  const allBooksData = booksData?.data || [];
   const { data: getCategory } = useGetAllcategoryQuery(undefined);
+
+  const allBooks = allBooksData?.filter(
+    (data: any) => data.categoryId.name === category
+  );
 
   const allcategory = getCategory?.data || [];
 
@@ -214,4 +220,4 @@ const Books = () => {
   );
 };
 
-export default Books;
+export default SingleCategoryData;

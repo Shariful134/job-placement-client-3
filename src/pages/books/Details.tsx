@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, useLocation, useParams } from "react-router";
 import {
   useGetAllBooksQuery,
@@ -6,7 +7,7 @@ import {
 import { FaBook } from "react-icons/fa";
 import { IoMdCart } from "react-icons/io";
 import { TBook, TUser } from "../../types/type";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppSelector } from "@/redux/hooks";
 import { useCurrentToken } from "@/redux/auth/authSlice";
 import { verifyToken } from "@/utils/verifyToken";
@@ -17,6 +18,7 @@ const Details = () => {
   const { id } = useParams();
   const { data: Book } = useGetSingleBookQuery(id);
   const { data: allBooks } = useGetAllBooksQuery(undefined);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const token = useAppSelector(useCurrentToken);
   let user;
@@ -28,6 +30,8 @@ const Details = () => {
 
   const book = Book?.data;
 
+  console.log("book: ", book);
+
   const sameCategory = allBooks?.data?.filter(
     (item: TBook) => item?.category === book?.category
   );
@@ -35,6 +39,12 @@ const Details = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [location]);
+
+  useEffect(() => {
+    if (book?.imageURL?.length) {
+      setSelectedImage(book.imageURL[0]);
+    }
+  }, [book]);
 
   return (
     <div className="pt-10 px-10 bg-[#fafafa]">
@@ -50,9 +60,26 @@ const Details = () => {
         </p>
       </div>
       <div className="card max-w-10/12 flex sm:flex-col md:flex-row lg:flex-row  mx-auto shadow  mt-5 p-5  ">
-        <figure>
-          <img src={book?.imageURL} alt="imageURL" />
-        </figure>
+        <div className="flex flex-col gap-2">
+          <div className="w-xs">
+            <figure>
+              <img src={selectedImage || book?.imageURL[0]} alt="imageURL" />
+            </figure>
+          </div>
+          <div className="flex gap-2">
+            {book?.imageURL?.map((img: string, index: number) => (
+              <div
+                key={index}
+                className="w-15 cursor-pointer"
+                onClick={() => setSelectedImage(img)}
+              >
+                <figure>
+                  <img src={img} alt={`image ${index + 1}`} />
+                </figure>
+              </div>
+            ))}
+          </div>
+        </div>
         <div className="card-body font-[inter]  ">
           <h2 className="card-title">{book?.title}</h2>
           <p>
@@ -118,7 +145,7 @@ const Details = () => {
         </p>
       </div>
       <div className="flex justify-center flex-wrap gap-4 pb-5 font-[inter] bg-[#fafafa]">
-        {sameCategory?.map((sameBook: TBook) => {
+        {sameCategory?.map((sameBook: any) => {
           const inStock = sameBook.inStock;
           return (
             <div
@@ -127,7 +154,7 @@ const Details = () => {
             >
               <figure className="px-5 pt-5">
                 <img
-                  src={sameBook.imageURL}
+                  src={sameBook.imageURL[0]}
                   alt="Shoes"
                   className="rounded-xl"
                 />
