@@ -19,6 +19,7 @@ import {
 } from "@/redux/book/bookApi";
 import { TBookData } from "@/types/type";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const AllBookData = () => {
   const { data: allBookData, isLoading } = useGetAllBooksQuery(undefined);
@@ -69,6 +70,7 @@ const AllBookData = () => {
       console.error("Delete failed:", error);
     }
   };
+
   return (
     <div className=" pt-18 ">
       {isLoading ? (
@@ -146,6 +148,14 @@ const AllBookData = () => {
                           >
                             Delete
                           </Button>
+                          {/* <Button className="border-1 text-block rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
+                            Update
+                          </Button> */}
+                          <Link to={`/book-update/${book._id}`}>
+                            <Button className="border-1 text-block rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
+                              Update
+                            </Button>
+                          </Link>
                         </TableCell>
                       </TableRow>
                     ))

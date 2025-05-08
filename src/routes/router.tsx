@@ -137,6 +137,10 @@ const router = createBrowserRouter([
         element: <CreateBook />,
       },
       {
+        path: "/admin/update-book",
+        element: <UpdateBooks />,
+      },
+      {
         path: "/admin/get-AllbooksData",
         element: <AllBookData />,
       },

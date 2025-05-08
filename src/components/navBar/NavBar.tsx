@@ -10,6 +10,7 @@ import { LiaRegistered } from "react-icons/lia";
 import { AiOutlineLogin, AiOutlineLogout } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { MdDashboardCustomize } from "react-icons/md";
+import { Button } from "../ui/button";
 
 const NavBar = () => {
   const dispatch = useAppDispath();
@@ -59,6 +60,7 @@ const NavBar = () => {
                   Home
                 </NavLink>
               </li>
+
               <li>
                 <NavLink to="/get-books" className="hover:text-cyan-600">
                   Book
@@ -138,7 +140,7 @@ const NavBar = () => {
                   />
                 </svg>
                 <span className="badge badge-sm indicator-item px-1 bg-rose-400">
-                  8
+                  0
                 </span>
               </div>
             </div>
@@ -147,7 +149,7 @@ const NavBar = () => {
               className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 w-52 shadow"
             >
               <div className="card-body">
-                <span className="text-lg font-bold">8 Items</span>
+                <span className="text-lg font-bold">0 Items</span>
                 <span className="text-info">Subtotal: $999</span>
                 <div className="card-actions">
                   <button className="btn btn-primary btn-block">
@@ -159,63 +161,70 @@ const NavBar = () => {
           </div>
 
           {/* User Avatar Dropdown */}
-          <div className="dropdown dropdown-end">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle avatar"
-            >
-              <div className="w-10 rounded-full border-2 border-gray-400">
-                <img
-                  alt="user"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                />
+
+          {user ? (
+            <div className="dropdown dropdown-end">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn btn-ghost btn-circle avatar"
+              >
+                <div className="w-10 rounded-full border-2 border-gray-400">
+                  <img
+                    alt="user"
+                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                  />
+                </div>
               </div>
-            </div>
-            <ul
-              tabIndex={0}
-              className="menu  menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-            >
-              <p className="font-bold ">My Account</p>
-              <li>
-                <a href={`/${user?.role}/dashboard`} className="text-sm">
-                  <CgProfile /> Profile
-                </a>
-              </li>
-
-              <li>
-                <a href={`/${user?.role}/dashboard`} className="text-sm">
-                  <MdDashboardCustomize /> Dashboard
-                </a>
-              </li>
-              {user ? (
+              <ul
+                tabIndex={0}
+                className="menu  menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              >
+                <p className="font-bold ">My Account</p>
                 <li>
-                  <button onClick={handlLogOut}>
-                    <AiOutlineLogout /> LogOut
-                  </button>
+                  <a href={`/${user?.role}/dashboard`} className="text-sm">
+                    <CgProfile /> Profile
+                  </a>
                 </li>
-              ) : (
-                <>
-                  <li>
-                    <a href="/login">
-                      <AiOutlineLogin /> Login
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/login">
-                      <LiaRegistered /> Registration
-                    </a>
-                  </li>
-                </>
-              )}
 
-              <li>
-                <a className="text-sm">
-                  <IoMdSettings /> Settings
-                </a>
-              </li>
-            </ul>
-          </div>
+                <li>
+                  <a href={`/${user?.role}/dashboard`} className="text-sm">
+                    <MdDashboardCustomize /> Dashboard
+                  </a>
+                </li>
+                {user ? (
+                  <li>
+                    <button onClick={handlLogOut}>
+                      <AiOutlineLogout /> LogOut
+                    </button>
+                  </li>
+                ) : (
+                  <>
+                    <li>
+                      <a href="/login">
+                        <AiOutlineLogin /> Login
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/login">
+                        <LiaRegistered /> Registration
+                      </a>
+                    </li>
+                  </>
+                )}
+
+                <li>
+                  <a className="text-sm">
+                    <IoMdSettings /> Settings
+                  </a>
+                </li>
+              </ul>
+            </div>
+          ) : (
+            <Button className="bg-slate-400 text-black text-lg hover:bg-slate-400">
+              <a href="/login">Login</a>
+            </Button>
+          )}
         </div>
       </div>
     </div>

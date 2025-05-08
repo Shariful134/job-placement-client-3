@@ -91,7 +91,7 @@ const data = {
       icon: IconDatabase,
     },
     {
-      name: "Category Data",
+      name: "All Category",
       url: "/admin/data-category",
       icon: IconDatabase,
     },
@@ -100,6 +100,7 @@ const data = {
       url: "/admin/create-book",
       icon: IconDatabase,
     },
+
     {
       name: "All Books",
       url: "/admin/get-AllbooksData",

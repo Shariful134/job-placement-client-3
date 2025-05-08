@@ -49,7 +49,7 @@ const Details = () => {
           readers love it!
         </p>
       </div>
-      <div className="card max-w-10/12 flex sm:flex-col md:flex-row lg:flex-row  mx-auto shadow-2xl  mt-5 p-5  ">
+      <div className="card max-w-10/12 flex sm:flex-col md:flex-row lg:flex-row  mx-auto shadow  mt-5 p-5  ">
         <figure>
           <img src={book?.imageURL} alt="imageURL" />
         </figure>
@@ -81,9 +81,6 @@ const Details = () => {
           </p>
           {admin == "admin" ? (
             <div className="card-actions justify-start">
-              <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
-                Add To Cart <IoMdCart className="text-xl" />
-              </button>
               <Link to="/">
                 <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
                   Home
@@ -126,7 +123,7 @@ const Details = () => {
           return (
             <div
               key={sameBook?._id}
-              className="card  w-75 relative group shadow-2xl"
+              className="card  w-75 relative group shadow"
             >
               <figure className="px-5 pt-5">
                 <img
@@ -187,11 +184,6 @@ const Details = () => {
                     </div>
                   )}
                 </div>
-              </div>
-              <div className="absolute top-[50%] invisible group-hover:visible  left-0 w-full">
-                <button className="btn w-full border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
-                  Add To Cart <IoMdCart className="text-xl" />
-                </button>
               </div>
             </div>
           );

@@ -23,18 +23,11 @@ import {
 } from "@/redux/book/bookApi";
 
 import { useParams } from "react-router-dom";
+import { useGetAllcategoryQuery } from "@/redux/category/categoryApi";
 
 const stockOption = [
   { value: "true", label: "true" },
   { value: "false", label: "false" },
-];
-
-const categoryOption = [
-  { value: "Fiction", label: "Fiction" },
-  { value: "Science", label: "Science" },
-  { value: "SelfDevelopment", label: "SelfDevelopment" },
-  { value: "Poetry", label: "Poetry" },
-  { value: "Religious", label: "Religious" },
 ];
 
 const UpdatedBookComponent = () => {
@@ -42,6 +35,14 @@ const UpdatedBookComponent = () => {
   const { data: singleBook } = useGetSingleBookQuery(id);
 
   const [updateBook] = useUpdatebookMutation();
+  const { data: getCategory } = useGetAllcategoryQuery(undefined);
+  const allcategory = getCategory?.data || [];
+
+  const categoryOption = allcategory?.map((category: any) => ({
+    label: category.name,
+    value: category._id,
+  }));
+
   const book = singleBook?.data;
 
   const form = useForm({

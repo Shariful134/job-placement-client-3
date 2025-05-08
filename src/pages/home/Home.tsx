@@ -1,16 +1,31 @@
 import { FaBook } from "react-icons/fa";
-import bannerImg from "../../assets/image/caroselImg-1.png";
+
 import Books from "@/components/books/Books";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { useGetAllcategoryQuery } from "@/redux/category/categoryApi";
+import { Skeleton } from "@/components/ui/skeleton";
+import { TCategory } from "../admin/CreateCategory";
+import { MarqueeDemo } from "./Marque";
+import FeatureSection from "./Featured";
+
+import bannerImg from "../../assets/image/caroselImg-1.png";
+import upcoming1 from "../../assets/image/download.jpeg";
+import upcoming2 from "../../assets/image/upcoming2.jpeg";
+import upcoming3 from "../../assets/image/upcoming3.jpeg";
+import upcoming4 from "../../assets/image/upcoming4.jpeg";
 
 const Home = () => {
   const location = useLocation();
+  const { data: allData, isLoading } = useGetAllcategoryQuery(undefined);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [location]);
 
+  if (isLoading) {
+    return <Skeleton />;
+  }
   return (
     <div className="pt-16 bg-[#fafafa]">
       <div className="relative">
@@ -26,15 +41,135 @@ const Home = () => {
           </button>
         </div>
       </div>
-
-      {/* ===============Best selling sections =================== */}
-      <section className="mt-8 px-10">
+      {/* ===============Marque sections =================== */}
+      <MarqueeDemo></MarqueeDemo>
+      {/* ===============Category sections =================== */}
+      <section className="mt-10 pt-10 container mx-auto">
         <div className=" text-center font-[inter]">
+          <h2 className="text-3xl mb-2 text-cyan-500">
+            -- <FaBook className="inline" /> Explore Our Top Categories{" "}
+            <FaBook className="inline" /> --{" "}
+          </h2>
+          <p className="max-w-3/6 mx-auto font-[inter]">
+            {" "}
+            Dive into a handpicked collection of our best-selling book
+            categories. From cutting-edge technology and personal growth to
+            captivating fiction, there's something here for every reader.
+          </p>
+        </div>
+        <div className=" grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-30 my-10 pb-10">
+          {allData?.data?.map((category: TCategory, index: number) => (
+            <div key={index} className=" flex justify-center items-center">
+              <a href="/#" className="group">
+                <div className="w-40 h-40">
+                  <img
+                    src={category?.imageURL}
+                    alt="Category"
+                    className="w-full h-full object-cover rounded-full border-4 border-white shadow-md group-hover:border-slate-300"
+                  />
+                  <div className="cursor-pointer mt-5 bg-slate-300 text-black text-center text-sm font-medium py-2 rounded-sm border-white border-2">
+                    {category?.name}
+                  </div>
+                </div>
+              </a>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ===================upcomming Books========================== */}
+      <section className="mt-15 pt-15 container mx-auto">
+        <div className=" text-center font-[inter]">
+          <h2 className="text-3xl mb-2 text-cyan-500">
+            -- <FaBook className="inline" /> Upcoming Book Releases{" "}
+            <FaBook className="inline" /> --{" "}
+          </h2>
+          <p className="max-w-3/6 mx-auto font-[inter]">
+            {" "}
+            Dive into a handpicked collection of our best-selling book
+            categories. From cutting-edge technology and personal growth to
+            captivating fiction, there's something here for every reader.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-10 my-10 pb-10">
+          <div className=" flex justify-center items-center">
+            <a href="/#" className="group">
+              <div>
+                <div className="w-48 h-64 overflow-hidden">
+                  <img
+                    src={upcoming1}
+                    alt="Category"
+                    className="w-full h-full object-cover border-4 border-white shadow-md group-hover:border-slate-300"
+                  />
+                </div>
+
+                <div className="cursor-pointer mt-5 bg-slate-300 text-black text-center text-sm font-medium py-2 rounded-sm border-white border-2">
+                  "The Silent Hacker"
+                </div>
+              </div>
+            </a>
+          </div>
+          <div className=" flex justify-center items-center">
+            <a href="/#" className="group">
+              <div>
+                <div className="w-48 h-64 overflow-hidden">
+                  <img
+                    src={upcoming2}
+                    alt="Category"
+                    className="w-full h-full object-cover border-4 border-white shadow-md group-hover:border-slate-300"
+                  />
+                </div>
+
+                <div className="cursor-pointer mt-5 bg-slate-300 text-black text-center text-sm font-medium py-2 rounded-sm border-white border-2">
+                  " the MetaMind"
+                </div>
+              </div>
+            </a>
+          </div>
+          <div className=" flex justify-center items-center">
+            <a href="/#" className="group">
+              <div>
+                <div className="w-48 h-64 overflow-hidden">
+                  <img
+                    src={upcoming3}
+                    alt="Category"
+                    className="w-full h-full object-cover border-4 border-white shadow-md group-hover:border-slate-300"
+                  />
+                </div>
+
+                <div className="cursor-pointer mt-5 bg-slate-300 text-black text-center text-sm font-medium py-2 rounded-sm border-white border-2">
+                  "Mental Potential"
+                </div>
+              </div>
+            </a>
+          </div>
+          <div className=" flex justify-center items-center">
+            <a href="/#" className="group">
+              <div>
+                <div className="w-48 h-64 overflow-hidden">
+                  <img
+                    src={upcoming4}
+                    alt="Category"
+                    className="w-full h-full object-cover border-4 border-white shadow-md group-hover:border-slate-300"
+                  />
+                </div>
+
+                <div className="cursor-pointer mt-5 bg-slate-300 text-black text-center text-sm font-medium py-2 rounded-sm border-white border-2">
+                  " Garage to Global"
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+      {/* ===============Best selling sections =================== */}
+      <section className="mt-10  px-10">
+        <div className=" text-center font-[inter]  pt-5">
           <h2 className="text-3xl mb-2 text-cyan-500">
             -- <FaBook className="inline" /> Best Selling Books{" "}
             <FaBook className="inline" /> --{" "}
           </h2>
-          <p className="max-w-3/6 mx-auto font-[inter]">
+          <p className="max-w-3/6 mx-auto font-[inter] pb-5">
             {" "}
             Discover a curated selection of our top-rated books! Whether you're
             into programming, self-development, or fiction, find the perfect
@@ -117,6 +252,8 @@ const Home = () => {
       <section>
         <Books></Books>
       </section>
+      {/* ==================Featured Section==================== */}
+      <FeatureSection></FeatureSection>
     </div>
   );
 };

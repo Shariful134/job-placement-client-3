@@ -92,7 +92,7 @@ const GetBooks = () => {
       </div>
       <div
         ref={booksRef}
-        className=" mt-5 flex justify-center flex-wrap lg:gap-4 sm:gap-2 md:gap-4 px-10"
+        className=" my-5 flex justify-center flex-wrap gap-2 lg:gap-4 sm:gap-2 md:gap-4 px-10"
       >
         <Input
           className="w-75 border-gray-500 "
@@ -117,10 +117,7 @@ const GetBooks = () => {
           allFilteredBooks?.map((book: TBook) => {
             const inStock = book.inStock;
             return (
-              <div
-                key={book?._id}
-                className="card  w-75 relative group shadow-2xl"
-              >
+              <div key={book?._id} className="card  w-75 relative group shadow">
                 <figure className="px-5 pt-5">
                   <img src={book.imageURL} alt="Shoes" className="rounded-xl" />
                 </figure>

@@ -13,7 +13,6 @@ import InStockSelect from "../select/InStockSelect";
 import { useAppSelector } from "@/redux/hooks";
 import { useCurrentToken } from "@/redux/auth/authSlice";
 import { verifyToken } from "@/utils/verifyToken";
-import BookDelete from "../modal/BookDelete";
 
 const Books = () => {
   const navigate = useNavigate();
@@ -99,12 +98,14 @@ const Books = () => {
         <p className="max-w-3/6 mx-auto">
           {" "}
           Explore our most popular books, loved by readers worldwide. From
-          fiction to self-help, find your next favorite read today!
+          fiction to self-help, find your next favorite read today! Explore our
+          most popular books, loved by readers worldwide. From fiction to
+          self-help, find your
         </p>
       </div>
       <div
         ref={booksRef}
-        className=" mt-5 flex justify-center flex-wrap lg:gap-4 sm:gap-2 md:gap-4 px-10"
+        className=" my-15 flex justify-center flex-wrap lg:gap-4 sm:gap-2 md:gap-4 px-10"
       >
         <Input
           className="w-75 border-gray-500 "
@@ -153,7 +154,6 @@ const Books = () => {
                           Update
                         </button>
                       </Link>
-                      <BookDelete id={book._id} />
                     </div>
                   ) : (
                     <div className=" flex flex-wrap justify-center gap-2">
