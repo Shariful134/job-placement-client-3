@@ -12,11 +12,12 @@ import { useAppSelector } from "@/redux/hooks";
 import { useCurrentToken } from "@/redux/auth/authSlice";
 import { verifyToken } from "@/utils/verifyToken";
 import BookDelete from "@/components/modal/BookDelete";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Details = () => {
   const location = useLocation();
   const { id } = useParams();
-  const { data: Book } = useGetSingleBookQuery(id);
+  const { data: Book, isFetching } = useGetSingleBookQuery(id);
   const { data: allBooks } = useGetAllBooksQuery(undefined);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
@@ -46,6 +47,13 @@ const Details = () => {
     }
   }, [book]);
 
+  if (isFetching) {
+    return (
+      <div className="h-screen">
+        <Skeleton></Skeleton>
+      </div>
+    );
+  }
   return (
     <div className="pt-10 px-10 bg-[#fafafa]">
       <div className=" text-center pt-8 font-[inter]">

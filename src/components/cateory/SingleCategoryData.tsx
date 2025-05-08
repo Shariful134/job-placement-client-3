@@ -143,7 +143,7 @@ const SingleCategoryData = () => {
                 return (
                   <div
                     key={book?._id}
-                    className="card w-75 relative group shadow-sm "
+                    className="card w-full relative group shadow-sm "
                   >
                     <figure className="px-5 pt-5">
                       <img

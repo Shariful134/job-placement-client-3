@@ -25,6 +25,8 @@ import CategoryData from "@/pages/admin/CategoryData";
 import AllBookData from "@/pages/admin/AllBooks";
 import SingleCategoryData from "@/components/cateory/SingleCategoryData";
 import BlogPage from "@/pages/blog/BlogPage";
+import UserLayout from "@/components/layout/UserLayout";
+import UserDashboardPage from "@/components/dashboard/UserDashboardPage"; // You can replace with your actual user dashboard component
 
 const router = createBrowserRouter([
   {
@@ -64,7 +66,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "order-verify",
+        path: "/order-verify",
         element: (
           <ProtectedRoutes role="user">
             <VerifyOrder></VerifyOrder>
@@ -72,7 +74,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "get-orders/:order_id",
+        path: "/get-orders/:order_id",
         element: (
           <ProtectedRoutes role="user">
             <OrdersData></OrdersData>
@@ -80,7 +82,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "get-order-histry",
+        path: "/get-order-histry",
         element: (
           <ProtectedRoutes role="user">
             <OrderHistry></OrderHistry>
@@ -120,23 +122,20 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "about",
+        path: "/about",
         element: <About></About>,
       },
       {
-        path: "login",
+        path: "/login",
         element: <Login></Login>,
       },
       {
-        path: "register",
+        path: "/register",
         element: <Registration></Registration>,
-      },
-      {
-        path: "contact",
-        element: <Contact></Contact>,
       },
     ],
   },
+
   // Admin layout based routes
   {
     path: "/admin",
@@ -147,37 +146,36 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        path: "/admin/create-book",
+        path: "create-book",
         element: <CreateBook />,
       },
       {
-        path: "/admin/update-book",
+        path: "update-book",
         element: <UpdateBooks />,
       },
       {
-        path: "/admin/get-AllbooksData",
+        path: "get-AllbooksData",
         element: <AllBookData />,
       },
       {
-        path: "/admin/order-history",
+        path: "order-history",
         element: <AllOrder></AllOrder>,
       },
       {
-        path: "/admin/data-category",
+        path: "data-category",
         element: <CategoryData />,
       },
       {
-        path: "/admin/user-history",
+        path: "user-history",
         element: <UsersData></UsersData>,
       },
       {
-        path: "/admin/create-category",
+        path: "create-category",
         element: <CreateCategory></CreateCategory>,
       },
-
       {
         path: "dashboard",
-        element: <DashboardPage />, // <-- Dashboard Component
+        element: <DashboardPage />,
       },
       {
         path: "update-book/:id",
@@ -190,6 +188,34 @@ const router = createBrowserRouter([
       {
         path: "users",
         element: <UsersData />,
+      },
+    ],
+  },
+
+  // User layout based routes
+  {
+    path: "/user",
+    element: (
+      <ProtectedRoutes role="user">
+        <UserLayout />
+      </ProtectedRoutes>
+    ),
+    children: [
+      {
+        path: "dashboard",
+        element: <UserDashboardPage />,
+      },
+      {
+        path: "order-history",
+        element: <OrderHistry />,
+      },
+      {
+        path: "orders/:order_id",
+        element: <OrdersData />,
+      },
+      {
+        path: "verify-order",
+        element: <VerifyOrder />,
       },
     ],
   },

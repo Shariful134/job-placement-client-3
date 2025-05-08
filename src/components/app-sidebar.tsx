@@ -1,12 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
-import {
-  IconCamera,
-  IconDatabase,
-  IconFileAi,
-  IconFileDescription,
-  // IconFileWord,
-  // IconReport,
-} from "@tabler/icons-react";
+import { IconDatabase } from "@tabler/icons-react";
 
 import { NavDocuments } from "@/components/nav-documents";
 import { NavMain } from "@/components/nav-main";
@@ -21,65 +15,26 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+
 import logoImage from "../assets/image/logo.png";
 
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  navMain: [],
-  navClouds: [
-    {
-      title: "Capture",
-      icon: IconCamera,
-      isActive: true,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Proposal",
-      icon: IconFileDescription,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Prompts",
-      icon: IconFileAi,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-  ],
-  navSecondary: [],
-  documents: [
+import { useAppSelector } from "@/redux/hooks";
+import { useCurrentToken } from "@/redux/auth/authSlice";
+import { TUser } from "@/types/type";
+import { verifyToken } from "@/utils/verifyToken";
+
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const token = useAppSelector(useCurrentToken);
+  let user: TUser | null = null;
+
+  if (token) {
+    user = verifyToken(token) as TUser;
+  }
+
+  const navMain: any[] = [];
+  const navSecondary: any[] = [];
+
+  const adminDocuments = [
     {
       name: "Dashboard",
       url: "/admin/dashboard",
@@ -100,36 +55,39 @@ const data = {
       url: "/admin/create-book",
       icon: IconDatabase,
     },
-
     {
       name: "All Books",
       url: "/admin/get-AllbooksData",
       icon: IconDatabase,
     },
+  ];
+
+  const userDocuments = [
     {
       name: "All Order History",
-      url: "/admin/order-history",
+      url: "/get-order-histry",
       icon: IconDatabase,
     },
     {
       name: "All User History",
-      url: "/admin/user-history",
+      url: "/users",
       icon: IconDatabase,
     },
-    // {
-    //   name: "Reports",
-    //   url: "#",
-    //   icon: IconReport,
-    // },
-    // {
-    //   name: "Word Assistant",
-    //   url: "#",
-    //   icon: IconFileWord,
-    // },
-  ],
-};
+  ];
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const documents =
+    user?.role === "admin"
+      ? adminDocuments
+      : user?.role === "user"
+      ? userDocuments
+      : [];
+
+  const defaultUser = {
+    name: user?.role || "Guest",
+    email: user?.role || "guest@example.com",
+    avatar: "/avatars/shadcn.jpg",
+  };
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -148,13 +106,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
+
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavDocuments items={data.documents} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <NavMain items={navMain} />
+        <NavDocuments items={documents} />
+        <NavSecondary items={navSecondary} className="mt-auto" />
       </SidebarContent>
+
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={defaultUser} />
       </SidebarFooter>
     </Sidebar>
   );

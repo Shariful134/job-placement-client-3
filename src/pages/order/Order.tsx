@@ -29,7 +29,9 @@ const Order = () => {
 
   const { id } = useParams();
   const { data: Book } = useGetSingleBookQuery(id);
+
   const [addOrder, { isLoading }] = useAddOrderMutation();
+
   useEffect(() => {
     if (isLoading) {
       toast.loading("Procesing Order...", { id: "orderLoading" });
@@ -41,7 +43,7 @@ const Order = () => {
   const book = Book?.data;
 
   const price = book?.price;
-  const totalPrice = price * quantity;
+  const totalPrice = (price * quantity).toFixed(2);
 
   const handleDecrease = () => {
     if (quantity > 1) {
@@ -79,12 +81,12 @@ const Order = () => {
 
   return (
     <div className="bg-[#fafafa] pt-18 px-10 flex gap-2 flex-wrap justify-center pb-5">
-      <div className="card mt-5  w-full max-w-sm shrink-0 shadow-2xl ">
+      <div className="card mt-5  w-full max-w-sm shrink-0 shadow-sm ">
         <div className="card-body font-[inter]">
           <div className="flex justify-between items-end">
             <label className="fieldset-label">Quantity</label>
             <div className="flex flex-col gap-2">
-              <div className="flex w-[120px] border-1  justify-between  border-gray-400 bg-accent  rounded-2xl">
+              <div className="flex w-[120px] border-1  justify-between  border-gray-400 bg-accent  rounded-sm">
                 <button
                   onClick={handleDecrease}
                   className="hover:bg-gray-300 bg-gray-200 rounded-full px-1"
@@ -161,7 +163,7 @@ const Order = () => {
           </fieldset>
         </div>
       </div>
-      <div className="card font-[inter]  flex sm:flex-col md:flex-row lg:flex-row  mx-auto max-w-7/12   shadow-2xl  mt-5 p-5  ">
+      <div className="card font-[inter]  flex sm:flex-col md:flex-row lg:flex-row  mx-auto max-w-7/12   shadow-sm  mt-5 p-5  ">
         <figure>
           <img src={book?.imageURL} alt="Movie" />
         </figure>

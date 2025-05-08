@@ -60,14 +60,14 @@ const Home = () => {
         <div className=" grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-30 my-10 pb-10">
           {allData?.data?.map((category: TCategory, index: number) => (
             <div key={index} className=" flex justify-center items-center">
-              <a href="/#" className="group">
+              <a href={`/category/details/${category?.name}`} className="group">
                 <div className="w-40 h-40">
                   <img
                     src={category?.imageURL}
                     alt="Category"
                     className="w-full h-full object-cover rounded-full border-4 border-white shadow-md group-hover:border-slate-300"
                   />
-                  <div className="cursor-pointer mt-5 bg-slate-300 text-black text-center text-sm font-medium py-2 rounded-sm border-white border-2">
+                  <div className="cursor-pointer hover:border-4 mt-5 bg-slate-300 text-black text-center text-sm font-medium py-2 rounded-sm border-white border-2">
                     {category?.name}
                   </div>
                 </div>
