@@ -61,22 +61,85 @@ const NavBar = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
-              <li>
-                <NavLink to="/" className="hover:text-cyan-600">
-                  Home
-                </NavLink>
-              </li>
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-cyan-600 font-bold  border-cyan-600 underline text-lg"
+                    : "hover:text-cyan-600 hover:underline text-lg"
+                }
+              >
+                Home
+              </NavLink>
 
-              <li>
-                <NavLink to="/get-books" className="hover:text-cyan-600">
-                  Book
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/about" className="hover:text-cyan-600">
-                  About
-                </NavLink>
-              </li>
+              <NavLink
+                to="/get-books"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-cyan-600 font-bold underline text-lg border-cyan-600"
+                    : "hover:text-cyan-600 hover:underline text-lg"
+                }
+              >
+                Book
+              </NavLink>
+
+              <NavLink
+                to="/about"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-cyan-600 font-bold underline text-lg border-cyan-600"
+                    : "hover:text-cyan-600 hover:underline text-lg"
+                }
+              >
+                About
+              </NavLink>
+              <NavLink
+                to="/blogs"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-cyan-600 font-bold underline text-lg border-cyan-600"
+                    : "hover:text-cyan-600 hover:underline text-lg"
+                }
+              >
+                Blog
+              </NavLink>
+              <NavLink
+                to="/contact"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-cyan-600 font-bold underline text-lg border-cyan-600"
+                    : "hover:text-cyan-600 hover:underline text-lg"
+                }
+              >
+                Contact
+              </NavLink>
+              <div className="dropdown dropdown-hover">
+                <label
+                  tabIndex={0}
+                  className="text-lg cursor-pointer hover:text-cyan-600 flex items-center "
+                >
+                  Category <RiArrowDropDownLine className=" text-2xl" />
+                </label>
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+                >
+                  {categoryData?.map((category: any) => (
+                    <li>
+                      <NavLink
+                        to={`/category/details/${category}`}
+                        className={({ isActive }) =>
+                          isActive
+                            ? "text-cyan-600 font-bold underline text-lg"
+                            : "hover:text-cyan-600 text-lg"
+                        }
+                      >
+                        {category}
+                      </NavLink>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </ul>
           </div>
           <img className="w-[100px] ms-2" src={logoImage} alt="logo" />
@@ -116,6 +179,26 @@ const NavBar = () => {
               }
             >
               About
+            </NavLink>
+            <NavLink
+              to="/blogs"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-cyan-600 font-bold underline text-lg border-cyan-600"
+                  : "hover:text-cyan-600 hover:underline text-lg"
+              }
+            >
+              Blog
+            </NavLink>
+            <NavLink
+              to="/contact"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-cyan-600 font-bold underline text-lg border-cyan-600"
+                  : "hover:text-cyan-600 hover:underline text-lg"
+              }
+            >
+              Contact
             </NavLink>
             <div className="dropdown dropdown-hover">
               <label

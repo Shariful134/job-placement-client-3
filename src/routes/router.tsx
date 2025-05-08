@@ -24,6 +24,7 @@ import CreateCategory from "@/pages/admin/CreateCategory";
 import CategoryData from "@/pages/admin/CategoryData";
 import AllBookData from "@/pages/admin/AllBooks";
 import SingleCategoryData from "@/components/cateory/SingleCategoryData";
+import BlogPage from "@/pages/blog/BlogPage";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,14 @@ const router = createBrowserRouter([
       {
         path: "/book-details/:id",
         element: <Details></Details>,
+      },
+      {
+        path: "/blogs",
+        element: <BlogPage></BlogPage>,
+      },
+      {
+        path: "/contact",
+        element: <Contact></Contact>,
       },
       {
         path: "/category/details/:category",
