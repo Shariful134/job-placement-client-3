@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRef, useState } from "react";
 import { useGetAllBooksQuery } from "../../redux/book/bookApi";
 import { TBook, TUser } from "../../types/type";
@@ -13,6 +14,8 @@ import Authorselect from "@/components/select/AuthorSelect";
 import PriceSelect from "@/components/select/PriceSelect";
 import InStockSelect from "@/components/select/InStockSelect";
 import BookDelete from "@/components/modal/BookDelete";
+import { useGetAllcategoryQuery } from "@/redux/category/categoryApi";
+import { TCategory } from "../admin/CreateCategory";
 
 const GetBooks = () => {
   const navigate = useNavigate();
@@ -37,24 +40,28 @@ const GetBooks = () => {
 
   const { data: booksData } = useGetAllBooksQuery(undefined);
   const allBooks = booksData?.data || [];
+  const { data: getCategory } = useGetAllcategoryQuery(undefined);
+
+  const allcategory = getCategory?.data || [];
 
   const categories = [
-    ...new Set(allBooks.map((book: TBook) => book.category)),
+    ...new Set(allcategory?.map((category: TCategory) => category.name)),
   ] as string[];
 
   const authors = [
-    ...new Set(allBooks.map((book: TBook) => book.author)),
+    ...new Set(allBooks?.map((book: TBook) => book.author)),
   ] as string[];
-
+  console.log(allBooks);
   // search and filtering
-  const allFilteredBooks = allBooks.filter((book: TBook) => {
+  const allFilteredBooks = allBooks?.filter((book: any) => {
     const searchData =
       searchTerm === "" ||
       book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       book.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      book.category.toLowerCase().includes(searchTerm.toLowerCase());
+      book.categoryId.name.toLowerCase().includes(searchTerm.toLowerCase());
     const categoriesData =
-      categoriesSelect.length === 0 || categoriesSelect.includes(book.category);
+      categoriesSelect.length === 0 ||
+      categoriesSelect.includes(book.categoryId.name);
     const authorData =
       authorSelect.length === 0 || authorSelect.includes(book.author);
     const pricesData =
@@ -78,7 +85,7 @@ const GetBooks = () => {
     window.scrollTo(0, 0);
   };
   return (
-    <div className="pt-10 bg-[#fafafa]">
+    <div className="container mx-auto pt-10 mb-15 bg-[#fafafa]">
       <div className=" text-center font-[inter]  px-10 pt-8">
         <h2 className="text-3xl mb-2 text-cyan-500">
           -- <FaBook className="inline" /> Our Books{" "}
@@ -90,88 +97,102 @@ const GetBooks = () => {
           fiction to self-help, find your next favorite read today!
         </p>
       </div>
-      <div
-        ref={booksRef}
-        className=" my-5 flex justify-center flex-wrap gap-2 lg:gap-4 sm:gap-2 md:gap-4 px-10"
-      >
-        <Input
-          className="w-75 border-gray-500 "
-          type="search"
-          value={searchTerm}
-          placeholder="Search here"
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <CategorySelect
-          categories={categories}
-          setCategoriesSelect={setCategoriesSelect}
-        ></CategorySelect>
-        <Authorselect
-          authors={authors}
-          setAuthorSelect={setAuthorSelect}
-        ></Authorselect>
-        <PriceSelect setPricesSelect={setPricesSelect}></PriceSelect>
-        <InStockSelect setInStockSelect={setInStockSelect}></InStockSelect>
-      </div>
-      <div className="flex justify-center flex-wrap gap-4 px-10 py-2 bg-[#fafafa]">
-        {allFilteredBooks.length > 0 ? (
-          allFilteredBooks?.map((book: TBook) => {
-            const inStock = book.inStock;
-            return (
-              <div key={book?._id} className="card  w-75 relative group shadow">
-                <figure className="px-5 pt-5">
-                  <img src={book.imageURL} alt="Shoes" className="rounded-xl" />
-                </figure>
-                <div className="card-body items-center text-center">
-                  <h2 className="card-title">{book?.title}</h2>
-                  <p className="text-cyan-600 font-bold ">{book?.price} $</p>
-                  {inStock ? (
-                    <p>InStock: Available</p>
-                  ) : (
-                    <p>InStock: Unavailable</p>
-                  )}
-                  {admin === "admin" ? (
-                    <div className=" flex flex-wrap justify-center gap-2">
-                      <Link to={`/book-details/${book._id}`}>
-                        <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
-                          Details
-                        </button>
-                      </Link>
-                      <Link to={`/book-update/${book._id}`}>
-                        <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
-                          Update
-                        </button>
-                      </Link>
-                      <BookDelete id={book._id}></BookDelete>
+      <div className="px-5 grid grid-cols-1 md:grid-cols-12 gap-5 mt-10">
+        <div ref={booksRef} className=" col-span-1 md:col-span-3 lg:col-span-2">
+          <div className="grid grid-cols-1 gap-5">
+            <Input
+              className="w-full border-gray-500 "
+              type="search"
+              value={searchTerm}
+              placeholder="Search here"
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <CategorySelect
+              categories={categories}
+              setCategoriesSelect={setCategoriesSelect}
+            ></CategorySelect>
+            <Authorselect
+              authors={authors}
+              setAuthorSelect={setAuthorSelect}
+            ></Authorselect>
+            <PriceSelect setPricesSelect={setPricesSelect}></PriceSelect>
+            <InStockSelect setInStockSelect={setInStockSelect}></InStockSelect>
+          </div>
+        </div>
+        <div className="col-span-1 md:col-span-9 lg:col-span-10">
+          <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 bg-[#fafafa]">
+            {allFilteredBooks.length > 0 ? (
+              allFilteredBooks?.map((book: TBook) => {
+                const inStock = book.inStock;
+                return (
+                  <div
+                    key={book?._id}
+                    className="card  max-w-75 relative group shadow"
+                  >
+                    <figure className="px-5 pt-5">
+                      <img
+                        src={book.imageURL}
+                        alt="Shoes"
+                        className="rounded-xl"
+                      />
+                    </figure>
+                    <div className="card-body items-center text-center">
+                      <h2 className="card-title">{book?.title}</h2>
+                      <p className="text-cyan-600 font-bold ">
+                        {book?.price} $
+                      </p>
+                      {inStock ? (
+                        <p>InStock: Available</p>
+                      ) : (
+                        <p>InStock: Unavailable</p>
+                      )}
+                      {admin === "admin" ? (
+                        <div className=" flex flex-wrap justify-center gap-2">
+                          <Link to={`/book-details/${book._id}`}>
+                            <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
+                              Details
+                            </button>
+                          </Link>
+                          <Link to={`/book-update/${book._id}`}>
+                            <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
+                              Update
+                            </button>
+                          </Link>
+                          <BookDelete id={book._id}></BookDelete>
+                        </div>
+                      ) : (
+                        <div className="flex flex-wrap justify-center gap-2">
+                          <Link to={`/book-details/${book._id}`}>
+                            <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
+                              Details
+                            </button>
+                          </Link>
+                          <Link to={`/book-order/${book._id}`}>
+                            <button
+                              onClick={handleBuy}
+                              className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200"
+                            >
+                              Buy Now
+                            </button>
+                          </Link>
+                        </div>
+                      )}
                     </div>
-                  ) : (
-                    <div className="flex flex-wrap justify-center gap-2">
-                      <Link to={`/book-details/${book._id}`}>
-                        <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
-                          Details
-                        </button>
-                      </Link>
-                      <Link to={`/book-order/${book._id}`}>
-                        <button
-                          onClick={handleBuy}
-                          className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200"
-                        >
-                          Buy Now
-                        </button>
-                      </Link>
+                    <div className="absolute top-[50%] invisible group-hover:visible  left-0 w-full">
+                      <button className="btn border-1 w-full font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
+                        Add To Cart <IoMdCart className="text-xl" />
+                      </button>
                     </div>
-                  )}
-                </div>
-                <div className="absolute top-[50%] invisible group-hover:visible  left-0 w-full">
-                  <button className="btn border-1 w-full font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
-                    Add To Cart <IoMdCart className="text-xl" />
-                  </button>
-                </div>
-              </div>
-            );
-          })
-        ) : (
-          <p className="text-center text-2xl text-cyan-600">No Book Found!</p>
-        )}
+                  </div>
+                );
+              })
+            ) : (
+              <p className="text-center text-2xl text-cyan-600">
+                No Book Found!
+              </p>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

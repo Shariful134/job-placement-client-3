@@ -18,7 +18,7 @@ const InStockSelect: React.FC<SelectedProps> = ({ setInStockSelect }) => {
         setInStockSelect(value as "all" | "inStock" | "outOfStock")
       }
     >
-      <SelectTrigger className="w-75 border-gray-500">
+      <SelectTrigger className="w-full border-gray-500">
         <SelectValue placeholder="Select Stock" />
       </SelectTrigger>
       <SelectContent>

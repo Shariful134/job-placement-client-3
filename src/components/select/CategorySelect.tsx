@@ -25,7 +25,7 @@ const CategorySelect: React.FC<SelectedProps> = ({
   };
   return (
     <Select onValueChange={handleSelect}>
-      <SelectTrigger className="w-75 border-gray-500">
+      <SelectTrigger className="w-full border-gray-500">
         <SelectValue placeholder="Select a Category" />
       </SelectTrigger>
       <SelectContent className="border border-black/30 rounded-lg">

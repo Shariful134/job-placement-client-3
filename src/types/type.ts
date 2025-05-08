@@ -67,6 +67,13 @@ export type TRoute = {
 };
 
 export type TBook = {
+  categoryId?: {
+    _id?: string;
+    name?: string;
+    imageURL?: string;
+    createdAt?: string;
+    updatedAt?: string;
+  };
   _id?: string;
   title: string;
   author: string;
