@@ -143,7 +143,7 @@ export function SiteHeader() {
             </div>
 
             {/* Navbar Center (Only visible in large screen) */}
-            <div className="navbar-center hidden lg:flex">
+            <div className="navbar-end hidden lg:flex">
               <ul className="menu menu-horizontal px-1 text-black gap-5">
                 <NavLink
                   to="/get-books"
