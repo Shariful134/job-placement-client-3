@@ -46,7 +46,7 @@ const OrdersData = () => {
   const invoices: TOrderDetails[] = [];
   invoices.push(orderDetails);
   return (
-    <div className="px-10 pt-18 bg-[#fafafa]">
+    <div className="container mx-auto pt-18 bg-[#fafafa] h-screen">
       <h2 className="text-2xl text-center py-5">Recently Your Order</h2>
       <Table className="font-[inter]">
         <TableCaption>A list of your recent invoices.</TableCaption>

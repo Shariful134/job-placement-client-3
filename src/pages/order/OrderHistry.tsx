@@ -69,7 +69,7 @@ const OrdersData = () => {
 
   const totalAmount = Number(subtotal).toFixed(2);
   return (
-    <div className="px-10 pt-18 bg-[#fafafa]">
+    <div className="px-10 pt-18 bg-[#fafafa] h-screen">
       <h2 className="text-2xl text-center py-5 font-[inter]">
         {" "}
         Your All Orders
