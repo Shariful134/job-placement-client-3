@@ -228,7 +228,11 @@ const NavBar = () => {
         </div>
 
         {/* Navbar End (Right Part) */}
-        <div className="navbar-end w-full lg:w-14 flex gap-4">
+        <div
+          className={`navbar-end w-full flex gap-4 ${
+            user ? "lg:w-14" : "lg:w-25"
+          } `}
+        >
           {user ? (
             <div className="dropdown dropdown-end">
               <div
