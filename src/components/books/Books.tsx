@@ -16,6 +16,7 @@ import { useCurrentToken } from "@/redux/auth/authSlice";
 import { verifyToken } from "@/utils/verifyToken";
 import { useGetAllcategoryQuery } from "@/redux/category/categoryApi";
 import { TCategory } from "@/pages/admin/CreateCategory";
+import { Skeleton } from "../ui/skeleton";
 
 const Books = () => {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ const Books = () => {
     "all" | "inStock" | "outOfStock"
   >("all");
 
-  const { data: booksData } = useGetAllBooksQuery(undefined);
+  const { data: booksData, isFetching } = useGetAllBooksQuery(undefined);
   const allBooks = booksData?.data || [];
   const { data: getCategory } = useGetAllcategoryQuery(undefined);
 
@@ -95,6 +96,13 @@ const Books = () => {
     window.scrollTo(0, 0);
   };
 
+  if (isFetching) {
+    return (
+      <div>
+        <Skeleton></Skeleton>
+      </div>
+    );
+  }
   return (
     <div className="container mx-auto">
       <div className=" text-center font-[inter]  px-10 pt-8 bg-[#fafafa]">
@@ -186,7 +194,7 @@ const Books = () => {
                       )}
                     </div>
 
-                    <div className="absolute top-[50%] invisible group-hover:visible  left-0 w-full">
+                    <div className="absolute top-[40%] invisible group-hover:visible  left-0 w-full">
                       <button className="btn w-full border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
                         Add To Cart <IoMdCart className="text-xl" />
                       </button>

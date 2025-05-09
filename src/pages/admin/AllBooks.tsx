@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from "react";
 import SelectForm from "@/components/form/SelectForm";
 import { Input } from "@/components/ui/input";
 import {
@@ -10,7 +11,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useState } from "react";
 import { FaBook } from "react-icons/fa";
 import { SkeletonDemo } from "@/components/skeleton/SkeletonDemo";
 import {
@@ -27,6 +27,10 @@ const AllBookData = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
+
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10; // Default items per page
 
   console.log("allBookData :", allBookData?.data);
   const invoices = allBookData?.data?.map((item: TBookData, index: number) => ({
@@ -63,6 +67,13 @@ const AllBookData = () => {
     }
   });
 
+  // Pagination Logic: Slice the filteredBooks to get only the current page's items
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedBooks = filteredBooks?.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
+
   const handleDelete = async (id: string) => {
     try {
       await deleteBook(id);
@@ -71,14 +82,21 @@ const AllBookData = () => {
     }
   };
 
+  // Handle page change
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const totalPages = Math.ceil((filteredBooks?.length || 0) / itemsPerPage);
+
   return (
-    <div className=" pt-18 ">
+    <div className="pt-5">
       {isLoading ? (
         <SkeletonDemo />
       ) : (
-        <div>
-          <div className=" text-center font-[inter] pb-10  pt-5">
-            <h2 className="text-3xl mb-2  text-cyan-500">
+        <div className="mb-10">
+          <div className="text-center font-[inter] pb-10 ">
+            <h2 className="text-3xl mb-2 text-cyan-500">
               -- <FaBook className="inline" /> All Books Data{" "}
               <FaBook className="inline" /> --{" "}
             </h2>
@@ -92,10 +110,10 @@ const AllBookData = () => {
             <h2 className="text-4xl text-center pb-5">No Data Found!</h2>
           ) : (
             <div>
-              <div className="flex flex-wrap flex-start font-[inter]  gap-2 mb-5">
+              <div className="flex flex-wrap flex-start font-[inter] gap-2 mb-5">
                 <div className="w-60">
                   <Input
-                    className="w-full border-1 border-gray-400 "
+                    className="w-full border-1 border-gray-400"
                     type="search"
                     value={searchTerm}
                     placeholder="Search here"
@@ -105,14 +123,15 @@ const AllBookData = () => {
                 <div className="w-60">
                   <SelectForm
                     options={options}
-                    placeholder="Selecet"
+                    placeholder="Select"
                     onChange={setSelectedFilter}
-                  ></SelectForm>
+                  />
                 </div>
               </div>
+
               <Table className="font-[inter]">
                 <TableCaption></TableCaption>
-                <TableHeader className="bg-gray-200 ">
+                <TableHeader className="bg-gray-200">
                   <TableRow>
                     <TableHead></TableHead>
                     <TableHead>Title</TableHead>
@@ -127,8 +146,8 @@ const AllBookData = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {filteredBooks?.length > 0 ? (
-                    filteredBooks.map((book: any) => (
+                  {paginatedBooks?.length > 0 ? (
+                    paginatedBooks.map((book: any) => (
                       <TableRow key={book._id}>
                         <TableCell>{book.index}</TableCell>
                         <TableCell>{book.title}</TableCell>
@@ -148,9 +167,6 @@ const AllBookData = () => {
                           >
                             Delete
                           </Button>
-                          {/* <Button className="border-1 text-block rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
-                            Update
-                          </Button> */}
                           <Link to={`/book-update/${book._id}`}>
                             <Button className="border-1 text-block rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
                               Update
@@ -166,6 +182,40 @@ const AllBookData = () => {
                   )}
                 </TableBody>
               </Table>
+
+              {/* Pagination Controls */}
+              <div className="flex justify-center items-center gap-3 mt-4">
+                <Button
+                  className="btn text-black border-1 font-[inter] rounded-md border-white bg-slate-300 hover:bg-slate-400"
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                >
+                  Previous
+                </Button>
+                {[...Array(totalPages)].map((_, index) => (
+                  <Button
+                    key={index}
+                    onClick={() => setCurrentPage(index + 1)}
+                    className={
+                      currentPage === index + 1
+                        ? "bg-cyan-500 text-white"
+                        : "bg-cyan-100 text-black"
+                    }
+                  >
+                    {index + 1}
+                  </Button>
+                ))}
+                {/* <span>
+                  Page {currentPage} of {totalPages}
+                </span> */}
+                <Button
+                  className="btn text-black border-1 font-[inter] rounded-md border-white bg-slate-300 hover:bg-slate-400"
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                >
+                  Next
+                </Button>
+              </div>
             </div>
           )}
         </div>

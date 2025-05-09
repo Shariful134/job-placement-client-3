@@ -36,6 +36,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   const adminDocuments = [
     {
+      name: "Home",
+      url: "/",
+      icon: IconDatabase,
+    },
+    {
       name: "Dashboard",
       url: "/admin/dashboard",
       icon: IconDatabase,
@@ -60,17 +65,32 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       url: "/admin/get-AllbooksData",
       icon: IconDatabase,
     },
+    {
+      name: "Order History",
+      url: "/admin/order-history",
+      icon: IconDatabase,
+    },
+    {
+      name: "User History",
+      url: "/admin/user-history",
+      icon: IconDatabase,
+    },
   ];
 
   const userDocuments = [
     {
-      name: "All Order History",
-      url: "/get-order-histry",
+      name: "Home",
+      url: "/",
       icon: IconDatabase,
     },
     {
-      name: "All User History",
-      url: "/users",
+      name: "dashboard",
+      url: "/user/dashboard",
+      icon: IconDatabase,
+    },
+    {
+      name: "All Order History",
+      url: "/user/get-order-histry",
       icon: IconDatabase,
     },
   ];

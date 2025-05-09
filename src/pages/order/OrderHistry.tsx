@@ -65,10 +65,9 @@ const OrdersData = () => {
       quantity: item?.quantity,
     })) || [];
 
-  const totalAmount = invoices.reduce(
-    (sum, order) => sum + order.totalPrice,
-    0
-  );
+  const subtotal = invoices.reduce((sum, order) => sum + order.totalPrice, 0);
+
+  const totalAmount = Number(subtotal).toFixed(2);
   return (
     <div className="px-10 pt-18 bg-[#fafafa]">
       <h2 className="text-2xl text-center py-5 font-[inter]">

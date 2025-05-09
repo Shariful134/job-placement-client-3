@@ -12,6 +12,7 @@ import { LuMinus } from "react-icons/lu";
 import { FiPlus } from "react-icons/fi";
 import { useAddOrderMutation } from "@/redux/order/orderApi";
 import { TResponse } from "@/types/type";
+import { Skeleton } from "@/components/ui/skeleton";
 type TUser = {
   userEmail: string;
   role: string;
@@ -28,7 +29,7 @@ const Order = () => {
   }
 
   const { id } = useParams();
-  const { data: Book } = useGetSingleBookQuery(id);
+  const { data: Book, isFetching } = useGetSingleBookQuery(id);
 
   const [addOrder, { isLoading }] = useAddOrderMutation();
 
@@ -43,7 +44,7 @@ const Order = () => {
   const book = Book?.data;
 
   const price = book?.price;
-  const totalPrice = (price * quantity).toFixed(2);
+  const totalPrice = Number((price * quantity).toFixed(2));
 
   const handleDecrease = () => {
     if (quantity > 1) {
@@ -79,8 +80,15 @@ const Order = () => {
     }
   };
 
+  if (isFetching) {
+    return (
+      <div>
+        <Skeleton></Skeleton>
+      </div>
+    );
+  }
   return (
-    <div className="bg-[#fafafa] pt-18 px-10 flex gap-2 flex-wrap justify-center pb-5">
+    <div className="container mx-auto pt-18 px-10 flex gap-2 flex-wrap justify-center pb-5">
       <div className="card mt-5  w-full max-w-sm shrink-0 shadow-sm ">
         <div className="card-body font-[inter]">
           <div className="flex justify-between items-end">

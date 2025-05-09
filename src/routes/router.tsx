@@ -81,14 +81,7 @@ const router = createBrowserRouter([
           </ProtectedRoutes>
         ),
       },
-      {
-        path: "/get-order-histry",
-        element: (
-          <ProtectedRoutes role="user">
-            <OrderHistry></OrderHistry>
-          </ProtectedRoutes>
-        ),
-      },
+
       {
         path: "/users",
         element: (
@@ -206,7 +199,7 @@ const router = createBrowserRouter([
         element: <UserDashboardPage />,
       },
       {
-        path: "order-history",
+        path: "get-order-histry",
         element: <OrderHistry />,
       },
       {

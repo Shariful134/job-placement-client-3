@@ -1,6 +1,5 @@
 import SelectForm from "@/components/form/SelectForm";
 import UserBlockModal from "@/components/modal/UserBlockModal";
-
 import UserUnblockedModal from "@/components/modal/UserUnblockedModal";
 import { SkeletonDemo } from "@/components/skeleton/SkeletonDemo";
 import { Button } from "@/components/ui/button";
@@ -18,7 +17,7 @@ import {
   useDeleteUserMutation,
   useGetAllUserQuery,
 } from "@/redux/user/userApi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaUserAstronaut } from "react-icons/fa";
 
 type User = {
@@ -32,8 +31,11 @@ type User = {
 const UsersData = () => {
   const { data: allData, isLoading } = useGetAllUserQuery(undefined);
   const [deleteUser] = useDeleteUserMutation();
+
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
 
   const invoices = allData?.data?.map((item: User, index: number) => ({
     _id: item._id,
@@ -50,18 +52,31 @@ const UsersData = () => {
   ];
 
   const filteredUsers = invoices?.filter((user: User) => {
-    const SearchData = searchTerm
-      ? user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.email.toLowerCase().includes(searchTerm.toLowerCase())
-      : true;
+    const search = searchTerm.toLowerCase();
+    const matchName = user.name.toLowerCase().includes(search);
+    const matchEmail = user.email.toLowerCase().includes(search);
+
     if (!selectedFilter || selectedFilter === "both") {
-      return SearchData;
+      return matchName || matchEmail;
     } else if (selectedFilter === "name") {
-      return user.name.toLowerCase().includes(searchTerm.toLowerCase());
+      return matchName;
     } else if (selectedFilter === "email") {
-      return user.email.toLowerCase().includes(searchTerm.toLowerCase());
+      return matchEmail;
     }
+    return true;
   });
+
+  // Reset to first page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, selectedFilter]);
+
+  const totalPages = Math.ceil(filteredUsers?.length / itemsPerPage || 1);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentUsers = filteredUsers?.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
 
   const handleDelete = async (id: string) => {
     try {
@@ -70,28 +85,30 @@ const UsersData = () => {
       console.error("Delete failed:", error);
     }
   };
+
   return (
-    <div className="px-10 pt-18 ">
-      <div className=" text-center font-[inter] pb-10 pt-5">
-        <h2 className="text-3xl mb-2  text-cyan-500">
+    <div className="px-10 pt-18">
+      <div className="text-center font-[inter] pb-10 pt-5">
+        <h2 className="text-3xl mb-2 text-cyan-500">
           -- <FaUserAstronaut className="inline" /> Users Data{" "}
-          <FaUserAstronaut className="inline" /> --{" "}
+          <FaUserAstronaut className="inline" /> --
         </h2>
         <p>
-          Currently, we have a total of {allData?.data?.length} registered
+          Currently, we have a total of {allData?.data?.length || 0} registered
           users.
         </p>
       </div>
+
       {isLoading ? (
         <SkeletonDemo />
-      ) : allData?.data?.length === 0 ? (
+      ) : filteredUsers?.length === 0 ? (
         <h2 className="text-4xl text-center pb-5">No Data</h2>
       ) : (
         <div>
-          <div className="flex flex-wrap flex-start font-[inter] gap-2">
+          <div className="flex flex-wrap gap-2 mb-4">
             <div className="w-60">
               <Input
-                className="w-full border-1 border-gray-400 "
+                className="w-full border-1 border-gray-400"
                 type="search"
                 value={searchTerm}
                 placeholder="Search here"
@@ -101,51 +118,76 @@ const UsersData = () => {
             <div className="w-60">
               <SelectForm
                 options={options}
-                placeholder="Selecet"
+                placeholder="Select"
                 onChange={setSelectedFilter}
-              ></SelectForm>
+              />
             </div>
           </div>
+
           <Table className="font-[inter]">
             <TableCaption></TableCaption>
             <TableHeader>
               <TableRow>
-                <TableHead className="max-w-5/6">Name</TableHead>
+                <TableHead>Name</TableHead>
                 <TableHead>Email</TableHead>
-
                 <TableHead className="text-start">Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredUsers?.length > 0 ? (
-                filteredUsers?.map((user: User) => (
-                  <TableRow key={user._id}>
-                    <TableCell className="font-medium font-[inter]">
-                      {user.index}. {user.name}
-                    </TableCell>
-                    <TableCell>{user.email}</TableCell>
-                    <TableCell className="flex flex-wrap  gap-2">
-                      <Button
-                        onClick={() => handleDelete(user._id as string)}
-                        className="text-black border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200"
-                      >
-                        Delete
-                      </Button>
-                      {user?.isBlocked ? (
-                        <UserUnblockedModal id={user._id}></UserUnblockedModal>
-                      ) : (
-                        <UserBlockModal id={user._id}></UserBlockModal>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell>No Data</TableCell>
+              {currentUsers?.map((user: User) => (
+                <TableRow key={user._id}>
+                  <TableCell className="font-medium">
+                    {user.index}. {user.name}
+                  </TableCell>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell className="flex flex-wrap gap-2">
+                    <Button
+                      onClick={() => handleDelete(user._id as string)}
+                      className="text-black border-1 rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200"
+                    >
+                      Delete
+                    </Button>
+                    {user.isBlocked ? (
+                      <UserUnblockedModal id={user._id} />
+                    ) : (
+                      <UserBlockModal id={user._id} />
+                    )}
+                  </TableCell>
                 </TableRow>
-              )}
+              ))}
             </TableBody>
           </Table>
+
+          {/* Pagination Controls */}
+          <div className="flex justify-center mt-4 gap-2">
+            <Button
+              className="btn text-black border-1 font-[inter] rounded-md border-white bg-slate-300 hover:bg-slate-400"
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage((prev) => prev - 1)}
+            >
+              Prev
+            </Button>
+            {[...Array(totalPages)].map((_, index) => (
+              <Button
+                key={index}
+                onClick={() => setCurrentPage(index + 1)}
+                className={
+                  currentPage === index + 1
+                    ? "bg-cyan-500 text-white"
+                    : "bg-cyan-100 text-black"
+                }
+              >
+                {index + 1}
+              </Button>
+            ))}
+            <Button
+              className="btn text-black border-1 font-[inter] rounded-md border-white bg-slate-300 hover:bg-slate-400"
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage((prev) => prev + 1)}
+            >
+              Next
+            </Button>
+          </div>
         </div>
       )}
     </div>

@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import SelectForm from "@/components/form/SelectForm";
 import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -13,12 +13,10 @@ import {
   useDeleteOrderMutation,
   useGetAllOrderQuery,
 } from "@/redux/order/orderApi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaBook } from "react-icons/fa";
 import { TAllOrder, TOrder } from "./AllOrder.type";
-
 import { SkeletonDemo } from "@/components/skeleton/SkeletonDemo";
-
 import { Button } from "@/components/ui/button";
 
 const AllOrder = () => {
@@ -26,7 +24,9 @@ const AllOrder = () => {
   const [deleteOrder] = useDeleteOrderMutation();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
-  console.log(allData?.data);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
+
   const invoices = allData?.data?.map((item: TAllOrder, index: number) => ({
     _id: item?._id,
     email: item?.email,
@@ -47,16 +47,35 @@ const AllOrder = () => {
     { value: "email", label: "Email" },
   ];
 
-  const filteredUsers = invoices?.filter((user: TOrder) => {
-    const SearchData = searchTerm
-      ? user.email.toLowerCase().includes(searchTerm.toLowerCase())
-      : true;
+  const filteredOrders = invoices?.filter((order: TOrder) => {
+    const search = searchTerm.toLowerCase();
+    const matchEmail = order.email.toLowerCase().includes(search);
+
     if (!selectedFilter || selectedFilter === "both") {
-      return SearchData;
+      return matchEmail;
     } else if (selectedFilter === "email") {
-      return user.email.toLowerCase().includes(searchTerm.toLowerCase());
+      return matchEmail;
     }
+    return true;
   });
+
+  // Reset pagination on search/filter change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, selectedFilter]);
+
+  const totalPages = Math.ceil((filteredOrders?.length || 1) / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentOrders = filteredOrders?.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
+
+  const subtotal =
+    currentOrders?.reduce(
+      (sum: number, item: any) => sum + Number(item.totalAmount),
+      0
+    ) ?? 0;
 
   const handleDelete = async (id: string) => {
     try {
@@ -67,19 +86,19 @@ const AllOrder = () => {
   };
 
   return (
-    <div className=" pt-18 ">
+    <div className="pt-18">
       {isLoading ? (
         <SkeletonDemo />
       ) : (
         <div>
-          <div className=" text-center font-[inter] pb-10 pt-5">
-            <h2 className="text-3xl mb-2  text-cyan-500">
+          <div className="text-center font-[inter] pb-10 pt-5">
+            <h2 className="text-3xl mb-2 text-cyan-500">
               -- <FaBook className="inline" /> All Orders Data{" "}
-              <FaBook className="inline" /> --{" "}
+              <FaBook className="inline" /> --
             </h2>
             <p>
-              Currently, we have a total of {allData?.data?.length} Order of
-              users.
+              Currently, we have a total of {allData?.data?.length || 0} user
+              orders.
             </p>
           </div>
 
@@ -87,10 +106,10 @@ const AllOrder = () => {
             <h2 className="text-4xl text-center pb-5">No Data Found!</h2>
           ) : (
             <div>
-              <div className="flex flex-wrap flex-start font-[inter] gap-2">
+              <div className="flex flex-wrap font-[inter] gap-2 mb-4">
                 <div className="w-60">
                   <Input
-                    className="w-full border-1 border-gray-400 "
+                    className="w-full border border-gray-400"
                     type="search"
                     value={searchTerm}
                     placeholder="Search here"
@@ -100,16 +119,17 @@ const AllOrder = () => {
                 <div className="w-60">
                   <SelectForm
                     options={options}
-                    placeholder="Selecet"
+                    placeholder="Select"
                     onChange={setSelectedFilter}
-                  ></SelectForm>
+                  />
                 </div>
               </div>
+
               <Table className="font-[inter]">
-                <TableCaption></TableCaption>
                 <TableHeader className="bg-gray-200">
                   <TableRow>
-                    <TableHead className="max-w-5/6">Email</TableHead>
+                    <TableHead>#</TableHead>
+                    <TableHead>Email</TableHead>
                     <TableHead>OrderId</TableHead>
                     <TableHead>Method</TableHead>
                     <TableHead>Status</TableHead>
@@ -120,13 +140,13 @@ const AllOrder = () => {
                     <TableHead className="text-start">Action</TableHead>
                   </TableRow>
                 </TableHeader>
+
                 <TableBody>
-                  {filteredUsers?.length > 0 ? (
-                    filteredUsers?.map((order: TOrder) => (
+                  {currentOrders?.length > 0 ? (
+                    currentOrders.map((order: TOrder) => (
                       <TableRow key={order._id}>
-                        <TableCell className="font-medium font-[inter]">
-                          {order.index}. {order.email}
-                        </TableCell>
+                        <TableCell>{order.index}.</TableCell>
+                        <TableCell>{order.email}</TableCell>
                         <TableCell>{order.orderId}</TableCell>
                         <TableCell>{order.method}</TableCell>
                         <TableCell>{order.status}</TableCell>
@@ -134,11 +154,10 @@ const AllOrder = () => {
                         <TableCell>{order.date}</TableCell>
                         <TableCell>{order.quantity}</TableCell>
                         <TableCell>{order.totalAmount} BDT</TableCell>
-                        <TableCell>{order.quantity}</TableCell>
-                        <TableCell className="flex flex-wrap  gap-2">
+                        <TableCell className="flex flex-wrap gap-2">
                           <Button
                             onClick={() => handleDelete(order._id)}
-                            className=" border-white border-2 bg-slate-200 hover:bg-slate-300 text-black cursor-pointer"
+                            className="border-white border-2 bg-slate-200 hover:bg-slate-300 text-black"
                           >
                             Delete
                           </Button>
@@ -147,11 +166,56 @@ const AllOrder = () => {
                     ))
                   ) : (
                     <TableRow>
-                      <TableCell>No Data</TableCell>
+                      <TableCell colSpan={10} className="text-center">
+                        No Data Found
+                      </TableCell>
+                    </TableRow>
+                  )}
+
+                  {currentOrders?.length > 0 && (
+                    <TableRow>
+                      <TableCell colSpan={8} className="text-right font-bold">
+                        Subtotal:
+                      </TableCell>
+                      <TableCell className="font-bold">
+                        {subtotal.toFixed(2)} BDT
+                      </TableCell>
+                      <TableCell />
                     </TableRow>
                   )}
                 </TableBody>
               </Table>
+
+              {/* Pagination Controls */}
+              <div className="flex justify-center mt-4 gap-2">
+                <Button
+                  className="btn text-black border-1 font-[inter] rounded-md border-white bg-slate-300 hover:bg-slate-400"
+                  disabled={currentPage === 1}
+                  onClick={() => setCurrentPage((prev) => prev - 1)}
+                >
+                  Prev
+                </Button>
+                {[...Array(totalPages)].map((_, index) => (
+                  <Button
+                    key={index}
+                    onClick={() => setCurrentPage(index + 1)}
+                    className={
+                      currentPage === index + 1
+                        ? "bg-cyan-500 text-white"
+                        : "bg-cyan-100 text-black"
+                    }
+                  >
+                    {index + 1}
+                  </Button>
+                ))}
+                <Button
+                  className="btn text-black border-1 font-[inter] rounded-md border-white bg-slate-300 hover:bg-slate-400"
+                  disabled={currentPage === totalPages}
+                  onClick={() => setCurrentPage((prev) => prev + 1)}
+                >
+                  Next
+                </Button>
+              </div>
             </div>
           )}
         </div>

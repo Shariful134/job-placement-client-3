@@ -16,6 +16,7 @@ import InStockSelect from "@/components/select/InStockSelect";
 import BookDelete from "@/components/modal/BookDelete";
 import { useGetAllcategoryQuery } from "@/redux/category/categoryApi";
 import { TCategory } from "../admin/CreateCategory";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const GetBooks = () => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const GetBooks = () => {
     "all" | "inStock" | "outOfStock"
   >("all");
 
-  const { data: booksData } = useGetAllBooksQuery(undefined);
+  const { data: booksData, isFetching } = useGetAllBooksQuery(undefined);
   const allBooks = booksData?.data || [];
   const { data: getCategory } = useGetAllcategoryQuery(undefined);
 
@@ -84,6 +85,14 @@ const GetBooks = () => {
     }
     window.scrollTo(0, 0);
   };
+
+  if (isFetching) {
+    return (
+      <div>
+        <Skeleton></Skeleton>
+      </div>
+    );
+  }
   return (
     <div className="container mx-auto pt-10 mb-15 bg-[#fafafa]">
       <div className=" text-center font-[inter]  px-10 pt-8">
@@ -178,7 +187,7 @@ const GetBooks = () => {
                         </div>
                       )}
                     </div>
-                    <div className="absolute top-[50%] invisible group-hover:visible  left-0 w-full">
+                    <div className="absolute top-[40%] invisible group-hover:visible  left-0 w-full">
                       <button className="btn border-1 w-full font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
                         Add To Cart <IoMdCart className="text-xl" />
                       </button>
