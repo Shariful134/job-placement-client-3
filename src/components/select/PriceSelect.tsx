@@ -28,10 +28,10 @@ const PriceSelect: React.FC<SelectedProps> = ({ setPricesSelect }) => {
 
   return (
     <Select onValueChange={handleSelect}>
-      <SelectTrigger className="w-full border-gray-500">
+      <SelectTrigger className="w-full border-gray-500 dark:text-gray-300">
         <SelectValue placeholder="Select Price Range" />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="dark:text-gray-300 dark:bg-gray-900">
         <SelectGroup>
           <SelectItem key="All Price" value="All Price">
             Price

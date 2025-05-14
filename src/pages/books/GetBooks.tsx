@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useGetAllBooksQuery } from "../../redux/book/bookApi";
 import { TBook, TUser } from "../../types/type";
 import { IoMdCart } from "react-icons/io";
@@ -13,12 +13,15 @@ import CategorySelect from "@/components/select/CategorySelect";
 import Authorselect from "@/components/select/AuthorSelect";
 import PriceSelect from "@/components/select/PriceSelect";
 import InStockSelect from "@/components/select/InStockSelect";
-import BookDelete from "@/components/modal/BookDelete";
 import { useGetAllcategoryQuery } from "@/redux/category/categoryApi";
 import { TCategory } from "../admin/CreateCategory";
-import { Skeleton } from "@/components/ui/skeleton";
+
+import { SkeletonLoading } from "@/components/skeletonLoading/SkeletonLoading";
 
 const GetBooks = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const booksPerPage = 8;
+
   const navigate = useNavigate();
   const token = useAppSelector(useCurrentToken);
   let user;
@@ -86,15 +89,31 @@ const GetBooks = () => {
     window.scrollTo(0, 0);
   };
 
+  //add pagination
+  const totalBooks = allFilteredBooks.length;
+  const totalPages = Math.ceil(totalBooks / booksPerPage);
+  const startIndex = (currentPage - 1) * booksPerPage;
+  const endIndex = startIndex + booksPerPage;
+  const paginatedBooks = allFilteredBooks.slice(startIndex, endIndex);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    booksRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, categoriesSelect, authorSelect, pricesSelect, inStockSelect]);
+
   if (isFetching) {
     return (
-      <div>
-        <Skeleton></Skeleton>
+      <div className="min-h-screen flex justify-center items-center">
+        <SkeletonLoading />
       </div>
     );
   }
   return (
-    <div className="container mx-auto pt-10 mb-15 bg-[#fafafa]">
+    <div className="container mx-auto pt-10 mb-15 bg-[#fafafa] dark:bg-black">
       <div className=" text-center font-[inter]  px-10 pt-8">
         <h2 className="text-3xl mb-2 text-cyan-500">
           -- <FaBook className="inline" /> Our Books{" "}
@@ -129,68 +148,128 @@ const GetBooks = () => {
           </div>
         </div>
         <div className="col-span-1 md:col-span-9 lg:col-span-10">
-          <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 bg-[#fafafa]">
-            {allFilteredBooks.length > 0 ? (
-              allFilteredBooks?.map((book: TBook) => {
+          <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 bg-[#fafafa] dark:bg-black">
+            {paginatedBooks.length > 0 ? (
+              paginatedBooks?.map((book: TBook) => {
                 const inStock = book.inStock;
                 return (
+                  // <div
+                  //   key={book?._id}
+                  //   className="card  max-w-75 relative group shadow"
+                  // >
+                  //   <figure className="px-5 pt-5">
+                  //     <img
+                  //       src={book.imageURL}
+                  //       alt="Shoes"
+                  //       className="rounded-xl"
+                  //     />
+                  //   </figure>
+                  //   <div className="card-body items-center text-center">
+                  //     <h2 className="card-title">{book?.title}</h2>
+                  //     <p className="text-cyan-600 font-bold ">
+                  //       {book?.price} $
+                  //     </p>
+                  //     {inStock ? (
+                  //       <p>InStock: Available</p>
+                  //     ) : (
+                  //       <p>InStock: Unavailable</p>
+                  //     )}
+                  //     {admin === "admin" ? (
+                  //       <div className=" flex flex-wrap justify-center gap-2">
+                  //         <Link to={`/book-details/${book._id}`}>
+                  //           <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
+                  //             Details
+                  //           </button>
+                  //         </Link>
+                  //         <Link to={`/book-update/${book._id}`}>
+                  //           <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
+                  //             Update
+                  //           </button>
+                  //         </Link>
+                  //         <BookDelete id={book._id}></BookDelete>
+                  //       </div>
+                  //     ) : (
+                  //       <div className="flex flex-wrap justify-center gap-2">
+                  //         <Link to={`/book-details/${book._id}`}>
+                  //           <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
+                  //             Details
+                  //           </button>
+                  //         </Link>
+                  //         <Link to={`/book-order/${book._id}`}>
+                  //           <button
+                  //             onClick={handleBuy}
+                  //             className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200"
+                  //           >
+                  //             Buy Now
+                  //           </button>
+                  //         </Link>
+                  //       </div>
+                  //     )}
+                  //   </div>
+                  //   <div className="absolute top-[40%] invisible group-hover:visible  left-0 w-full">
+                  //     <button className="btn border-1 w-full font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
+                  //       Add To Cart <IoMdCart className="text-xl" />
+                  //     </button>
+                  //   </div>
+                  // </div>
                   <div
-                    key={book?._id}
-                    className="card  max-w-75 relative group shadow"
+                    key={book._id}
+                    className="relative group bg-white dark:bg-gray-900 rounded shadow  transition-shadow duration-300 overflow-hidden"
                   >
-                    <figure className="px-5 pt-5">
+                    <figure className="w-full h-52 bg-gray-100 dark:bg-gray-800 flex items-center justify-center p-4 relative">
                       <img
-                        src={book.imageURL}
-                        alt="Shoes"
-                        className="rounded-xl"
+                        src={book.imageURL[0]}
+                        alt={book.title}
+                        className="object-contain h-full max-w-full transition-transform duration-300 group-hover:scale-105"
                       />
+
+                      {/* Add To Cart button inside the image area, centered */}
+                      <button className="absolute inset-0 flex items-center justify-center bg-black/40 sm:bg-transparent sm:opacity-0 sm:group-hover:opacity-100 sm:pointer-events-none sm:group-hover:pointer-events-auto transition-opacity duration-300">
+                        <span className="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-white text-sm font-medium rounded-md shadow flex items-center gap-2">
+                          Add To Cart <IoMdCart className="text-lg" />
+                        </span>
+                      </button>
                     </figure>
-                    <div className="card-body items-center text-center">
-                      <h2 className="card-title">{book?.title}</h2>
-                      <p className="text-cyan-600 font-bold ">
-                        {book?.price} $
+
+                    <div className="p-4 text-center space-y-3">
+                      <h2 className="text-lg font-semibold text-gray-800 dark:text-white truncate">
+                        {book.title}
+                      </h2>
+                      <p className="text-cyan-600 font-bold text-sm">
+                        ${book.price}
                       </p>
-                      {inStock ? (
-                        <p>InStock: Available</p>
-                      ) : (
-                        <p>InStock: Unavailable</p>
-                      )}
-                      {admin === "admin" ? (
-                        <div className=" flex flex-wrap justify-center gap-2">
-                          <Link to={`/book-details/${book._id}`}>
-                            <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
-                              Details
-                            </button>
-                          </Link>
+                      <p
+                        className={`text-sm font-medium ${
+                          inStock ? "text-green-600" : "text-red-500"
+                        }`}
+                      >
+                        InStock: {inStock ? "Available" : "Unavailable"}
+                      </p>
+
+                      {/* Action Buttons */}
+                      <div className="flex flex-wrap justify-center gap-2 pt-2">
+                        <Link to={`/book-details/${book._id}`}>
+                          <button className="px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700">
+                            Details
+                          </button>
+                        </Link>
+                        {admin === "admin" ? (
                           <Link to={`/book-update/${book._id}`}>
-                            <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
+                            <button className="px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700">
                               Update
                             </button>
                           </Link>
-                          <BookDelete id={book._id}></BookDelete>
-                        </div>
-                      ) : (
-                        <div className="flex flex-wrap justify-center gap-2">
-                          <Link to={`/book-details/${book._id}`}>
-                            <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
-                              Details
-                            </button>
-                          </Link>
+                        ) : (
                           <Link to={`/book-order/${book._id}`}>
                             <button
                               onClick={handleBuy}
-                              className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200"
+                              className="px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
                             >
                               Buy Now
                             </button>
                           </Link>
-                        </div>
-                      )}
-                    </div>
-                    <div className="absolute top-[40%] invisible group-hover:visible  left-0 w-full">
-                      <button className="btn border-1 w-full font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
-                        Add To Cart <IoMdCart className="text-xl" />
-                      </button>
+                        )}
+                      </div>
                     </div>
                   </div>
                 );
@@ -203,6 +282,23 @@ const GetBooks = () => {
           </div>
         </div>
       </div>
+      {totalPages > 1 && (
+        <div className="flex justify-center items-center mt-6 gap-2 flex-wrap">
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i + 1}
+              onClick={() => handlePageChange(i + 1)}
+              className={`px-4 py-2 border rounded-md text-sm font-medium ${
+                currentPage === i + 1
+                  ? "bg-cyan-500 text-white"
+                  : "bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:text-white"
+              }`}
+            >
+              {i + 1}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

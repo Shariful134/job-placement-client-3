@@ -25,16 +25,24 @@ const Authorselect: React.FC<SelectedProps> = ({
   };
   return (
     <Select onValueChange={handleSelect}>
-      <SelectTrigger className="w-full border-gray-500">
+      <SelectTrigger className="w-full border-gray-500 dark:text-gray-300">
         <SelectValue placeholder="Select a Authors" />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="dark:text-gray-300 dark:bg-gray-900">
         <SelectGroup>
-          <SelectItem key="All Authors" value="All Authors">
+          <SelectItem
+            className="dark:text-gray-300"
+            key="All Authors"
+            value="All Authors"
+          >
             All Authors
           </SelectItem>
           {authors.map((author: string) => (
-            <SelectItem key={author} value={author}>
+            <SelectItem
+              className="dark:text-gray-300"
+              key={author}
+              value={author}
+            >
               {author}
             </SelectItem>
           ))}

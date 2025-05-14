@@ -18,6 +18,7 @@ import {
 } from "@/redux/category/categoryApi";
 
 import { AiOutlineDelete } from "react-icons/ai";
+import { SkeletonLoading } from "@/components/skeletonLoading/SkeletonLoading";
 type ICategory = {
   id: string;
   name: string;
@@ -43,6 +44,12 @@ const CategoryData = () => {
       console.error("Delete failed:", error);
     }
   };
+
+  if (isLoading) {
+    <div className="min-h-screen flex justify-center items-center">
+      <SkeletonLoading />
+    </div>;
+  }
   return (
     <div className="px-10 pt-18 ">
       <div className=" text-center font-[inter] pb-10 pt-5">
@@ -64,8 +71,8 @@ const CategoryData = () => {
           <Table className="font-[inter]">
             <TableCaption></TableCaption>
             <TableHeader>
-              <TableRow>
-                <TableHead className="max-w-5/6">Name</TableHead>
+              <TableRow className="dark:bg-gray-900 bg-gray-300">
+                <TableHead className="max-w-5/6 ">Name</TableHead>
                 <TableHead>imageURL</TableHead>
                 <TableHead className="text-start">Action</TableHead>
               </TableRow>

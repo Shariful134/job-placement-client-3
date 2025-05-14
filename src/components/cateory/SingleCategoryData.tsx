@@ -103,12 +103,12 @@ const SingleCategoryData = () => {
 
   return (
     <div className="container mx-auto">
-      <div className=" text-center font-[inter]  px-10 pt-8 bg-[#fafafa]">
+      <div className=" text-center font-[inter]  px-10 pt-8 bg-[#fafafa] dark:bg-black">
         <h2 className="text-3xl mb-2 text-cyan-500">
           -- <FaBook className="inline" /> Our Books{" "}
           <FaBook className="inline" /> --
         </h2>
-        <p className="max-w-3/6 mx-auto">
+        <p className="max-w-3/6 mx-auto dark:text-gray-300">
           {" "}
           Explore our most popular books, loved by readers worldwide. From
           fiction to self-help, find your next favorite read today! Explore our
@@ -136,66 +136,69 @@ const SingleCategoryData = () => {
           </div>
         </div>
         <div className="col-span-1 md:col-span-9 lg:col-span-10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 bg-[#fafafa]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 bg-[#fafafa] dark:bg-black">
             {allFilteredBooks.length > 0 ? (
               allFilteredBooks?.map((book: any) => {
                 const inStock = book.inStock;
                 return (
                   <div
-                    key={book?._id}
-                    className="card w-full relative group shadow-sm "
+                    key={book._id}
+                    className="relative group bg-white dark:bg-gray-900 rounded shadow transition-shadow duration-300 overflow-hidden"
                   >
-                    <figure className="px-5 pt-5">
+                    <figure className="w-full h-52 bg-gray-100 dark:bg-gray-800 flex items-center justify-center p-4 relative">
                       <img
                         src={book.imageURL[0]}
-                        alt="Shoes"
-                        className="rounded-xl"
+                        alt={book.title}
+                        className="object-contain h-full max-w-full transition-transform duration-300 group-hover:scale-105"
                       />
+
+                      {/* Add To Cart button inside the image area, centered */}
+                      <button className="absolute inset-0 flex items-center justify-center bg-black/40 sm:bg-transparent sm:opacity-0 sm:group-hover:opacity-100 sm:pointer-events-none sm:group-hover:pointer-events-auto transition-opacity duration-300">
+                        <span className="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-white text-sm font-medium rounded-md shadow flex items-center gap-2">
+                          Add To Cart <IoMdCart className="text-lg" />
+                        </span>
+                      </button>
                     </figure>
-                    <div className="card-body items-center text-center">
-                      <h2 className="card-title">{book?.title}</h2>
-                      <p className="text-cyan-600 font-bold">{book?.price} $</p>
-                      {inStock ? (
-                        <p>InStock: Available</p>
-                      ) : (
-                        <p>InStock: Unavailable</p>
-                      )}
-                      {admin === "admin" ? (
-                        <div className=" flex flex-wrap justify-center gap-2 font-serif">
-                          <Link to={`/book-details/${book._id}`}>
-                            <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
-                              Details
-                            </button>
-                          </Link>
+
+                    <div className="p-4 text-center space-y-3">
+                      <h2 className="text-lg font-semibold text-gray-800 dark:text-white truncate">
+                        {book.title}
+                      </h2>
+                      <p className="text-cyan-600 font-bold text-sm">
+                        ${book.price}
+                      </p>
+                      <p
+                        className={`text-sm font-medium ${
+                          inStock ? "text-green-600" : "text-red-500"
+                        }`}
+                      >
+                        InStock: {inStock ? "Available" : "Unavailable"}
+                      </p>
+
+                      {/* Action Buttons */}
+                      <div className="flex flex-wrap justify-center gap-2 pt-2">
+                        <Link to={`/book-details/${book._id}`}>
+                          <button className="px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700">
+                            Details
+                          </button>
+                        </Link>
+                        {admin === "admin" ? (
                           <Link to={`/book-update/${book._id}`}>
-                            <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
+                            <button className="px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700">
                               Update
                             </button>
                           </Link>
-                        </div>
-                      ) : (
-                        <div className=" flex flex-wrap justify-center gap-2">
-                          <Link to={`/book-details/${book._id}`}>
-                            <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
-                              Details
-                            </button>
-                          </Link>
+                        ) : (
                           <Link to={`/book-order/${book._id}`}>
                             <button
                               onClick={handleBuy}
-                              className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200"
+                              className="px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
                             >
                               Buy Now
                             </button>
                           </Link>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="absolute top-[50%] invisible group-hover:visible  left-0 w-full">
-                      <button className="btn w-full border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
-                        Add To Cart <IoMdCart className="text-xl" />
-                      </button>
+                        )}
+                      </div>
                     </div>
                   </div>
                 );
@@ -211,7 +214,7 @@ const SingleCategoryData = () => {
       <div className="flex justify-center flex-wrap px-10 gap-4 py-2">
         <button
           onClick={handleViewMore}
-          className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200"
+          className="px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
         >
           View More
         </button>

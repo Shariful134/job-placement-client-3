@@ -18,6 +18,7 @@ import { FaBook } from "react-icons/fa";
 import { TAllOrder, TOrder } from "./AllOrder.type";
 import { SkeletonDemo } from "@/components/skeleton/SkeletonDemo";
 import { Button } from "@/components/ui/button";
+import { SkeletonLoading } from "@/components/skeletonLoading/SkeletonLoading";
 
 const AllOrder = () => {
   const { data: allData, isLoading } = useGetAllOrderQuery(undefined);
@@ -85,6 +86,11 @@ const AllOrder = () => {
     }
   };
 
+   if(isLoading){
+       <div className="min-h-screen flex justify-center items-center">
+              <SkeletonLoading />
+            </div>
+    }
   return (
     <div className="pt-18">
       {isLoading ? (
@@ -127,7 +133,7 @@ const AllOrder = () => {
 
               <Table className="font-[inter]">
                 <TableHeader className="bg-gray-200">
-                  <TableRow>
+                  <TableRow className="dark:bg-gray-900">
                     <TableHead>#</TableHead>
                     <TableHead>Email</TableHead>
                     <TableHead>OrderId</TableHead>
@@ -157,7 +163,7 @@ const AllOrder = () => {
                         <TableCell className="flex flex-wrap gap-2">
                           <Button
                             onClick={() => handleDelete(order._id)}
-                            className="border-white border-2 bg-slate-200 hover:bg-slate-300 text-black"
+                            className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
                           >
                             Delete
                           </Button>
@@ -189,7 +195,7 @@ const AllOrder = () => {
               {/* Pagination Controls */}
               <div className="flex justify-center mt-4 gap-2">
                 <Button
-                  className="btn text-black border-1 font-[inter] rounded-md border-white bg-slate-300 hover:bg-slate-400"
+                  className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
                   disabled={currentPage === 1}
                   onClick={() => setCurrentPage((prev) => prev - 1)}
                 >
@@ -209,7 +215,7 @@ const AllOrder = () => {
                   </Button>
                 ))}
                 <Button
-                  className="btn text-black border-1 font-[inter] rounded-md border-white bg-slate-300 hover:bg-slate-400"
+                  className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
                   disabled={currentPage === totalPages}
                   onClick={() => setCurrentPage((prev) => prev + 1)}
                 >

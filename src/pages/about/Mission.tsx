@@ -2,7 +2,7 @@ import mission from "../../assets/image/About/Misson.png";
 
 const Mission = () => {
   return (
-    <div className="px-10">
+    <div className="px-10 dark:bg-black">
       <div className="font-[inter">
         <h2 className="text-4xl text-center text-cyan-500 pt-5 pb-12">
           Our Mission & Vision?
@@ -15,8 +15,10 @@ const Mission = () => {
           alt=""
         />
         <div className="w-full md:w-3/5 lg:w-/5 text-center md:text-left">
-          <h2 className="text-3xl pb-2">Shaping the Future of Reading</h2>
-          <p>
+          <h2 className="text-3xl pb-2 dark:text-gray-300">
+            Shaping the Future of Reading
+          </h2>
+          <p className="dark:text-gray-300">
             At [Your Bookshop Name], our mission is to make reading accessible
             and enjoyable for everyone. We believe books have the power to
             inspire, educate, and transform lives. Our vision is to create a

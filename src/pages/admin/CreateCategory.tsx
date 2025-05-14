@@ -68,66 +68,74 @@ const CreateCategory = () => {
   };
 
   return (
-    <div className=" px-10 ">
-      <div className=" text-center font-[inter] pt-8 pb-5 ">
-        <h2 className="text-3xl mb-2 text-cyan-500">
+    <div className="px-4 sm:px-6 md:px-10 py-10 bg-white dark:bg-gray-900 min-h-screen">
+      {/* Header */}
+      <div className="text-center font-[inter] pt-4 pb-6">
+        <h2 className="text-3xl font-bold text-cyan-600 dark:text-cyan-400 mb-2">
           -- <FaBook className="inline" /> Category Create{" "}
-          <FaBook className="inline" /> --{" "}
+          <FaBook className="inline" /> --
         </h2>
-        <p className="max-w-3/6 mx-auto">
+        <p className="max-w-2xl mx-auto text-gray-700 dark:text-gray-300 text-sm sm:text-base">
           Create and manage book categories effortlessly. Categorizing books
           helps users explore content based on interests, genres, or
           themes—enhancing discoverability and user experience across your
           platform.
         </p>
       </div>
+
+      {/* Form */}
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="max-w-lg space-y-6"
+          className="max-w-lg mx-auto space-y-6 font-[inter]"
         >
-          <div>
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Category</FormLabel>
-                  <FormControl>
-                    <SelectForm
-                      options={categoryOption}
-                      placeholder="Select a Category"
-                      onChange={field.onChange}
-                    ></SelectForm>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="imageURL"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>ImageURL</FormLabel>
-                  <FormControl>
-                    <Input
-                      className="border-1 border-gray-400"
-                      placeholder="ImageURL"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
+          {/* Category Name */}
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-gray-800 dark:text-gray-200">
+                  Category
+                </FormLabel>
+                <FormControl>
+                  <SelectForm
+                    options={categoryOption}
+                    placeholder="Select a Category"
+                    onChange={field.onChange}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-          <div className="text-center pb-5">
-            {" "}
+          {/* Image URL */}
+          <FormField
+            control={form.control}
+            name="imageURL"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-gray-800 dark:text-gray-200">
+                  Image URL
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter image URL"
+                    className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Submit Button */}
+          <div className="text-center">
             <Button
-              className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200 text-black"
               type="submit"
+              className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
             >
               Submit
             </Button>

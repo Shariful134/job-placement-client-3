@@ -4,7 +4,7 @@ import Books from "@/components/books/Books";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { useGetAllcategoryQuery } from "@/redux/category/categoryApi";
-import { Skeleton } from "@/components/ui/skeleton";
+
 import { TCategory } from "../admin/CreateCategory";
 import { MarqueeDemo } from "./Marque";
 import FeatureSection from "./Featured";
@@ -14,6 +14,7 @@ import upcoming1 from "../../assets/image/download.jpeg";
 import upcoming2 from "../../assets/image/upcoming2.jpeg";
 import upcoming3 from "../../assets/image/upcoming3.jpeg";
 import upcoming4 from "../../assets/image/upcoming4.jpeg";
+import { SkeletonLoading } from "@/components/skeletonLoading/SkeletonLoading";
 
 const Home = () => {
   const location = useLocation();
@@ -24,10 +25,14 @@ const Home = () => {
   }, [location]);
 
   if (isLoading) {
-    return <Skeleton />;
+    return (
+      <div className="min-h-screen flex justify-center items-center">
+        <SkeletonLoading />
+      </div>
+    );
   }
   return (
-    <div className="pt-16 bg-[#fafafa] dark:bg-black">
+    <div className=" bg-[#fafafa] dark:bg-black">
       <div className="relative">
         <img className="h-99 w-full" src={bannerImg} alt="" />
         <div className="hidden sm:block absolute top-20 left-1/9 -translate-x-[6-%] bg-red-100/45 font-[inter] p-4 rounded-lg max-w-93 text-center">
@@ -84,7 +89,7 @@ const Home = () => {
             -- <FaBook className="inline" /> Upcoming Book Releases{" "}
             <FaBook className="inline" /> --{" "}
           </h2>
-          <p className="max-w-3/6 mx-auto font-[inter]">
+          <p className="max-w-3/6 mx-auto font-[inter] dark:text-gray-300">
             {" "}
             Dive into a handpicked collection of our best-selling book
             categories. From cutting-edge technology and personal growth to
@@ -169,7 +174,7 @@ const Home = () => {
             -- <FaBook className="inline" /> Best Selling Books{" "}
             <FaBook className="inline" /> --{" "}
           </h2>
-          <p className="max-w-3/6 mx-auto font-[inter] pb-5">
+          <p className="max-w-3/6 mx-auto font-[inter] pb-5 dark:text-gray-300">
             {" "}
             Discover a curated selection of our top-rated books! Whether you're
             into programming, self-development, or fiction, find the perfect
@@ -186,9 +191,11 @@ const Home = () => {
               />
             </figure>
             <div className="card-body items-center text-center font-[inter]">
-              <h2 className="card-title">How to Learn Programming</h2>
+              <h2 className="card-title dark:text-gray-300">
+                How to Learn Programming
+              </h2>
               <h4 className="text-xl text-cyan-500">Self-Development</h4>
-              <p>
+              <p className="dark:text-gray-300">
                 Start your coding journey by learning the fundamentals of
                 programming. Practice consistently, build real-world projects,
                 and engage.
@@ -204,9 +211,11 @@ const Home = () => {
               />
             </figure>
             <div className="card-body items-center text-center font-[inter]">
-              <h2 className="card-title">Dark Psychology Secrets</h2>
+              <h2 className="card-title dark:text-gray-300">
+                Dark Psychology Secrets
+              </h2>
               <h4 className="text-xl text-cyan-500">Self-Development</h4>
-              <p>
+              <p className="dark:text-gray-300">
                 Unlock the hidden tactics of persuasion, manipulation, and
                 influence. Understand human behavior and
               </p>
@@ -221,9 +230,11 @@ const Home = () => {
               />
             </figure>
             <div className="card-body items-center text-center font-[inter]">
-              <h2 className="card-title">Mastering as Programmer</h2>
+              <h2 className="card-title dark:text-gray-300">
+                Mastering as Programmer
+              </h2>
               <h4 className="text-xl text-cyan-500">Self-Development</h4>
-              <p>
+              <p className="dark:text-gray-300">
                 Enhance your coding skills with advanced techniques, best
                 practices, and real-world projects.
               </p>
@@ -238,9 +249,11 @@ const Home = () => {
               />
             </figure>
             <div className="card-body items-center text-center font-[inter]">
-              <h2 className="card-title ">How to Improove mine</h2>
+              <h2 className="card-title dark:text-gray-300">
+                How to Improove mine
+              </h2>
               <h4 className="text-xl text-cyan-500">Self-Development</h4>
-              <p>
+              <p className="dark:text-gray-300">
                 Enhance your coding skills with advanced techniques, best
                 practices, and real-world projects.
               </p>

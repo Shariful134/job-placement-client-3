@@ -20,6 +20,7 @@ import {
 import { TBookData } from "@/types/type";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { SkeletonLoading } from "@/components/skeletonLoading/SkeletonLoading";
 
 const AllBookData = () => {
   const { data: allBookData, isLoading } = useGetAllBooksQuery(undefined);
@@ -89,12 +90,17 @@ const AllBookData = () => {
 
   const totalPages = Math.ceil((filteredBooks?.length || 0) / itemsPerPage);
 
+  if(isLoading){
+     <div className="min-h-screen flex justify-center items-center">
+            <SkeletonLoading />
+          </div>
+  }
   return (
     <div className="pt-5">
       {isLoading ? (
         <SkeletonDemo />
       ) : (
-        <div className="mb-10">
+        <div className="mb-10 ">
           <div className="text-center font-[inter] pb-10 ">
             <h2 className="text-3xl mb-2 text-cyan-500">
               -- <FaBook className="inline" /> All Books Data{" "}
@@ -132,7 +138,7 @@ const AllBookData = () => {
               <Table className="font-[inter]">
                 <TableCaption></TableCaption>
                 <TableHeader className="bg-gray-200">
-                  <TableRow>
+                  <TableRow className="dark:bg-gray-900">
                     <TableHead></TableHead>
                     <TableHead>Title</TableHead>
                     <TableHead>Author</TableHead>
@@ -163,12 +169,12 @@ const AllBookData = () => {
                         <TableCell className="flex gap-2">
                           <Button
                             onClick={() => handleDelete(book._id)}
-                            className="border-1 text-block rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200"
+                            className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
                           >
                             Delete
                           </Button>
                           <Link to={`/book-update/${book._id}`}>
-                            <Button className="border-1 text-block rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
+                            <Button className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700">
                               Update
                             </Button>
                           </Link>
@@ -186,7 +192,7 @@ const AllBookData = () => {
               {/* Pagination Controls */}
               <div className="flex justify-center items-center gap-3 mt-4">
                 <Button
-                  className="btn text-black border-1 font-[inter] rounded-md border-white bg-slate-300 hover:bg-slate-400"
+                  className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
                   onClick={() => handlePageChange(currentPage - 1)}
                   disabled={currentPage === 1}
                 >
@@ -209,7 +215,7 @@ const AllBookData = () => {
                   Page {currentPage} of {totalPages}
                 </span> */}
                 <Button
-                  className="btn text-black border-1 font-[inter] rounded-md border-white bg-slate-300 hover:bg-slate-400"
+                  className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
                   onClick={() => handlePageChange(currentPage + 1)}
                   disabled={currentPage === totalPages}
                 >

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useGetSingleBookQuery } from "@/redux/book/bookApi";
-import { Link, useParams } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+
 import { useAppSelector } from "@/redux/hooks";
 import { useCurrentToken } from "@/redux/auth/authSlice";
 import { verifyToken } from "@/utils/verifyToken";
@@ -12,7 +11,9 @@ import { LuMinus } from "react-icons/lu";
 import { FiPlus } from "react-icons/fi";
 import { useAddOrderMutation } from "@/redux/order/orderApi";
 import { TResponse } from "@/types/type";
-import { Skeleton } from "@/components/ui/skeleton";
+
+import { useParams } from "react-router-dom";
+import { SkeletonLoading } from "@/components/skeletonLoading/SkeletonLoading";
 type TUser = {
   userEmail: string;
   role: string;
@@ -82,44 +83,50 @@ const Order = () => {
 
   if (isFetching) {
     return (
-      <div>
-        <Skeleton></Skeleton>
+      <div className="min-h-screen flex justify-center items-center">
+        <SkeletonLoading />
       </div>
     );
   }
   return (
     <div className="container mx-auto pt-18 px-10 flex gap-2 flex-wrap justify-center pb-5">
-      <div className="card mt-5  w-full max-w-sm shrink-0 shadow-sm ">
-        <div className="card-body font-[inter]">
+      <div className="card mt-5  w-full max-w-sm shrink-0 shadow">
+        <div className="card-body font-[inter] dark:bg-gray-900">
           <div className="flex justify-between items-end">
-            <label className="fieldset-label">Quantity</label>
+            <label className="fieldset-label dark:text-gray-300">
+              Quantity
+            </label>
             <div className="flex flex-col gap-2">
               <div className="flex w-[120px] border-1  justify-between  border-gray-400 bg-accent  rounded-sm">
                 <button
                   onClick={handleDecrease}
-                  className="hover:bg-gray-300 bg-gray-200 rounded-full px-1"
+                  className="hover:bg-gray-300 bg-gray-200 dark:text-gray-300 dark:bg-gray-700   rounded-full px-1"
                 >
                   {" "}
-                  <LuMinus className=" text-2xl " />
+                  <LuMinus className=" text-2xl dark:text-gray-300" />
                 </button>{" "}
-                <p className="text-2xl text-center">{quantity}</p>
+                <p className="text-2xl text-center dark:text-gray-300">
+                  {quantity}
+                </p>
                 <button
                   onClick={handleIncrease}
-                  className="hover:bg-gray-300 bg-gray-200 rounded-full px-1"
+                  className="hover:bg-gray-300 bg-gray-200 rounded-full px-1 dark:text-gray-300 dark:bg-gray-700"
                 >
                   {" "}
-                  <FiPlus className=" text-2xl" />
+                  <FiPlus className=" text-2xl dark:text-gray-300" />
                 </button>
               </div>
-              <div className="text-end">
+              <div className="text-end dark:text-gray-300">
                 {" "}
-                <p className="text-cyan-500  font-bold">{quantity}</p>
+                <p className="text-cyan-500  font-bold ">{quantity}</p>
               </div>
             </div>
           </div>
 
           <div className="flex justify-between ">
-            <label className="fieldset-label">TotalPrice</label>
+            <label className="fieldset-label dark:text-gray-300">
+              TotalPrice
+            </label>
             <div>
               {" "}
               <p className="text-cyan-500 font-bold">{totalPrice} $</p>
@@ -133,14 +140,14 @@ const Order = () => {
                 name="name"
                 type="text"
                 required={true}
-                className="input border-1 border-gray-300"
+                className="input border-1 border-gray-300 dark:text-gray-300 dark:bg-gray-700"
                 placeholder="Name"
               />
-              <label className="fieldset-label ">Email</label>
+              <label className="fieldset-label dark:text-gray-300">Email</label>
               <input
                 name="email"
                 type="email"
-                className="input border-1 border-gray-300"
+                className="input border-1 border-gray-300 dark:text-gray-300 dark:bg-gray-700"
                 required={true}
                 defaultValue={user?.userEmail}
                 placeholder="Email"
@@ -150,7 +157,7 @@ const Order = () => {
                 name="address"
                 type="text"
                 required={true}
-                className="input border-1 border-gray-300 "
+                className="input border-1 border-gray-300 dark:text-gray-300 dark:bg-gray-700"
                 placeholder="Address"
               />
               <label className="fieldset-label">Phone</label>
@@ -158,12 +165,12 @@ const Order = () => {
                 name="phone"
                 type="number"
                 required={true}
-                className="input border-1 border-gray-300 "
-                placeholder="Number"
+                className="input border-1 border-gray-300 dark:text-gray-300 dark:bg-gray-700"
+                placeholder="Phone Number"
               />
               <button
                 type="submit"
-                className="btn  border-1 mt-5 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200"
+                className="px-4 mt-5 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
               >
                 Order Now
               </button>
@@ -171,11 +178,11 @@ const Order = () => {
           </fieldset>
         </div>
       </div>
-      <div className="card font-[inter]  flex sm:flex-col md:flex-row lg:flex-row  mx-auto max-w-7/12   shadow-sm  mt-5 p-5  ">
+      <div className="card rounded font-[inter] dark:bg-gray-900  flex sm:flex-col md:flex-row lg:flex-row  mx-auto max-w-7/12  shadow mt-5 p-5  ">
         <figure>
           <img src={book?.imageURL} alt="Movie" />
         </figure>
-        <div className="card-body font-[inter]">
+        <div className="card-body rounded font-[inter]">
           <div className="flex justify-between items-end">
             <h2 className="card-title">{book?.title}</h2>
           </div>
@@ -203,16 +210,6 @@ const Order = () => {
             <span className="text-cyan-600">Description</span>:{" "}
             {book?.description}
           </p>
-          <div className="card-actions justify-start font-[inter]">
-            <Link to="/">
-              <Button
-                className="btn border-1 mt-5  rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200"
-                variant="outline"
-              >
-                Home
-              </Button>
-            </Link>
-          </div>
         </div>
       </div>
     </div>

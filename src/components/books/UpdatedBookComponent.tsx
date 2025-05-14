@@ -21,7 +21,7 @@ import {
   useGetSingleBookQuery,
   useUpdatebookMutation,
 } from "@/redux/book/bookApi";
-
+import { FaBook } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { useGetAllcategoryQuery } from "@/redux/category/categoryApi";
 
@@ -93,23 +93,38 @@ const UpdatedBookComponent = () => {
     }
   };
   return (
-    <div className="pt-16 px-10 bg-[#fafafa]">
+    <div className="pt-5 px-4 sm:px-8 md:px-10 bg-white dark:bg-gray-900 min-h-screen">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full space-y-6"
+          className="w-full space-y-6 max-w-7xl mx-auto"
         >
-          <div className=" grid font-[inter] sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-2 gap-y-5">
+          <div className=" text-center font-[inter] pt-8 ">
+            <h2 className="text-3xl mb-2 text-cyan-500">
+              -- <FaBook className="inline" /> Book Update{" "}
+              <FaBook className="inline" /> --{" "}
+            </h2>
+            <p className="max-w-3/6 mx-auto dark:text-gray-300">
+              Discover in-depth details about this book, including its author,
+              category, price, and availability. Get insights into the story and
+              why readers love it!
+            </p>
+          </div>
+
+          <div className="grid font-[inter] sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-6">
+            {/* Title */}
             <FormField
               control={form.control}
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Title</FormLabel>
+                  <FormLabel className="text-gray-700 dark:text-gray-300">
+                    Title
+                  </FormLabel>
                   <FormControl>
                     <Input
-                      className="border-1 border-gray-400"
-                      placeholder="title"
+                      className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-700"
+                      placeholder="Book title"
                       {...field}
                     />
                   </FormControl>
@@ -117,16 +132,20 @@ const UpdatedBookComponent = () => {
                 </FormItem>
               )}
             />
+
+            {/* Author */}
             <FormField
               control={form.control}
               name="author"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Author</FormLabel>
+                  <FormLabel className="text-gray-700 dark:text-gray-300">
+                    Author
+                  </FormLabel>
                   <FormControl>
                     <Input
-                      className="border-1 border-gray-400"
-                      placeholder="author"
+                      className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-700"
+                      placeholder="Author name"
                       {...field}
                     />
                   </FormControl>
@@ -134,17 +153,21 @@ const UpdatedBookComponent = () => {
                 </FormItem>
               )}
             />
+
+            {/* Price */}
             <FormField
               control={form.control}
               name="price"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Price</FormLabel>
+                  <FormLabel className="text-gray-700 dark:text-gray-300">
+                    Price
+                  </FormLabel>
                   <FormControl>
                     <Input
-                      className="border-1 border-gray-400"
                       type="number"
-                      placeholder="price"
+                      className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-700"
+                      placeholder="Price"
                       {...field}
                     />
                   </FormControl>
@@ -153,101 +176,19 @@ const UpdatedBookComponent = () => {
               )}
             />
 
+            {/* Description */}
             <FormField
               control={form.control}
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel className="text-gray-700 dark:text-gray-300">
+                    Description
+                  </FormLabel>
                   <FormControl>
                     <Input
-                      className="border-1 border-gray-400"
-                      placeholder="description"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="category"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Category</FormLabel>
-                  <FormControl>
-                    <SelectForm
-                      options={categoryOption}
-                      placeholder="select a Category"
-                      onChange={field.onChange}
-                    ></SelectForm>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="quantity"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Quantity</FormLabel>
-                  <FormControl>
-                    <Input
-                      className="border-1 border-gray-400"
-                      type="number"
-                      placeholder="quantity"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="inStock"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>InStock</FormLabel>
-                  <FormControl>
-                    <SelectForm
-                      options={stockOption}
-                      placeholder="select a Stock"
-                      onChange={field.onChange}
-                    ></SelectForm>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="publicationDate"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>PublicationDate</FormLabel>
-                  <FormControl>
-                    <SelectDatePicker
-                      value={field.value}
-                      onSelect={field.onChange}
-                    ></SelectDatePicker>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="publisher"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Publisher</FormLabel>
-                  <FormControl>
-                    <Input
-                      className="border-1 border-gray-400"
-                      placeholder="publisher"
+                      className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-700"
+                      placeholder="Book description"
                       {...field}
                     />
                   </FormControl>
@@ -256,16 +197,124 @@ const UpdatedBookComponent = () => {
               )}
             />
 
+            {/* Category */}
+            <FormField
+              control={form.control}
+              name="category"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-gray-700 dark:text-gray-300">
+                    Category
+                  </FormLabel>
+                  <FormControl>
+                    <SelectForm
+                      options={categoryOption}
+                      placeholder="Select category"
+                      onChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Quantity */}
+            <FormField
+              control={form.control}
+              name="quantity"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-gray-700 dark:text-gray-300">
+                    Quantity
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-700"
+                      placeholder="Quantity"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* In Stock */}
+            <FormField
+              control={form.control}
+              name="inStock"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-gray-700 dark:text-gray-300">
+                    In Stock
+                  </FormLabel>
+                  <FormControl>
+                    <SelectForm
+                      options={stockOption}
+                      placeholder="Select availability"
+                      onChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Publication Date */}
+            <FormField
+              control={form.control}
+              name="publicationDate"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel className="text-gray-700 dark:text-gray-300">
+                    Publication Date
+                  </FormLabel>
+                  <FormControl>
+                    <SelectDatePicker
+                      value={field.value}
+                      onSelect={field.onChange}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Publisher */}
+            <FormField
+              control={form.control}
+              name="publisher"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-gray-700 dark:text-gray-300">
+                    Publisher
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-700"
+                      placeholder="Publisher name"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Image URL */}
             <FormField
               control={form.control}
               name="imageURL"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Image URL</FormLabel>
+                  <FormLabel className="text-gray-700 dark:text-gray-300">
+                    Image URL
+                  </FormLabel>
                   <FormControl>
                     <Input
-                      className="border-1 border-gray-400"
-                      placeholder="imageURl"
+                      className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-700"
+                      placeholder="Image URL"
                       {...field}
                     />
                   </FormControl>
@@ -275,10 +324,10 @@ const UpdatedBookComponent = () => {
             />
           </div>
 
-          <div className="text-center mb-2">
-            {" "}
+          {/* Submit Button */}
+          <div className="text-center mt-6">
             <Button
-              className="btn border-1 font-[inter] text-black rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200"
+              className="w-full md:w-auto px-6 py-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-semibold rounded-md hover:opacity-90 transition"
               type="submit"
             >
               Submit

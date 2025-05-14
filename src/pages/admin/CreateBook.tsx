@@ -120,34 +120,40 @@ const CreateBook = () => {
   };
 
   return (
-    <div className=" px-10 bg-[#fafafa]">
-      <div className=" text-center font-[inter] pt-8 pb-5 ">
-        <h2 className="text-3xl mb-2 text-cyan-500">
+    <div className="px-4 sm:px-6 md:px-10 py-10 bg-[#fafafa] dark:bg-gray-900 min-h-screen transition-colors duration-300">
+      {/* Header */}
+      <div className="text-center font-[inter] pt-4 pb-6">
+        <h2 className="text-3xl font-bold text-cyan-600 dark:text-cyan-400 mb-2">
           -- <FaBook className="inline" /> Book Create{" "}
-          <FaBook className="inline" /> --{" "}
+          <FaBook className="inline" /> --
         </h2>
-        <p className="max-w-3/6 mx-auto">
+        <p className="max-w-2xl mx-auto text-gray-700 dark:text-gray-300 text-sm sm:text-base">
           Discover in-depth details about this book, including its author,
           category, price, and availability. Get insights into the story and why
           readers love it!
         </p>
       </div>
+
+      {/* Form */}
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full space-y-6"
+          className="w-full space-y-6 font-[inter]"
         >
-          <div className=" grid  sm:grid-cols-1 md:grid-cols-2  gap-x-5 gap-y-5">
+          <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-5">
+            {/* Title */}
             <FormField
               control={form.control}
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Title</FormLabel>
+                  <FormLabel className="text-gray-800 dark:text-gray-200">
+                    Title
+                  </FormLabel>
                   <FormControl>
                     <Input
-                      className="border-1 border-gray-400"
-                      placeholder="title"
+                      className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600"
+                      placeholder="Title"
                       {...field}
                     />
                   </FormControl>
@@ -155,16 +161,20 @@ const CreateBook = () => {
                 </FormItem>
               )}
             />
+
+            {/* Author */}
             <FormField
               control={form.control}
               name="author"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Author</FormLabel>
+                  <FormLabel className="text-gray-800 dark:text-gray-200">
+                    Author
+                  </FormLabel>
                   <FormControl>
                     <Input
-                      className="border-1 border-gray-400"
-                      placeholder="author"
+                      className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600"
+                      placeholder="Author"
                       {...field}
                     />
                   </FormControl>
@@ -172,17 +182,21 @@ const CreateBook = () => {
                 </FormItem>
               )}
             />
+
+            {/* Price */}
             <FormField
               control={form.control}
               name="price"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Price</FormLabel>
+                  <FormLabel className="text-gray-800 dark:text-gray-200">
+                    Price
+                  </FormLabel>
                   <FormControl>
                     <Input
-                      className="border-1 border-gray-400"
                       type="number"
-                      placeholder="price"
+                      placeholder="Price"
+                      className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600"
                       {...field}
                     />
                   </FormControl>
@@ -191,16 +205,19 @@ const CreateBook = () => {
               )}
             />
 
+            {/* Description */}
             <FormField
               control={form.control}
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel className="text-gray-800 dark:text-gray-200">
+                    Description
+                  </FormLabel>
                   <FormControl>
                     <Input
-                      className="border-1 border-gray-400"
-                      placeholder="description"
+                      placeholder="Description"
+                      className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600"
                       {...field}
                     />
                   </FormControl>
@@ -209,35 +226,41 @@ const CreateBook = () => {
               )}
             />
 
+            {/* Category */}
             <FormField
               control={form.control}
               name="categoryId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Category</FormLabel>
+                  <FormLabel className="text-gray-800 dark:text-gray-200">
+                    Category
+                  </FormLabel>
                   <FormControl>
                     <SelectForm
                       options={categoryOption}
-                      placeholder="select a Category"
+                      placeholder="Select a Category"
                       onChange={field.onChange}
-                    ></SelectForm>
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
+            {/* Quantity */}
             <FormField
               control={form.control}
               name="quantity"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Quantity</FormLabel>
+                  <FormLabel className="text-gray-800 dark:text-gray-200">
+                    Quantity
+                  </FormLabel>
                   <FormControl>
                     <Input
-                      className="border-1 border-gray-400"
                       type="number"
-                      placeholder="quantity"
+                      placeholder="Quantity"
+                      className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600"
                       {...field}
                     />
                   </FormControl>
@@ -245,49 +268,61 @@ const CreateBook = () => {
                 </FormItem>
               )}
             />
+
+            {/* InStock */}
             <FormField
               control={form.control}
               name="inStock"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>InStock</FormLabel>
+                  <FormLabel className="text-gray-800 dark:text-gray-200">
+                    In Stock
+                  </FormLabel>
                   <FormControl>
                     <SelectForm
                       options={stockOption}
-                      placeholder="select a Stock"
+                      placeholder="Select Stock Status"
                       onChange={field.onChange}
-                    ></SelectForm>
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
+            {/* Publication Date */}
             <FormField
               control={form.control}
               name="publicationDate"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>PublicationDate</FormLabel>
+                  <FormLabel className="text-gray-800 dark:text-gray-200">
+                    Publication Date
+                  </FormLabel>
                   <FormControl>
                     <SelectDatePicker
                       value={field.value}
                       onSelect={field.onChange}
-                    ></SelectDatePicker>
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
+            {/* Publisher */}
             <FormField
               control={form.control}
               name="publisher"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Publisher</FormLabel>
+                  <FormLabel className="text-gray-800 dark:text-gray-200">
+                    Publisher
+                  </FormLabel>
                   <FormControl>
                     <Input
-                      className="border-1 border-gray-400"
-                      placeholder="publisher"
+                      placeholder="Publisher"
+                      className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600"
                       {...field}
                     />
                   </FormControl>
@@ -296,10 +331,12 @@ const CreateBook = () => {
               )}
             />
           </div>
+
+          {/* Image URL Array */}
           <div>
-            <div className="flex justify-between items-center border-t border-b py-3 my-5">
-              <p className="text-primary font-bold text-xl">
-                Available Image URL
+            <div className="flex justify-between items-center border-t border-b border-gray-300 dark:border-gray-600 py-3 my-5">
+              <p className="text-primary font-bold text-xl dark:text-white">
+                Available Image URLs
               </p>
               <Button
                 variant="outline"
@@ -319,9 +356,16 @@ const CreateBook = () => {
                     name={`imageURL.${index}.value`}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>imageURL {index + 1}</FormLabel>
+                        <FormLabel className="text-gray-800 dark:text-gray-200">
+                          Image URL {index + 1}
+                        </FormLabel>
                         <FormControl>
-                          <Input {...field} value={field.value || ""} />
+                          <Input
+                            {...field}
+                            value={field.value || ""}
+                            placeholder={`https://...`}
+                            className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600"
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -331,10 +375,11 @@ const CreateBook = () => {
               ))}
             </div>
           </div>
+
+          {/* Submit Button */}
           <div className="text-center pb-5">
-            {" "}
             <Button
-              className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200 text-black"
+              className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
               type="submit"
             >
               Submit

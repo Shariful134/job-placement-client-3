@@ -38,44 +38,50 @@ const Login = () => {
   };
 
   return (
-    <div className="hero  min-h-screen px-10 bg-[#fafafa] font-[inter]">
-      <div className="hero-content flex-col lg:flex-row-reverse">
-        <div className="text-center lg:text-left font-[inter]">
-          <h1 className="text-5xl font-bold">Login now!</h1>
-          <p className="py-6">
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
-            a id nisi.
-          </p>
-        </div>
-        <div className="card  w-full max-w-sm shrink-0 shadow-2xl">
+    <div className="hero  min-h-screen px-10 bg-[#fafafa] dark:bg-black font-[inter]">
+      <div className="hero-content flex-col">
+        <div className="card  w-full max-w-sm shrink-0 shadow dark:bg-gray-900">
           <div className="card-body">
+            <div className="text-center mb-4">
+              <h1 className="text-2xl font-bold">Login to Your Account</h1>
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                Welcome back! Please enter your credentials
+              </p>
+            </div>
+            <div className="mb-4 p-3 bg-slate-200 dark:bg-gray-800 rounded-md">
+              <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">
+                <strong>Demo Email:</strong> shariful@gmail.com
+              </p>
+              <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">
+                <strong>Demo Password:</strong> Shariful!23
+              </p>
+            </div>
             <fieldset className="fieldset font-[inter]">
               <form onSubmit={handleLogin}>
                 <label className="fieldset-label">Email</label>
                 <input
                   name="email"
                   type="email"
-                  className="input border-1 border-gray-300"
+                  className="input border-1 dark:text-gray-900 border-gray-300"
                   placeholder="Email"
                 />
                 <label className="fieldset-label">Password</label>
                 <input
                   name="password"
                   type="password"
-                  className="input border-1 border-gray-300"
+                  className="input border-1 dark:text-gray-900 border-gray-300"
                   placeholder="Password"
                 />
                 <button
                   type="submit"
-                  className="btn mt-2 border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200mt-4"
+                  className="px-4 mt-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
                 >
                   Login
                 </button>
               </form>
               <span>
                 Don't Have An Account? Please{" "}
-                <Link to="/register" className="text-red-500 underline">
+                <Link to="/register" className="text-cyan-400 hover:underline">
                   Resitration
                 </Link>
               </span>

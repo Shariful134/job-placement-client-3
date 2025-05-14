@@ -2,55 +2,63 @@ import { FaLinkedin } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <div className="bg-base-300">
-      <footer className="footer container mx-auto sm:footer-horizontal  text-base-content py-10">
+    <div className="bg-base-300 dark:bg-black">
+      <hr className="container mx-auto " />
+      <footer className=" footer container mx-auto px-4  sm:footer-horizontal text-base-content py-10 text-center sm:text-left">
         <nav>
-          <h6 className="footer-title">Services</h6>
+          <h6 className="footer-title dark:text-gray-300">Services</h6>
           <a
             href="https://demo2.wpthemego.com/themes/sw_topdeal/layout3/"
-            className="link link-hover"
+            className="link link-hover dark:text-gray-300"
           >
-            Book Recomandation
+            Book Recommendation
           </a>
           <a
             href="https://demo2.wpthemego.com/themes/sw_topdeal/"
-            className="link link-hover"
+            className="link link-hover dark:text-gray-300"
           >
             E-Book Store
           </a>
           <a
             href="https://demo2.wpthemego.com/themes/sw_topdeal/"
-            className="link link-hover"
+            className="link link-hover dark:text-gray-300"
           >
             Gift Cards
           </a>
           <a
             href="https://demo2.wpthemego.com/themes/sw_topdeal/"
-            className="link link-hover"
+            className="link link-hover dark:text-gray-300"
           >
-            MemberShip Plan
+            Membership Plan
           </a>
         </nav>
+
         <nav>
-          <h6 className="footer-title">Company</h6>
-          <a href="/about" className="link link-hover">
+          <h6 className="footer-title dark:text-gray-300">Company</h6>
+          <a href="/about" className="link link-hover dark:text-gray-300">
             About
           </a>
-          <a href="/contact" className="link link-hover">
+          <a href="/contact" className="link link-hover dark:text-gray-300">
             Contact
           </a>
-          <a href="/blog" className="link link-hover">
+          <a href="/blog" className="link link-hover dark:text-gray-300">
             Blog
           </a>
         </nav>
+
         <nav>
-          <h6 className="footer-title">Social</h6>
-          <div className="grid grid-flow-col gap-4">
-            <a href="https://www.linkedin.com/in/md-shariful-/">
+          <h6 className="footer-title dark:text-gray-300">Social</h6>
+          <div className="grid grid-flow-col gap-4 justify-center sm:justify-start">
+            <a
+              href="https://www.linkedin.com/in/md-shariful-/"
+              className="dark:text-gray-300"
+            >
               <FaLinkedin className="text-2xl" />
             </a>
-
-            <a href="https://www.facebook.com/sharifulislam.367281">
+            <a
+              href="https://www.facebook.com/sharifulislam.367281"
+              className="dark:text-gray-300"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"

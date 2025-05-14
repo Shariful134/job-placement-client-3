@@ -48,39 +48,37 @@ const Registration = () => {
   };
 
   return (
-    <div className="hero min-h-screen bg-[#fafafa] font-[inter]">
+    <div className="hero min-h-screen bg-[#fafafa] dark:bg-black font-[inter]">
       <div className="hero-content flex-col lg:flex-row-reverse">
-        <div className="text-center lg:text-left">
-          <h1 className="text-5xl font-bold">Registeration now!</h1>
-          <p className="py-6">
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
-            a id nisi.
-          </p>
-        </div>
-        <div className="card  w-full max-w-sm shrink-0 shadow-2xl">
+        <div className="card  w-full max-w-sm shrink-0 shadow dark:bg-gray-900 ">
           <div className="card-body">
+            <div className="text-center mb-4">
+              <h2 className="text-2xl font-bold">Create an Account</h2>
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                Join us today and start your journey
+              </p>
+            </div>
             <fieldset className="fieldset font-[inter]">
               <form onSubmit={handleRegister}>
                 <label className="fieldset-label">Name</label>
                 <input
                   type="text"
                   name="name"
-                  className="input border-1 border-gray-300"
-                  placeholder="Nmae"
+                  className="input dark:text-gray-900 border-1 border-gray-300"
+                  placeholder="name"
                 />
                 <label className="fieldset-label">Email</label>
                 <input
                   type="email"
                   name="email"
-                  className="input border-1 border-gray-300"
+                  className="input border-1 dark:text-gray-900 border-gray-300"
                   placeholder="Email"
                 />
                 <label className="fieldset-label">Password</label>
                 <input
                   type="password"
                   name="password"
-                  className="input border-1 border-gray-300"
+                  className="input border-1 dark:text-gray-900 border-gray-300"
                   placeholder="Password"
                 />
                 {passwordError && (
@@ -89,14 +87,14 @@ const Registration = () => {
 
                 <button
                   type="submit"
-                  className="btn mt-2 border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200"
+                  className="px-4 mt-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
                 >
                   Register
                 </button>
               </form>
               <span>
                 Have An Account? Please{" "}
-                <Link to="/login" className=" text-red-500 underline">
+                <Link to="/login" className=" text-cyan-400 hover:underline">
                   Login
                 </Link>
               </span>

@@ -87,7 +87,7 @@ const UsersData = () => {
   };
 
   return (
-    <div className="px-10 pt-18">
+    <div className="px-10 pt-18 ">
       <div className="text-center font-[inter] pb-10 pt-5">
         <h2 className="text-3xl mb-2 text-cyan-500">
           -- <FaUserAstronaut className="inline" /> Users Data{" "}
@@ -127,7 +127,7 @@ const UsersData = () => {
           <Table className="font-[inter]">
             <TableCaption></TableCaption>
             <TableHeader>
-              <TableRow>
+              <TableRow className="dark:bg-gray-900">
                 <TableHead>Name</TableHead>
                 <TableHead>Email</TableHead>
                 <TableHead className="text-start">Action</TableHead>
@@ -143,7 +143,7 @@ const UsersData = () => {
                   <TableCell className="flex flex-wrap gap-2">
                     <Button
                       onClick={() => handleDelete(user._id as string)}
-                      className="text-black border-1 rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200"
+                      className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
                     >
                       Delete
                     </Button>
@@ -161,7 +161,7 @@ const UsersData = () => {
           {/* Pagination Controls */}
           <div className="flex justify-center mt-4 gap-2">
             <Button
-              className="btn text-black border-1 font-[inter] rounded-md border-white bg-slate-300 hover:bg-slate-400"
+              className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
               disabled={currentPage === 1}
               onClick={() => setCurrentPage((prev) => prev - 1)}
             >
@@ -181,7 +181,7 @@ const UsersData = () => {
               </Button>
             ))}
             <Button
-              className="btn text-black border-1 font-[inter] rounded-md border-white bg-slate-300 hover:bg-slate-400"
+              className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
               disabled={currentPage === totalPages}
               onClick={() => setCurrentPage((prev) => prev + 1)}
             >

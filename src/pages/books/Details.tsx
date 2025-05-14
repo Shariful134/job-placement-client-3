@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Link, useLocation, useParams } from "react-router";
+import { Link, useLocation, useNavigate, useParams } from "react-router";
 import {
   useGetAllBooksQuery,
   useGetSingleBookQuery,
@@ -11,11 +11,11 @@ import { useEffect, useState } from "react";
 import { useAppSelector } from "@/redux/hooks";
 import { useCurrentToken } from "@/redux/auth/authSlice";
 import { verifyToken } from "@/utils/verifyToken";
-import BookDelete from "@/components/modal/BookDelete";
-import { Skeleton } from "@/components/ui/skeleton";
+import { SkeletonLoading } from "@/components/skeletonLoading/SkeletonLoading";
 
 const Details = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { id } = useParams();
   const { data: Book, isFetching } = useGetSingleBookQuery(id);
   const { data: allBooks } = useGetAllBooksQuery(undefined);
@@ -47,176 +47,184 @@ const Details = () => {
     }
   }, [book]);
 
+  const handleBuy = () => {
+    if (!token) {
+      navigate("/login");
+    }
+    window.scrollTo(0, 0);
+  };
+
   if (isFetching) {
     return (
-      <div className="h-screen">
-        <Skeleton></Skeleton>
+      <div className="min-h-screen flex justify-center items-center">
+        <SkeletonLoading />
       </div>
     );
   }
   return (
-    <div className="pt-10 px-10 bg-[#fafafa]">
-      <div className=" text-center pt-8 font-[inter]">
-        <h2 className="text-3xl mb-2 text-cyan-500">
+    <div className="pt-10 px-4 sm:px-8 md:px-12 lg:px-20 bg-[#fafafa] dark:bg-black">
+      {/* Book Details Header */}
+      <div className="text-center font-[inter]">
+        <h2 className="text-3xl font-semibold text-cyan-500 mb-3">
           -- <FaBook className="inline" /> Book Details{" "}
-          <FaBook className="inline" /> --{" "}
+          <FaBook className="inline" /> --
         </h2>
-        <p className="max-w-3/6 mx-auto">
+        <p className="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
           Discover in-depth details about this book, including its author,
-          category, price, and availability. Get insights into the story and why
-          readers love it!
+          category, price, and availability.
         </p>
       </div>
-      <div className="card max-w-10/12 flex sm:flex-col md:flex-row lg:flex-row  mx-auto shadow  mt-5 p-5  ">
-        <div className="flex flex-col gap-2">
-          <div className="w-xs">
-            <figure>
-              <img src={selectedImage || book?.imageURL[0]} alt="imageURL" />
-            </figure>
+
+      {/* Book Details Card */}
+      <div className="flex flex-col md:flex-row gap-6 mt-10 bg-white dark:bg-gray-900 shadow-md rounded p-5 max-w-6xl mx-auto">
+        {/* Image Section */}
+        <div className="flex flex-col items-center md:w-1/2">
+          <div className="w-full sm:w-[90%] md:w-[70%] lg:w-[60%] ">
+            <img
+              src={selectedImage || book?.imageURL[0]}
+              alt="Book Cover"
+              className="rounded object-cover w-full h-auto"
+            />
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 mt-4 flex-wrap justify-center">
             {book?.imageURL?.map((img: string, index: number) => (
-              <div
+              <img
                 key={index}
-                className="w-15 cursor-pointer"
+                src={img}
+                alt={`Image ${index + 1}`}
+                className="w-20 h-28 rounded cursor-pointer hover:ring-2 ring-cyan-500"
                 onClick={() => setSelectedImage(img)}
-              >
-                <figure>
-                  <img src={img} alt={`image ${index + 1}`} />
-                </figure>
-              </div>
+              />
             ))}
           </div>
         </div>
-        <div className="card-body font-[inter]  ">
-          <h2 className="card-title">{book?.title}</h2>
-          <p>
-            <span className="text-cyan-600">Category</span>: {book?.category}
-          </p>
-          <p>
-            <span className="text-cyan-600">Author</span>: {book?.author}
-          </p>
 
+        {/* Info Section */}
+        <div className="md:w-1/2 space-y-2 font-[inter]">
+          <h2 className="text-2xl font-bold">{book?.title}</h2>
           <p>
-            <span className="text-cyan-600">Price</span>: {book?.price} $
+            <span className="text-cyan-600 font-medium">Category:</span>{" "}
+            {book?.category}
           </p>
           <p>
-            <span className="text-cyan-600">Quantity</span>: {book?.quantity}
+            <span className="text-cyan-600 font-medium">Author:</span>{" "}
+            {book?.author}
           </p>
           <p>
-            <span className="text-cyan-600">Publisher</span>: {book?.publisher}
+            <span className="text-cyan-600 font-medium">Price:</span> $
+            {book?.price}
           </p>
           <p>
-            <span className="text-cyan-600">PublicationDate</span>:{" "}
+            <span className="text-cyan-600 font-medium">Quantity:</span>{" "}
+            {book?.quantity}
+          </p>
+          <p>
+            <span className="text-cyan-600 font-medium">Publisher:</span>{" "}
+            {book?.publisher}
+          </p>
+          <p>
+            <span className="text-cyan-600 font-medium">Publication Date:</span>{" "}
             {book?.publicationDate}
           </p>
           <p>
-            <span className="text-cyan-600">Description</span>:{" "}
+            <span className="text-cyan-600 font-medium">Description:</span>{" "}
             {book?.description}
           </p>
-          {admin == "admin" ? (
-            <div className="card-actions justify-start">
+
+          {/* Buttons */}
+          <div className="flex flex-wrap gap-3 pt-4">
+            {admin === "admin" ? (
               <Link to="/">
-                <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
-                  Home
-                </button>
+                <button className="btn-style">Home</button>
               </Link>
-            </div>
-          ) : (
-            <div className="card-actions justify-start">
-              <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
-                Add To Cart <IoMdCart className="text-xl" />
-              </button>
-              <Link to="/">
-                <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
-                  Home
+            ) : (
+              <>
+                <button className="btn-style flex items-center gap-2 px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700">
+                  Add To Cart <IoMdCart className="text-xl" />
                 </button>
-              </Link>
-              <Link to={`/book-order/${book?._id}`}>
-                <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
-                  Buy Now
-                </button>
-              </Link>
-            </div>
-          )}
+                <Link to={`/book-order/${book?._id}`}>
+                  <button className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700">
+                    Buy Now
+                  </button>
+                </Link>
+              </>
+            )}
+          </div>
         </div>
       </div>
-      <div className=" text-center font-[inter] pt-8 ">
-        <h2 className="text-3xl mb-2 text-cyan-500">
-          -- <FaBook className="inline" /> Releted Book{" "}
-          <FaBook className="inline" /> --{" "}
+
+      {/* Related Books Header */}
+      <div className="text-center mt-12 font-[inter]">
+        <h2 className="text-3xl font-semibold text-cyan-500 mb-2">
+          -- <FaBook className="inline" /> Related Books{" "}
+          <FaBook className="inline" /> --
         </h2>
-        <p className="max-w-3/6 mx-auto">
+        <p className="text-gray-600 dark:text-gray-300 max-w-xl mx-auto">
           More books from the{" "}
           <span className="font-bold text-cyan-600">{book?.category}</span>{" "}
-          category that you may love!
+          category you may love!
         </p>
       </div>
-      <div className="flex justify-center flex-wrap gap-4 pb-5 font-[inter] bg-[#fafafa]">
-        {sameCategory?.map((sameBook: any) => {
-          const inStock = sameBook.inStock;
+
+      {/* Related Books List */}
+      <div className="flex flex-wrap justify-center gap-6 mt-6 pb-10">
+        {sameCategory?.map((book: any) => {
+          const inStock = book.inStock;
           return (
             <div
-              key={sameBook?._id}
-              className="card  w-75 relative group shadow"
+              key={book._id}
+              className="relative group bg-white dark:bg-gray-900 rounded shadow  transition-shadow duration-300 overflow-hidden"
             >
-              <figure className="px-5 pt-5">
+              <figure className="w-full h-52 bg-gray-100 dark:bg-gray-800 flex items-center justify-center p-4 relative">
                 <img
-                  src={sameBook.imageURL[0]}
-                  alt="Shoes"
-                  className="rounded-xl"
+                  src={book.imageURL[0]}
+                  alt={book.title}
+                  className="object-contain h-full max-w-full transition-transform duration-300 group-hover:scale-105"
                 />
-              </figure>
-              <div className="card-body items-center text-center">
-                <h2 className="card-title">{sameBook?.title}</h2>
-                <p className="text-cyan-600 font-bold">{sameBook?.price} $</p>
-                <p className="text-cyan-600 font-bold">
-                  Category: {sameBook?.category}
-                </p>
-                {inStock ? (
-                  <p>InStock: Available</p>
-                ) : (
-                  <p>InStock: Unavailable</p>
-                )}
 
-                <div className="flex gap-2 flex-wrap font-[inter] justify-center">
-                  {admin == "admin" ? (
-                    <div className="flex  flex-wrap justify-center gap-2">
-                      <Link to={`/book-details/${sameBook?._id}`}>
-                        <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
-                          Details
-                        </button>
-                      </Link>
-                      <Link to={`/book-update/${sameBook?._id}`}>
-                        <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
-                          Update
-                        </button>
-                      </Link>
-                      <BookDelete id={sameBook?._id}></BookDelete>
-                      <Link to="/">
-                        <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
-                          Home
-                        </button>
-                      </Link>
-                    </div>
+                {/* Add To Cart button inside the image area, centered */}
+                <button className="absolute inset-0 flex items-center justify-center bg-black/40 sm:bg-transparent sm:opacity-0 sm:group-hover:opacity-100 sm:pointer-events-none sm:group-hover:pointer-events-auto transition-opacity duration-300">
+                  <span className="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-white text-sm font-medium rounded-md shadow flex items-center gap-2">
+                    Add To Cart <IoMdCart className="text-lg" />
+                  </span>
+                </button>
+              </figure>
+
+              <div className="p-4 text-center space-y-3">
+                <h2 className="text-lg font-semibold text-gray-800 dark:text-white truncate">
+                  {book.title}
+                </h2>
+                <p className="text-cyan-600 font-bold text-sm">${book.price}</p>
+                <p
+                  className={`text-sm font-medium ${
+                    inStock ? "text-green-600" : "text-red-500"
+                  }`}
+                >
+                  InStock: {inStock ? "Available" : "Unavailable"}
+                </p>
+
+                {/* Action Buttons */}
+                <div className="flex flex-wrap justify-center gap-2 pt-2">
+                  <Link to={`/book-details/${book._id}`}>
+                    <button className="px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700">
+                      Details
+                    </button>
+                  </Link>
+                  {admin === "admin" ? (
+                    <Link to={`/book-update/${book._id}`}>
+                      <button className="px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700">
+                        Update
+                      </button>
+                    </Link>
                   ) : (
-                    <div className="flex gap-2 flex-wrap justify-center">
-                      <Link to={`/book-details/${sameBook?._id}`}>
-                        <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
-                          Details
-                        </button>
-                      </Link>
-                      <Link to="/">
-                        <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
-                          Home
-                        </button>
-                      </Link>
-                      <Link to={`/book-order/${book._id}`}>
-                        <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
-                          Buy Now
-                        </button>
-                      </Link>
-                    </div>
+                    <Link to={`/book-order/${book._id}`}>
+                      <button
+                        onClick={handleBuy}
+                        className="px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+                      >
+                        Buy Now
+                      </button>
+                    </Link>
                   )}
                 </div>
               </div>

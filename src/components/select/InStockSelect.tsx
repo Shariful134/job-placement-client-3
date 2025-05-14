@@ -18,18 +18,26 @@ const InStockSelect: React.FC<SelectedProps> = ({ setInStockSelect }) => {
         setInStockSelect(value as "all" | "inStock" | "outOfStock")
       }
     >
-      <SelectTrigger className="w-full border-gray-500">
+      <SelectTrigger className="w-full border-gray-500 dark:text-gray-300">
         <SelectValue placeholder="Select Stock" />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="dark:bg-gray-900">
         <SelectGroup>
-          <SelectItem key="all" value="all">
+          <SelectItem className="dark:text-gray-300" key="all" value="all">
             All Books
           </SelectItem>
-          <SelectItem key="inStock" value="inStock">
+          <SelectItem
+            className="dark:text-gray-300"
+            key="inStock"
+            value="inStock"
+          >
             InStock
           </SelectItem>
-          <SelectItem key="outOfStock" value="outOfStock">
+          <SelectItem
+            className="dark:text-gray-300"
+            key="outOfStock"
+            value="outOfStock"
+          >
             outOfStock
           </SelectItem>
         </SelectGroup>

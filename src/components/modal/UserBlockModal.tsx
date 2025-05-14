@@ -35,7 +35,7 @@ const UserBlockModal = ({ id }: { id: string | undefined }) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger>
-        <Button className=" border-1 text-block rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
+        <Button className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700">
           Block
         </Button>
       </AlertDialogTrigger>

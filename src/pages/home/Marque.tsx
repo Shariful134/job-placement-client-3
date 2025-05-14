@@ -49,7 +49,7 @@ const ReviewCard = ({
   return (
     <figure
       className={cn(
-        "relative h-full w-64 cursor-pointer overflow-hidden rounded-xl border-2 border-slate-200 bg-white p-4"
+        "relative h-full w-64 cursor-pointer overflow-hidden rounded-xl border-2 border-slate-200 bg-white p-4 dark:bg-gray-900"
         // light styles
       )}
     >
@@ -63,8 +63,8 @@ const ReviewCard = ({
             src={img}
           />
           <div className="flex flex-col">
-            <p className="text-md font-semibold dark:text-white/40">{name}</p>
-            <p className="text-md  dark:text-white/40">{body}</p>
+            <p className="text-md font-semibold dark:text-gray-300 ">{name}</p>
+            <p className="text-md  dark:text-gray-300">{body}</p>
           </div>
         </div>
       </div>

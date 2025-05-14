@@ -90,7 +90,9 @@ const BlogsComponents = () => {
       <div className="relative">
         <img src={photo} width={1900} height={600} alt="BannerImg"></img>
         <div className="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center">
-          <h2 className=" text-xs md:text-xl lg:text-5xl">NewsLatter</h2>
+          <h2 className=" text-xs md:text-xl lg:text-5xl dark:text-gray-300">
+            NewsLatter
+          </h2>
           <div className="flex items-center text-xs md:text-sm gap-1">
             <Link className="hover:underline hover:text-fuchsia-700 " to={"/"}>
               Home
@@ -118,23 +120,23 @@ const BlogsComponents = () => {
                 className="rounded-lg"
               ></img>
               <div className="flex items-center gap-5 pt-1 pb-2">
-                <div className="flex justify-center items-center  text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
+                <div className="dark:text-gray-300 flex justify-center items-center  text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
                   {" "}
                   <RiAdminFill />
                   Admin
                 </div>
-                <div className="flex justify-center items-center  text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
+                <div className="dark:text-gray-300 flex justify-center items-center  text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
                   {" "}
                   <MdDateRange />
                   {curretntdate}
                 </div>
-                <div className=" sm:flex hidden  justify-center items-center text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
+                <div className="dark:text-gray-300 sm:flex hidden  justify-center items-center text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
                   {" "}
                   <FaTag />
                   HandeMade
                 </div>
               </div>
-              <h2 className="text-2xl font-semibold text-gray-700 ">
+              <h2 className="text-2xl dark:text-gray-300 font-semibold text-gray-700 ">
                 <Link
                   className="hover:underline hover:text-purple-500"
                   to={article?.url}
@@ -143,7 +145,7 @@ const BlogsComponents = () => {
                 </Link>
               </h2>
               {expandedIndex === index ? (
-                <p className="text-sm md:text-sm lg:text-lg text-gray-700">
+                <p className="text-sm md:text-sm lg:text-lg text-gray-700 dark:text-gray-300">
                   {article?.content?.split("").slice(0, 500)}
                   <button
                     className="text-purple-500 hover:underline"
@@ -153,7 +155,7 @@ const BlogsComponents = () => {
                   </button>
                 </p>
               ) : (
-                <p className="text-sm md:text-sm lg:text-lg text-gray-700">
+                <p className="dark:text-gray-300 text-sm md:text-sm lg:text-lg text-gray-700">
                   {article?.content?.split("").slice(0, 50)}
                   <button
                     className="text-purple-500 hover:underline"
@@ -175,23 +177,23 @@ const BlogsComponents = () => {
                 className="rounded-lg"
               ></img>
               <div className="flex  items-center gap-5 pt-1 pb-2">
-                <div className="flex justify-center items-center  text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
+                <div className="dark:text-gray-300 flex justify-center items-center  text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
                   {" "}
                   <RiAdminFill />
                   Admin
                 </div>
-                <div className="flex justify-center items-center  text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
+                <div className="flex dark:text-gray-300 justify-center items-center  text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
                   {" "}
                   <MdDateRange />
                   {curretntdate}
                 </div>
-                <div className=" sm:flex hidden  justify-center items-center text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
+                <div className="dark:text-gray-300 sm:flex hidden  justify-center items-center text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
                   {" "}
                   <FaTag />
                   HandeMade
                 </div>
               </div>
-              <h2 className="text-2xl font-semibold text-gray-700">
+              <h2 className="text-2xl dark:text-gray-300 font-semibold text-gray-700">
                 <Link
                   className="hover:underline hover:text-purple-500"
                   to={article?.url}
@@ -200,7 +202,7 @@ const BlogsComponents = () => {
                 </Link>
               </h2>
               {expandedIndexIndustrial === index ? (
-                <p className="text-sm md:text-sm lg:text-lg text-gray-700">
+                <p className="text-sm dark:text-gray-300 md:text-sm lg:text-lg text-gray-700">
                   {article?.content?.split("").slice(0, 500)}
                   <button
                     className="text-purple-500 hover:underline"
@@ -210,7 +212,7 @@ const BlogsComponents = () => {
                   </button>
                 </p>
               ) : (
-                <p className="text-sm md:text-sm lg:text-lg text-gray-700">
+                <p className=" dark:text-gray-300 text-sm md:text-sm lg:text-lg text-gray-700">
                   {article?.content?.split("").slice(0, 50)}
                   <button
                     className="text-purple-500 hover:underline"
@@ -231,27 +233,29 @@ const BlogsComponents = () => {
             className="w-full"
           ></Input>
           <div>
-            <h2 className="text-2xl py-3 bg-gray-200 my-5 ps-3">Categories</h2>
+            <h2 className="text-2xl py-3 bg-gray-200 my-5 ps-3 dark:text-black">
+              Categories
+            </h2>
             <div className="flex justify-between pt-5 ">
-              <p className="text-sm md:text-sm lg:text-lg text-gray-700 ps-3">
+              <p className="text-sm md:text-sm lg:text-lg text-gray-700 ps-3 dark:text-gray-300">
                 Educational
               </p>{" "}
               <p>{education?.length}</p>
             </div>
             <div className="flex justify-between pt-3">
-              <p className="text-sm md:text-sm lg:text-lg text-gray-700 ps-3">
+              <p className="text-sm md:text-sm lg:text-lg text-gray-700 ps-3 dark:text-gray-300">
                 Industrial
               </p>{" "}
               <p>{industrial?.length}</p>
             </div>
             <div className="flex justify-between pt-3 ">
-              <p className="text-sm md:text-sm lg:text-lg text-gray-700 ps-3">
+              <p className="text-sm md:text-sm lg:text-lg text-gray-700 ps-3 dark:text-gray-300">
                 Recently Posted
               </p>{" "}
               <p>{recentlyPosted}</p>
             </div>
             <div className="flex justify-between pt-3">
-              <p className="text-sm md:text-sm lg:text-lg text-gray-700 ps-3 ">
+              <p className="text-sm md:text-sm lg:text-lg text-gray-700 ps-3  dark:text-gray-300">
                 Recently Updated
               </p>{" "}
               <p>{recentlyUpdated}</p>
@@ -261,7 +265,7 @@ const BlogsComponents = () => {
           <div>
             {searchQuery === "" ? (
               <div>
-                <h2 className="text-2xl py-3 bg-gray-200 my-5 ps-3 ">
+                <h2 className="text-2xl py-3 bg-gray-200 my-5 ps-3 dark:text-black ">
                   Recently Updates
                 </h2>
                 <div>
@@ -296,7 +300,7 @@ const BlogsComponents = () => {
                       </div>
                     ))}
                 </div>{" "}
-                <h2 className="text-2xl py-3 bg-gray-200 my-5 ps-3 ">
+                <h2 className="text-2xl py-3 bg-gray-200 my-5 ps-3 dark:text-black">
                   Recently Posted
                 </h2>
                 <div>
@@ -367,7 +371,9 @@ const BlogsComponents = () => {
             ) : (
               <div>
                 {" "}
-                <h2 className="text-2xl pt-10">Search Result</h2>
+                <h2 className="text-2xl pt-10 dark:text-gray-300">
+                  Search Result
+                </h2>
                 {educationFiltered?.length > 0 ? (
                   <div>
                     {educationFiltered?.map((article: NewsArticle, index) => (
@@ -400,7 +406,7 @@ const BlogsComponents = () => {
                     ))}
                   </div>
                 ) : (
-                  <p>Not Matche</p>
+                  <p className="dark:text-gray-300">Not Matche</p>
                 )}
                 <div>
                   {industrialFiltered?.map((article: NewsArticle, index) => (
@@ -443,24 +449,30 @@ const BlogsComponents = () => {
           <div className="bg-gray-200 grid grid-cols-12 w-full">
             <p
               onClick={() => setSelectTab("All News")}
-              className={`py-2 sm:py-4 col-span-4 text-center ${
-                selectTab === "All News" ? "bg-purple-500 text-white" : ""
+              className={`py-2 sm:py-4 col-span-4 text-center  dark:text-black ${
+                selectTab === "All News"
+                  ? "bg-purple-500 text-white dark:text-white"
+                  : ""
               }`}
             >
               All News{" "}
             </p>
             <p
               onClick={() => setSelectTab("Industry")}
-              className={`py-2 sm:py-4 col-span-4 text-center ${
-                selectTab === "Industry" ? "bg-purple-500 text-white" : ""
+              className={`py-2 sm:py-4 col-span-4 text-center dark:text-black ${
+                selectTab === "Industry"
+                  ? "bg-purple-500 text-white dark:text-white"
+                  : ""
               }`}
             >
               Industry
             </p>
             <p
               onClick={() => setSelectTab("Education")}
-              className={`py-2 sm:py-4  col-span-4 text-center ${
-                selectTab === "Education" ? "bg-purple-500 text-white" : ""
+              className={`py-2 sm:py-4  col-span-4 text-center dark:text-black ${
+                selectTab === "Education"
+                  ? "bg-purple-500 text-white dark:text-white"
+                  : ""
               }`}
             >
               Education
@@ -480,24 +492,24 @@ const BlogsComponents = () => {
                       alt="blogImage"
                       className="rounded-lg"
                     ></img>
-                    <div className="flex items-center gap-5 pt-1 pb-2">
+                    <div className="dark:text-gray-300 flex items-center gap-5 pt-1 pb-2">
                       <div className="flex justify-center items-center  text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
                         {" "}
                         <RiAdminFill />
                         Admin
                       </div>
-                      <div className="flex justify-center items-center  text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
+                      <div className="dark:text-gray-300 flex justify-center items-center  text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
                         {" "}
                         <MdDateRange />
                         {curretntdate}
                       </div>
-                      <div className=" sm:flex hidden  justify-center items-center text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
+                      <div className="dark:text-gray-300 sm:flex hidden  justify-center items-center text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
                         {" "}
                         <FaTag />
                         HandeMade
                       </div>
                     </div>
-                    <h2 className="text-2xl font-semibold text-gray-700 ">
+                    <h2 className="text-2xl dark:text-gray-300 font-semibold text-gray-700 ">
                       <Link
                         className="hover:underline hover:text-purple-500"
                         to={article?.url}
@@ -506,7 +518,7 @@ const BlogsComponents = () => {
                       </Link>
                     </h2>
                     {expandedIndex === index ? (
-                      <p className="text-sm md:text-sm lg:text-lg text-gray-700">
+                      <p className="text-sm dark:text-gray-300 md:text-sm lg:text-lg text-gray-700">
                         {article?.content?.split("").slice(0, 500)}
                         <button
                           className="text-purple-500 hover:underline"
@@ -516,7 +528,7 @@ const BlogsComponents = () => {
                         </button>
                       </p>
                     ) : (
-                      <p className="text-sm md:text-sm lg:text-lg text-gray-700">
+                      <p className="text-sm dark:text-gray-300 md:text-sm lg:text-lg text-gray-700">
                         {article?.content?.split("").slice(0, 50)}
                         <button
                           className="text-purple-500 hover:underline"
@@ -537,18 +549,18 @@ const BlogsComponents = () => {
                       alt="blogImage"
                       className="rounded-lg"
                     ></img>
-                    <div className="flex items-center gap-5 pt-1 pb-2">
+                    <div className="dark:text-gray-300 flex items-center gap-5 pt-1 pb-2">
                       <div className="flex justify-center items-center  text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
                         {" "}
                         <RiAdminFill />
                         Admin
                       </div>
-                      <div className="flex justify-center items-center  text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
+                      <div className=" dark:text-gray-300 flex justify-center items-center  text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
                         {" "}
                         <MdDateRange />
                         {curretntdate}
                       </div>
-                      <div className=" sm:flex hidden  justify-center items-center text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
+                      <div className="dark:text-gray-300 sm:flex hidden  justify-center items-center text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
                         {" "}
                         <FaTag />
                         HandeMade
@@ -563,7 +575,7 @@ const BlogsComponents = () => {
                       </Link>
                     </h2>
                     {expandedIndexIndustrial === index ? (
-                      <p className="text-sm md:text-sm lg:text-lg text-gray-700">
+                      <p className="dark:text-gray-300 text-sm md:text-sm lg:text-lg text-gray-700">
                         {article?.content?.split("").slice(0, 500)}
                         <button
                           className="text-purple-500 hover:underline"
@@ -573,7 +585,7 @@ const BlogsComponents = () => {
                         </button>
                       </p>
                     ) : (
-                      <p className="text-sm md:text-sm lg:text-lg text-gray-700">
+                      <p className="dark:text-gray-300 text-sm md:text-sm lg:text-lg text-gray-700">
                         {article?.content?.split("").slice(0, 50)}
                         <button
                           className="text-purple-500 hover:underline"
@@ -600,17 +612,17 @@ const BlogsComponents = () => {
                     className="rounded-lg"
                   ></img>
                   <div className="flex items-center gap-5 pt-1 pb-2">
-                    <div className="flex justify-center items-center  text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
+                    <div className="dark:text-gray-300 flex justify-center items-center  text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
                       {" "}
                       <RiAdminFill />
                       Admin
                     </div>
-                    <div className="flex justify-center items-center  text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
+                    <div className="dark:text-gray-300 flex justify-center items-center  text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
                       {" "}
                       <MdDateRange />
                       {curretntdate}
                     </div>
-                    <div className=" sm:flex hidden  justify-center items-center text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
+                    <div className="dark:text-gray-300  sm:flex hidden  justify-center items-center text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
                       {" "}
                       <FaTag />
                       HandeMade
@@ -625,7 +637,7 @@ const BlogsComponents = () => {
                     </Link>
                   </h2>
                   {expandedIndexIndustrial === index ? (
-                    <p className="text-sm md:text-sm lg:text-lg text-gray-700">
+                    <p className="text-sm dark:text-gray-300 md:text-sm lg:text-lg text-gray-700">
                       {article?.content?.split("").slice(0, 500)}
                       <button
                         className="text-purple-500 hover:underline"
@@ -635,7 +647,7 @@ const BlogsComponents = () => {
                       </button>
                     </p>
                   ) : (
-                    <p className="text-sm md:text-sm lg:text-lg text-gray-700">
+                    <p className="text-sm dark:text-gray-300 md:text-sm lg:text-lg text-gray-700">
                       {article?.content?.split("").slice(0, 50)}
                       <button
                         className="text-purple-500 hover:underline"
@@ -660,17 +672,17 @@ const BlogsComponents = () => {
                     className="rounded-lg"
                   ></img>
                   <div className="flex items-center gap-5 pt-1 pb-2">
-                    <div className="flex justify-center items-center  text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
+                    <div className="flex dark:text-gray-300 justify-center items-center  text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
                       {" "}
                       <RiAdminFill />
                       Admin
                     </div>
-                    <div className="flex justify-center items-center  text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
+                    <div className="flex dark:text-gray-300 justify-center items-center  text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
                       {" "}
                       <MdDateRange />
                       {curretntdate}
                     </div>
-                    <div className=" sm:flex hidden  justify-center items-center text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
+                    <div className="dark:text-gray-300 sm:flex hidden  justify-center items-center text-xs sm:text-sm md:text-sm lg:text-lg text-gray-700 ">
                       {" "}
                       <FaTag />
                       HandeMade
@@ -685,7 +697,7 @@ const BlogsComponents = () => {
                     </Link>
                   </h2>
                   {expandedIndex === index ? (
-                    <p className="text-sm md:text-sm lg:text-lg text-gray-700">
+                    <p className="text-sm dark:text-gray-300 md:text-sm lg:text-lg text-gray-700">
                       {article?.content?.split("").slice(0, 500)}
                       <button
                         className="text-purple-500 hover:underline"
@@ -695,7 +707,7 @@ const BlogsComponents = () => {
                       </button>
                     </p>
                   ) : (
-                    <p className="text-sm md:text-sm lg:text-lg text-gray-700">
+                    <p className="text-sm dark:text-gray-300 md:text-sm lg:text-lg text-gray-700">
                       {article?.content?.split("").slice(0, 50)}
                       <button
                         className="text-purple-500 hover:underline"

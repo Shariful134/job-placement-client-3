@@ -5,7 +5,7 @@ import NavBar from "../navBar/NavBar";
 
 const MainLayout = () => {
   return (
-    <div>
+    <div className="dark:bg-black">
       <NavBar></NavBar>
       <main className="min-h-screen">
         <Outlet></Outlet>

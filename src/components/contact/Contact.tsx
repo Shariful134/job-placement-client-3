@@ -29,10 +29,10 @@ const ContactComponents = () => {
         </div>
       </div>
       <div className="mt-5 flex flex-col items-center justify-center">
-        <h2 className="text-xl md:text-2xl lg:text-4xl text-center md:text-start max-w-[344px] font-semibold ">
+        <h2 className="text-xl md:text-2xl lg:text-4xl text-center md:text-start max-w-[344px] font-semibold dark:text-gray-300">
           Get In Touch
         </h2>
-        <p className="text-sm md:text-sm lg:text-lg mt-4 max-w-[644px] text-center ">
+        <p className="text-sm md:text-sm lg:text-lg mt-4 max-w-[644px] text-center dark:text-gray-300">
           For More Information About Our Product & Services. Please Feel Free To
           Drop Us An Email. Our Staff Always Be There To Help You Out. Do Not
           Hesitate!
@@ -41,77 +41,85 @@ const ContactComponents = () => {
       <div className="mt-10 md:mt-20 grid grid-cols-2 gap-5">
         <div className="flex flex-col gap-10">
           <div>
-            <div className="flex items-center">
+            <div className="flex items-center dark:text-gray-300">
               <FaLocationDot />
 
-              <h2 className="text-sm sm:text-md md:text-xl text-center md:text-start font-semibold ">
+              <h2 className="text-sm sm:text-md md:text-xl text-center md:text-start font-semibold dark:text-gray-300">
                 Address
               </h2>
             </div>
-            <p className="text-sm md:text-sm lg:text-lg ps-5 ">
+            <p className="text-sm md:text-sm lg:text-lg ps-5 dark:text-gray-300">
               236 5th SE Avenue, New York NY10000, United States
             </p>
           </div>
           <div>
-            <div className="flex gap-1 items-center">
+            <div className="flex gap-1 items-center dark:text-gray-300">
               <FaClock />
 
               <h2 className="text-sm sm:text-md md:text-xl text-center md:text-start font-semibold ">
                 Working Time
               </h2>
             </div>
-            <p className="text-sm md:text-sm lg:text-lg ps-5 ">
+            <p className="text-sm md:text-sm lg:text-lg ps-5 dark:text-gray-300">
               Monday-Friday: 9:00 - 22:00 Saturday-Sunday: 9:00 - 21:00
             </p>
           </div>
           <div>
-            <div className="flex gap-1 items-center">
+            <div className="flex gap-1 items-center dark:text-gray-300">
               <FaPhone />
 
               <h2 className="text-sm sm:text-md md:text-xl text-center md:text-start font-semibold ">
                 Phone
               </h2>
             </div>
-            <p className="text-sm md:text-sm lg:text-lg ps-5 ">
+            <p className="text-sm md:text-sm lg:text-lg ps-5 dark:text-gray-300">
               Mobile: +(84) 546-6789 Hotline: +(84) 456-6789
             </p>
           </div>
         </div>
         <div className="flex flex-col gap-5">
           <div>
-            <p className="text-sm md:text-sm lg:text-lg ">Your Name</p>
+            <p className="text-sm md:text-sm lg:text-lg dark:text-gray-300">
+              Your Name
+            </p>
             <Input
               type="text"
               placeholder="name"
-              className="border-1 border-gray-400 max-w-[528px]"
+              className="border-1 border-gray-400 max-w-[528px] dark:text-gray-300"
             />
           </div>
           <div>
-            <p className="text-sm md:text-sm lg:text-lg ">Email</p>
+            <p className="text-sm md:text-sm lg:text-lg dark:text-gray-300">
+              Email
+            </p>
             <Input
               type="text"
               placeholder="Email"
-              className="border-1 border-gray-400 max-w-[528px]"
+              className="border-1 border-gray-400 max-w-[528px] dark:text-gray-300"
             />
           </div>
           <div>
-            <p className="text-sm md:text-sm lg:text-lg ">Subject</p>
+            <p className="text-sm md:text-sm lg:text-lg dark:text-gray-300">
+              Subject
+            </p>
             <Input
               type="text"
               placeholder="subject"
-              className="border-1 border-gray-400 max-w-[528px]"
+              className="border-1 border-gray-400 max-w-[528px] dark:text-gray-300"
             />
           </div>
           <div>
-            <p className="text-sm md:text-sm lg:text-lg ">Message</p>
+            <p className="text-sm md:text-sm lg:text-lg dark:text-gray-300">
+              Message
+            </p>
 
             <Textarea
               placeholder="message"
-              className="border-1 border-gray-400 max-w-[528px] "
+              className="border-1 border-gray-400 max-w-[528px] dark:text-gray-300"
             />
           </div>
           <div>
-            <Button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 text-black hover:bg-gray-200">
+            <Button className="px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700">
               Submit
             </Button>
           </div>

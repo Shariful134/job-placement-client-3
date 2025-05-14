@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { SkeletonLoading } from "@/components/skeletonLoading/SkeletonLoading";
 import { Button } from "@/components/ui/button";
 // import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -70,6 +71,12 @@ const ModalOrder = ({ id }: { id: string }) => {
       console.log(error);
     }
   };
+
+  if (isLoading) {
+    <div className="min-h-screen flex justify-center items-center">
+      <SkeletonLoading />
+    </div>;
+  }
   return (
     <Popover>
       <PopoverTrigger asChild>
