@@ -32,6 +32,7 @@ const SingleCategoryData = () => {
   const booksRef = useRef<HTMLDivElement | null>(null);
   const [currentPage, setCurrentPage] = useState(6);
   const [searchTerm, setSearchTerm] = useState("");
+  const [opoenFiltereing, setOpenFiltering] = useState<boolean>(false);
   const [categoriesSelect, setCategoriesSelect] = useState<string[]>([]);
   const [authorSelect, setAuthorSelect] = useState<string[]>([]);
   const [pricesSelect, setPricesSelect] = useState<[number, number] | null>(
@@ -94,6 +95,13 @@ const SingleCategoryData = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const handleFiltering = () => {
+    if (opoenFiltereing) {
+      setOpenFiltering(false);
+    } else {
+      setOpenFiltering(true);
+    }
+  };
   const handleBuy = () => {
     if (!token) {
       navigate("/login");
@@ -118,22 +126,41 @@ const SingleCategoryData = () => {
       </div>
       <div className="px-5 grid grid-cols-1 md:grid-cols-12 gap-5 mt-10">
         <div ref={booksRef} className=" col-span-1 md:col-span-3 lg:col-span-2">
-          <div className="grid grid-cols-1 gap-5">
-            <Input
-              className="w-full border-gray-500 "
-              type="search"
-              value={searchTerm}
-              placeholder="Search here"
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <CategorySelect
-              categories={categories}
-              setCategoriesSelect={setCategoriesSelect}
-            />
-            <Authorselect authors={authors} setAuthorSelect={setAuthorSelect} />
-            <PriceSelect setPricesSelect={setPricesSelect} />
-            <InStockSelect setInStockSelect={setInStockSelect} />
-          </div>
+          {!opoenFiltereing && (
+            <button
+              className="inline sm:hidden w-full px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+              onClick={handleFiltering}
+            >
+              Show Filtering
+            </button>
+          )}
+          {opoenFiltereing && (
+            <div className="grid grid-cols-1 gap-5">
+              <button
+                className="inline sm:hidden w-full px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+                onClick={handleFiltering}
+              >
+                Hide Filtering
+              </button>
+              <Input
+                className="w-full border-gray-500 dark:text-gray-300"
+                type="search"
+                value={searchTerm}
+                placeholder="Search here"
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <CategorySelect
+                categories={categories}
+                setCategoriesSelect={setCategoriesSelect}
+              />
+              <Authorselect
+                authors={authors}
+                setAuthorSelect={setAuthorSelect}
+              />
+              <PriceSelect setPricesSelect={setPricesSelect} />
+              <InStockSelect setInStockSelect={setInStockSelect} />
+            </div>
+          )}
         </div>
         <div className="col-span-1 md:col-span-9 lg:col-span-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 bg-[#fafafa] dark:bg-black">
