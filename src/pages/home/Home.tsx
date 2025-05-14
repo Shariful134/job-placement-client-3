@@ -27,9 +27,9 @@ const Home = () => {
     return <Skeleton />;
   }
   return (
-    <div className="pt-16 bg-[#fafafa]">
+    <div className="pt-16 bg-[#fafafa] dark:bg-black">
       <div className="relative">
-        <img className="h-96 w-full" src={bannerImg} alt="" />
+        <img className="h-99 w-full" src={bannerImg} alt="" />
         <div className="hidden sm:block absolute top-20 left-1/9 -translate-x-[6-%] bg-red-100/45 font-[inter] p-4 rounded-lg max-w-93 text-center">
           <h2 className="text-3xl mb-2 font-bold">Your Best Companion</h2>
           <p>

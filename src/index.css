@@ -48,7 +48,7 @@ body {
 }
 
 .dark {
-  --background: hsl(0 0% 3.9%);
+  --background: black;
   --foreground: hsl(0 0% 98%);
   --card: hsl(0 0% 3.9%);
   --card-foreground: hsl(0 0% 98%);

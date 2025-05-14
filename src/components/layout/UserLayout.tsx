@@ -12,7 +12,9 @@ const UserLayout = () => {
         <div className="flex flex-1 flex-col">
           <div className="@container/main flex flex-1 flex-col gap-2">
             <div className="flex flex-col gap-4 ">
-              <Outlet></Outlet>
+              <main className="min-h-screen">
+                <Outlet></Outlet>
+              </main>
             </div>
           </div>
         </div>

@@ -13,6 +13,7 @@ import { MdDashboardCustomize } from "react-icons/md";
 import { Button } from "../ui/button";
 import { useGetAllcategoryQuery } from "@/redux/category/categoryApi";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import { ModeToggle } from "../modeToggle/modeToggle";
 
 const NavBar = () => {
   const { data: allData } = useGetAllcategoryQuery(undefined);
@@ -35,10 +36,10 @@ const NavBar = () => {
   const categoryData = allData?.data?.map((name: any) => name.name);
   console.log(categoryData);
   return (
-    <div className="  sticky top-0 z-10 w-full bg-slate-300">
+    <div className="  sticky top-0 z-10 w-full bg-slate-300 dark:bg-black">
       <div className="navbar container mx-auto px-4 font-serif ">
         {/* Navbar Start (Left Part) */}
-        <div className="navbar-start">
+        <div className="navbar-start w-[40%]">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
               <svg
@@ -140,18 +141,22 @@ const NavBar = () => {
               </NavLink>
             </ul>
           </div>
-          <img className="w-[100px] ms-2" src={logoImage} alt="logo" />
+          <img
+            className="w-[100px] ms-2 hidden sm:block"
+            src={logoImage}
+            alt="logo"
+          />
         </div>
 
         {/* Navbar Center (Only visible in large screen) */}
-        <div className="navbar-end hidden lg:flex">
+        <div className="navbar-end w-[60%] hidden lg:flex">
           <ul className="menu menu-horizontal px-1 text-black gap-5">
             <NavLink
               to="/"
               className={({ isActive }) =>
                 isActive
-                  ? "text-cyan-600 font-bold  border-cyan-600 underline text-lg"
-                  : "hover:text-cyan-600 hover:underline text-lg"
+                  ? "text-cyan-600 font-bold  border-cyan-600 underline text-lg dark:text-gray-300"
+                  : "hover:text-cyan-600 hover:underline text-lg dark:text-gray-300"
               }
             >
               Home
@@ -159,13 +164,14 @@ const NavBar = () => {
             <div className="dropdown dropdown-hover">
               <label
                 tabIndex={0}
-                className="text-lg cursor-pointer hover:text-cyan-600 flex items-center justify-center"
+                className="text-lg cursor-pointer hover:text-cyan-600 flex items-center justify-center dark:text-gray-300"
               >
-                Category <RiArrowDropDownLine className=" text-2xl" />
+                Category{" "}
+                <RiArrowDropDownLine className="dark:text-gray-300 text-2xl" />
               </label>
               <ul
                 tabIndex={0}
-                className="dropdown-content z-[1] menu  shadow bg-base-100 rounded-box w-52"
+                className="dropdown-content z-[1] menu  shadow bg-base-100 rounded-box w-52 dark:bg-gray-900 dark:text-gray-300"
               >
                 {categoryData?.map((category: any) => (
                   <li>
@@ -187,8 +193,8 @@ const NavBar = () => {
               to="/get-books"
               className={({ isActive }) =>
                 isActive
-                  ? "text-cyan-600 font-bold underline text-lg border-cyan-600"
-                  : "hover:text-cyan-600 hover:underline text-lg"
+                  ? "text-cyan-600 font-bold underline text-lg border-cyan-600 dark:text-gray-300"
+                  : "hover:text-cyan-600 hover:underline text-lg dark:text-gray-300"
               }
             >
               Book
@@ -198,8 +204,8 @@ const NavBar = () => {
               to="/about"
               className={({ isActive }) =>
                 isActive
-                  ? "text-cyan-600 font-bold underline text-lg border-cyan-600"
-                  : "hover:text-cyan-600 hover:underline text-lg"
+                  ? "text-cyan-600 font-bold underline text-lg border-cyan-600 dark:text-gray-300"
+                  : "hover:text-cyan-600 hover:underline text-lg dark:text-gray-300"
               }
             >
               About
@@ -208,8 +214,8 @@ const NavBar = () => {
               to="/blogs"
               className={({ isActive }) =>
                 isActive
-                  ? "text-cyan-600 font-bold underline text-lg border-cyan-600"
-                  : "hover:text-cyan-600 hover:underline text-lg"
+                  ? "text-cyan-600 font-bold underline text-lg border-cyan-600 dark:text-gray-300"
+                  : "hover:text-cyan-600 hover:underline text-lg dark:text-gray-300"
               }
             >
               Blog
@@ -218,77 +224,90 @@ const NavBar = () => {
               to="/contact"
               className={({ isActive }) =>
                 isActive
-                  ? "text-cyan-600 font-bold underline text-lg border-cyan-600"
-                  : "hover:text-cyan-600 hover:underline text-lg"
+                  ? "text-cyan-600 font-bold underline text-lg border-cyan-600 dark:text-gray-300"
+                  : "hover:text-cyan-600 hover:underline text-lg dark:text-gray-300"
               }
             >
               Contact
             </NavLink>
           </ul>
         </div>
-
+        {/* <div>
+          <ModeToggle className />
+        </div> */}
         {/* Navbar End (Right Part) */}
         <div
           className={`navbar-end w-full flex gap-4 ${
-            user ? "lg:w-14" : "lg:w-25"
+            user ? "lg:w-25" : "lg:w-42"
           } `}
         >
           {user ? (
-            <div className="dropdown dropdown-end">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn btn-ghost btn-circle avatar"
-              >
-                <div className="w-10 rounded-full border-2 border-gray-400">
-                  <img
-                    alt="user"
-                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                  />
-                </div>
+            <div>
+              <div>
+                <ModeToggle />
               </div>
-              <ul
-                tabIndex={0}
-                className="menu  menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-              >
-                <p className="font-bold ">My Account</p>
-                <li>
-                  <a href={`/${user?.role}/dashboard`} className="text-sm">
-                    <CgProfile /> Profile
-                  </a>
-                </li>
 
-                <li>
-                  <a href={`/${user?.role}/dashboard`} className="text-sm">
-                    <MdDashboardCustomize /> Dashboard
-                  </a>
-                </li>
-                {user ? (
+              <div className="dropdown dropdown-end">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn btn-ghost btn-circle avatar"
+                >
+                  <div className="w-10 rounded-full border-2 border-gray-400">
+                    <img
+                      alt="user"
+                      src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                    />
+                  </div>
+                </div>
+                <ul
+                  tabIndex={0}
+                  className="menu  menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+                >
+                  <p className="font-bold ">My Account</p>
                   <li>
-                    <button onClick={handlLogOut}>
-                      <AiOutlineLogout /> LogOut
-                    </button>
+                    <a href={`/${user?.role}/dashboard`} className="text-sm">
+                      <CgProfile /> Profile
+                    </a>
                   </li>
-                ) : (
-                  <>
+
+                  <li>
+                    <a href={`/${user?.role}/dashboard`} className="text-sm">
+                      <MdDashboardCustomize /> Dashboard
+                    </a>
+                  </li>
+                  {user ? (
                     <li>
-                      <a href="/login">
-                        <AiOutlineLogin /> Login
-                      </a>
+                      <button onClick={handlLogOut}>
+                        <AiOutlineLogout /> LogOut
+                      </button>
                     </li>
-                    <li>
-                      <a href="/login">
-                        <LiaRegistered /> Registration
-                      </a>
-                    </li>
-                  </>
-                )}
-              </ul>
+                  ) : (
+                    <>
+                      <li>
+                        <a href="/login">
+                          <AiOutlineLogin /> Login
+                        </a>
+                      </li>
+                      <li>
+                        <a href="/login">
+                          <LiaRegistered /> Registration
+                        </a>
+                      </li>
+                    </>
+                  )}
+                </ul>
+              </div>
             </div>
           ) : (
-            <Button className="bg-slate-400 text-black text-lg hover:bg-slate-400">
-              <a href="/login">Login</a>
-            </Button>
+            <div className="flex gap-5">
+              <div>
+                <ModeToggle />
+              </div>
+              <Button className="bg-slate-400 text-black text-lg hover:bg-slate-400">
+                <a href="/login">Login</a>
+              </Button>
+            </div>
           )}
         </div>
       </div>
