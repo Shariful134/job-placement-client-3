@@ -89,7 +89,7 @@ const Order = () => {
     );
   }
   return (
-    <div className="container mx-auto pt-18 px-10 flex gap-2 flex-wrap justify-center pb-5">
+    <div className="container mx-auto pt-18 px-10 flex gap-2 flex-col lg:flex-row  justify-center sm:items-center lg:items-start pb-5">
       <div className="card mt-5  w-full max-w-sm shrink-0 shadow">
         <div className="card-body font-[inter] dark:bg-gray-900">
           <div className="flex justify-between items-end">
@@ -178,7 +178,7 @@ const Order = () => {
           </fieldset>
         </div>
       </div>
-      <div className="card rounded font-[inter] dark:bg-gray-900  flex sm:flex-col md:flex-row lg:flex-row  mx-auto max-w-7/12  shadow mt-5 p-5  ">
+      <div className="card  rounded font-[inter] dark:bg-gray-900  flex sm:flex-col md:flex-row lg:flex-row  mx-auto  shadow mt-5 p-5  ">
         <figure>
           <img src={book?.imageURL} alt="Movie" />
         </figure>

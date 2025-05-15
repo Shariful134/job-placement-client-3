@@ -137,7 +137,7 @@ const GetBooks = () => {
         <div ref={booksRef} className=" col-span-1 md:col-span-3 lg:col-span-2">
           {!openFiltereing && (
             <button
-              className="inline sm:hidden w-full px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+              className=" w-full px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
               onClick={handleFiltering}
             >
               Show Filtering
@@ -146,7 +146,7 @@ const GetBooks = () => {
           {openFiltereing && (
             <div className="grid grid-cols-1 gap-5">
               <button
-                className="inline sm:hidden w-full px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+                className=" w-full px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
                 onClick={handleFiltering}
               >
                 Hide Filtering
