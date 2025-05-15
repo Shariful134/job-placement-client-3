@@ -73,7 +73,7 @@ const AllOrder = () => {
   );
 
   const subtotal =
-    currentOrders?.reduce(
+    filteredOrders?.reduce(
       (sum: number, item: any) => sum + Number(item.totalAmount),
       0
     ) ?? 0;
@@ -160,7 +160,7 @@ const AllOrder = () => {
                       <TableCell className="flex flex-wrap gap-2">
                         <Button
                           onClick={() => handleDelete(order._id)}
-                          className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+                          className="text-black btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
                         >
                           Delete
                         </Button>
@@ -192,7 +192,7 @@ const AllOrder = () => {
             {/* Pagination Controls */}
             <div className="flex justify-center mt-4 gap-2">
               <Button
-                className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+                className="text-black btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
                 disabled={currentPage === 1}
                 onClick={() => setCurrentPage((prev) => prev - 1)}
               >
@@ -212,7 +212,7 @@ const AllOrder = () => {
                 </Button>
               ))}
               <Button
-                className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+                className="text-black btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
                 disabled={currentPage === totalPages}
                 onClick={() => setCurrentPage((prev) => prev + 1)}
               >
