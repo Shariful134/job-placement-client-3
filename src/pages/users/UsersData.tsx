@@ -1,7 +1,8 @@
 import SelectForm from "@/components/form/SelectForm";
 import UserBlockModal from "@/components/modal/UserBlockModal";
 import UserUnblockedModal from "@/components/modal/UserUnblockedModal";
-import { SkeletonDemo } from "@/components/skeleton/SkeletonDemo";
+
+import { SkeletonLoading } from "@/components/skeletonLoading/SkeletonLoading";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -100,7 +101,9 @@ const UsersData = () => {
       </div>
 
       {isLoading ? (
-        <SkeletonDemo />
+        <div className="min-h-screen flex justify-center items-center">
+          <SkeletonLoading />
+        </div>
       ) : filteredUsers?.length === 0 ? (
         <h2 className="text-4xl text-center pb-5">No Data</h2>
       ) : (

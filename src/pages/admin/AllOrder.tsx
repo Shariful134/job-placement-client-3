@@ -16,7 +16,7 @@ import {
 import { useEffect, useState } from "react";
 import { FaBook } from "react-icons/fa";
 import { TAllOrder, TOrder } from "./AllOrder.type";
-import { SkeletonDemo } from "@/components/skeleton/SkeletonDemo";
+
 import { Button } from "@/components/ui/button";
 import { SkeletonLoading } from "@/components/skeletonLoading/SkeletonLoading";
 
@@ -86,15 +86,17 @@ const AllOrder = () => {
     }
   };
 
-   if(isLoading){
-       <div className="min-h-screen flex justify-center items-center">
-              <SkeletonLoading />
-            </div>
-    }
+  if (isLoading) {
+    <div className="min-h-screen flex justify-center items-center">
+      <SkeletonLoading />
+    </div>;
+  }
   return (
     <div className="pt-18">
       {isLoading ? (
-        <SkeletonDemo />
+        <div className="min-h-screen flex justify-center items-center">
+          <SkeletonLoading />
+        </div>
       ) : (
         <div>
           <div className="text-center font-[inter] pb-10 pt-5">

@@ -1,4 +1,3 @@
-import { SkeletonDemo } from "@/components/skeleton/SkeletonDemo";
 import { useVerifyOrderQuery } from "@/redux/order/orderApi";
 import { Link, useSearchParams } from "react-router-dom";
 import logo1 from "../../assets/image/logo.png";
@@ -19,9 +18,11 @@ const VerifyOrder = () => {
     </div>;
   }
   return (
-    <div className="pt-20 px-4 md:px-10 bg-[#fafafa] dark:bg-black min-h-screen">
+    <div className="pt-20 pb-10 px-4 md:px-10 bg-[#fafafa] dark:bg-black min-h-screen">
       {isLoading ? (
-        <SkeletonDemo />
+        <div className="min-h-screen flex justify-center items-center">
+          <SkeletonLoading />
+        </div>
       ) : (
         <div className="font-[inter] max-w-screen-lg mx-auto pt-10">
           <div className="py-5 px-4 md:px-10 shadow bg-white dark:bg-gray-900 rounded-md mb-4">

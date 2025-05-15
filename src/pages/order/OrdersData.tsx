@@ -46,37 +46,60 @@ const OrdersData = () => {
   const invoices: TOrderDetails[] = [];
   invoices.push(orderDetails);
   return (
-    <div className="container mx-auto pt-18 bg-[#fafafa] h-screen">
-      <h2 className="text-2xl text-center py-5">Recently Your Order</h2>
-      <Table className="font-[inter]">
-        <TableCaption>A list of your recent invoices.</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Invoice ID</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Method</TableHead>
-            <TableHead>Phone No.</TableHead>
-            <TableHead>Date</TableHead>
-            <TableHead>Product</TableHead>
-            <TableHead>Quantity</TableHead>
-            <TableHead>Amount</TableHead>
+    <div className="container mx-auto pt-18 bg-[#fafafa] dark:bg-black min-h-screen text-gray-800 dark:text-gray-100">
+      <h2 className="text-2xl text-center py-5 text-gray-900 dark:text-gray-300">
+        Recently Your Order
+      </h2>
+      <Table className="font-[inter] w-full border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+        <TableCaption className="text-gray-600 dark:text-gray-300">
+          A list of your recent invoices.
+        </TableCaption>
+        <TableHeader className="bg-gray-100 dark:bg-gray-800">
+          <TableRow className="dark:bg-gray-900">
+            <TableHead className="text-gray-700 dark:text-gray-300">
+              Invoice ID
+            </TableHead>
+            <TableHead className="text-gray-700 dark:text-gray-300">
+              Status
+            </TableHead>
+            <TableHead className="text-gray-700 dark:text-gray-300">
+              Method
+            </TableHead>
+            <TableHead className="text-gray-700 dark:text-gray-300">
+              Phone No.
+            </TableHead>
+            <TableHead className="text-gray-700 dark:text-gray-300">
+              Date
+            </TableHead>
+            <TableHead className="text-gray-700 dark:text-gray-300">
+              Product
+            </TableHead>
+            <TableHead className="text-gray-700 dark:text-gray-300">
+              Quantity
+            </TableHead>
+            <TableHead className="text-gray-700 dark:text-gray-300">
+              Amount
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {invoices.map((invoice) => (
-            <TableRow key={invoice.invoiceId}>
+            <TableRow
+              key={invoice.invoiceId}
+              className="hover:bg-gray-100 dark:hover:bg-gray-700"
+            >
               <TableCell className="font-medium">{invoice.invoiceId}</TableCell>
               <TableCell>{invoice.status}</TableCell>
               <TableCell>{invoice.method}</TableCell>
               <TableCell>{invoice.phone}</TableCell>
               <TableCell>{invoice.date}</TableCell>
               <TableCell>{invoice.title} book</TableCell>
-              <TableCell>{invoice.quantity} </TableCell>
+              <TableCell>{invoice.quantity}</TableCell>
               <TableCell>{invoice.totalPrice}</TableCell>
             </TableRow>
           ))}
         </TableBody>
-        <TableFooter>
+        <TableFooter className="bg-gray-100 dark:bg-gray-900 font-semibold">
           <TableRow>
             <TableCell colSpan={7}>Total</TableCell>
             <TableCell>{orderData?.totalPrice}$</TableCell>

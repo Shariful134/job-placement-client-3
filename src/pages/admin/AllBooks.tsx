@@ -12,7 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { FaBook } from "react-icons/fa";
-import { SkeletonDemo } from "@/components/skeleton/SkeletonDemo";
+
 import {
   useDeletebookMutation,
   useGetAllBooksQuery,
@@ -90,15 +90,17 @@ const AllBookData = () => {
 
   const totalPages = Math.ceil((filteredBooks?.length || 0) / itemsPerPage);
 
-  if(isLoading){
-     <div className="min-h-screen flex justify-center items-center">
-            <SkeletonLoading />
-          </div>
+  if (isLoading) {
+    <div className="min-h-screen flex justify-center items-center">
+      <SkeletonLoading />
+    </div>;
   }
   return (
     <div className="pt-5">
       {isLoading ? (
-        <SkeletonDemo />
+        <div className="min-h-screen flex justify-center items-center">
+          <SkeletonLoading />
+        </div>
       ) : (
         <div className="mb-10 ">
           <div className="text-center font-[inter] pb-10 ">

@@ -1,4 +1,3 @@
-
 import Details from "../books/Details";
 
 import UpdatedBookComponent from "@/components/books/UpdatedBookComponent";
