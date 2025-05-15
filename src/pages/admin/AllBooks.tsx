@@ -97,137 +97,131 @@ const AllBookData = () => {
   }
   return (
     <div className="pt-5">
-      {isLoading ? (
-        <div className="min-h-screen flex justify-center items-center">
-          <SkeletonLoading />
+      <div className="mb-10 ">
+        <div className="text-center font-[inter] pb-10 ">
+          <h2 className="text-3xl mb-2 text-cyan-500">
+            -- <FaBook className="inline" /> All Books Data{" "}
+            <FaBook className="inline" /> --{" "}
+          </h2>
+          <p>
+            Currently, we have a total of {allBookData?.data?.length} Books of
+            Current Time.
+          </p>
         </div>
-      ) : (
-        <div className="mb-10 ">
-          <div className="text-center font-[inter] pb-10 ">
-            <h2 className="text-3xl mb-2 text-cyan-500">
-              -- <FaBook className="inline" /> All Books Data{" "}
-              <FaBook className="inline" /> --{" "}
-            </h2>
-            <p>
-              Currently, we have a total of {allBookData?.data?.length} Books of
-              Current Time.
-            </p>
-          </div>
 
-          {!invoices || invoices.length === 0 ? (
-            <h2 className="text-4xl text-center pb-5">No Data Found!</h2>
-          ) : (
-            <div>
-              <div className="flex flex-wrap flex-start font-[inter] gap-2 mb-5">
-                <div className="w-60">
-                  <Input
-                    className="w-full border-1 border-gray-400"
-                    type="search"
-                    value={searchTerm}
-                    placeholder="Search here"
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                </div>
-                <div className="w-60">
-                  <SelectForm
-                    options={options}
-                    placeholder="Select"
-                    onChange={setSelectedFilter}
-                  />
-                </div>
+        {!invoices || invoices.length === 0 ? (
+          <h2 className="text-4xl text-center pb-5">No Data Found!</h2>
+        ) : (
+          <div>
+            <div className="flex flex-wrap flex-start font-[inter] gap-2 mb-5">
+              <div className="w-60">
+                <Input
+                  className="w-full border-1 border-gray-400"
+                  type="search"
+                  value={searchTerm}
+                  placeholder="Search here"
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
               </div>
-
-              <Table className="font-[inter]">
-                <TableCaption></TableCaption>
-                <TableHeader className="bg-gray-200">
-                  <TableRow className="dark:bg-gray-900">
-                    <TableHead></TableHead>
-                    <TableHead>Title</TableHead>
-                    <TableHead>Author</TableHead>
-                    <TableHead>Category</TableHead>
-                    <TableHead>Price</TableHead>
-                    <TableHead>Quantity</TableHead>
-                    <TableHead>In Stock</TableHead>
-                    <TableHead>Publisher</TableHead>
-                    <TableHead>Publication Date</TableHead>
-                    <TableHead className="text-start">Action</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {paginatedBooks?.length > 0 ? (
-                    paginatedBooks.map((book: any) => (
-                      <TableRow key={book._id}>
-                        <TableCell>{book.index}</TableCell>
-                        <TableCell>{book.title}</TableCell>
-                        <TableCell>{book.author}</TableCell>
-                        <TableCell>{book.categoryName}</TableCell>
-                        <TableCell>{book.price} BDT</TableCell>
-                        <TableCell>{book.quantity}</TableCell>
-                        <TableCell>{book.inStock ? "Yes" : "No"}</TableCell>
-                        <TableCell>{book.publisher}</TableCell>
-                        <TableCell>
-                          {new Date(book.publicationDate).toLocaleDateString()}
-                        </TableCell>
-                        <TableCell className="flex gap-2">
-                          <Button
-                            onClick={() => handleDelete(book._id)}
-                            className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
-                          >
-                            Delete
-                          </Button>
-                          <Link to={`/book-update/${book._id}`}>
-                            <Button className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700">
-                              Update
-                            </Button>
-                          </Link>
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  ) : (
-                    <TableRow>
-                      <TableCell colSpan={10}>No Data Found</TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-
-              {/* Pagination Controls */}
-              <div className="flex justify-center items-center gap-3 mt-4">
-                <Button
-                  className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage === 1}
-                >
-                  Previous
-                </Button>
-                {[...Array(totalPages)].map((_, index) => (
-                  <Button
-                    key={index}
-                    onClick={() => setCurrentPage(index + 1)}
-                    className={
-                      currentPage === index + 1
-                        ? "bg-cyan-500 text-white"
-                        : "bg-cyan-100 text-black"
-                    }
-                  >
-                    {index + 1}
-                  </Button>
-                ))}
-                {/* <span>
-                  Page {currentPage} of {totalPages}
-                </span> */}
-                <Button
-                  className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={currentPage === totalPages}
-                >
-                  Next
-                </Button>
+              <div className="w-60">
+                <SelectForm
+                  options={options}
+                  placeholder="Select"
+                  onChange={setSelectedFilter}
+                />
               </div>
             </div>
-          )}
-        </div>
-      )}
+
+            <Table className="font-[inter]">
+              <TableCaption></TableCaption>
+              <TableHeader className="bg-gray-200">
+                <TableRow className="dark:bg-gray-900">
+                  <TableHead></TableHead>
+                  <TableHead>Title</TableHead>
+                  <TableHead>Author</TableHead>
+                  <TableHead>Category</TableHead>
+                  <TableHead>Price</TableHead>
+                  <TableHead>Quantity</TableHead>
+                  <TableHead>In Stock</TableHead>
+                  <TableHead>Publisher</TableHead>
+                  <TableHead>Publication Date</TableHead>
+                  <TableHead className="text-start">Action</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {paginatedBooks?.length > 0 ? (
+                  paginatedBooks.map((book: any) => (
+                    <TableRow key={book._id}>
+                      <TableCell>{book.index}</TableCell>
+                      <TableCell>{book.title}</TableCell>
+                      <TableCell>{book.author}</TableCell>
+                      <TableCell>{book.categoryName}</TableCell>
+                      <TableCell>{book.price} BDT</TableCell>
+                      <TableCell>{book.quantity}</TableCell>
+                      <TableCell>{book.inStock ? "Yes" : "No"}</TableCell>
+                      <TableCell>{book.publisher}</TableCell>
+                      <TableCell>
+                        {new Date(book.publicationDate).toLocaleDateString()}
+                      </TableCell>
+                      <TableCell className="flex gap-2">
+                        <Button
+                          onClick={() => handleDelete(book._id)}
+                          className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+                        >
+                          Delete
+                        </Button>
+                        <Link to={`/book-update/${book._id}`}>
+                          <Button className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700">
+                            Update
+                          </Button>
+                        </Link>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={10}>No Data Found</TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+
+            {/* Pagination Controls */}
+            <div className="flex justify-center items-center gap-3 mt-4">
+              <Button
+                className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+              >
+                Previous
+              </Button>
+              {[...Array(totalPages)].map((_, index) => (
+                <Button
+                  key={index}
+                  onClick={() => setCurrentPage(index + 1)}
+                  className={
+                    currentPage === index + 1
+                      ? "bg-cyan-500 text-white"
+                      : "bg-cyan-100 text-black"
+                  }
+                >
+                  {index + 1}
+                </Button>
+              ))}
+              {/* <span>
+                  Page {currentPage} of {totalPages}
+                </span> */}
+              <Button
+                className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+              >
+                Next
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

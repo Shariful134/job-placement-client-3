@@ -87,6 +87,11 @@ const UsersData = () => {
     }
   };
 
+  if (isLoading) {
+    <div className="min-h-screen flex justify-center items-center">
+      <SkeletonLoading />
+    </div>;
+  }
   return (
     <div className="px-10 pt-18 ">
       <div className="text-center font-[inter] pb-10 pt-5">
@@ -100,99 +105,91 @@ const UsersData = () => {
         </p>
       </div>
 
-      {isLoading ? (
-        <div className="min-h-screen flex justify-center items-center">
-          <SkeletonLoading />
-        </div>
-      ) : filteredUsers?.length === 0 ? (
-        <h2 className="text-4xl text-center pb-5">No Data</h2>
-      ) : (
-        <div>
-          <div className="flex flex-wrap gap-2 mb-4">
-            <div className="w-60">
-              <Input
-                className="w-full border-1 border-gray-400"
-                type="search"
-                value={searchTerm}
-                placeholder="Search here"
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-            <div className="w-60">
-              <SelectForm
-                options={options}
-                placeholder="Select"
-                onChange={setSelectedFilter}
-              />
-            </div>
+      <div>
+        <div className="flex flex-wrap gap-2 mb-4">
+          <div className="w-60">
+            <Input
+              className="w-full border-1 border-gray-400"
+              type="search"
+              value={searchTerm}
+              placeholder="Search here"
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
           </div>
+          <div className="w-60">
+            <SelectForm
+              options={options}
+              placeholder="Select"
+              onChange={setSelectedFilter}
+            />
+          </div>
+        </div>
 
-          <Table className="font-[inter]">
-            <TableCaption></TableCaption>
-            <TableHeader>
-              <TableRow className="dark:bg-gray-900">
-                <TableHead>Name</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead className="text-start">Action</TableHead>
+        <Table className="font-[inter]">
+          <TableCaption></TableCaption>
+          <TableHeader>
+            <TableRow className="dark:bg-gray-900">
+              <TableHead>Name</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead className="text-start">Action</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {currentUsers?.map((user: User) => (
+              <TableRow key={user._id}>
+                <TableCell className="font-medium">
+                  {user.index}. {user.name}
+                </TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell className="flex flex-wrap gap-2">
+                  <Button
+                    onClick={() => handleDelete(user._id as string)}
+                    className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+                  >
+                    Delete
+                  </Button>
+                  {user.isBlocked ? (
+                    <UserUnblockedModal id={user._id} />
+                  ) : (
+                    <UserBlockModal id={user._id} />
+                  )}
+                </TableCell>
               </TableRow>
-            </TableHeader>
-            <TableBody>
-              {currentUsers?.map((user: User) => (
-                <TableRow key={user._id}>
-                  <TableCell className="font-medium">
-                    {user.index}. {user.name}
-                  </TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell className="flex flex-wrap gap-2">
-                    <Button
-                      onClick={() => handleDelete(user._id as string)}
-                      className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
-                    >
-                      Delete
-                    </Button>
-                    {user.isBlocked ? (
-                      <UserUnblockedModal id={user._id} />
-                    ) : (
-                      <UserBlockModal id={user._id} />
-                    )}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-
-          {/* Pagination Controls */}
-          <div className="flex justify-center mt-4 gap-2">
-            <Button
-              className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
-              disabled={currentPage === 1}
-              onClick={() => setCurrentPage((prev) => prev - 1)}
-            >
-              Prev
-            </Button>
-            {[...Array(totalPages)].map((_, index) => (
-              <Button
-                key={index}
-                onClick={() => setCurrentPage(index + 1)}
-                className={
-                  currentPage === index + 1
-                    ? "bg-cyan-500 text-white"
-                    : "bg-cyan-100 text-black"
-                }
-              >
-                {index + 1}
-              </Button>
             ))}
+          </TableBody>
+        </Table>
+
+        {/* Pagination Controls */}
+        <div className="flex justify-center mt-4 gap-2">
+          <Button
+            className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage((prev) => prev - 1)}
+          >
+            Prev
+          </Button>
+          {[...Array(totalPages)].map((_, index) => (
             <Button
-              className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
-              disabled={currentPage === totalPages}
-              onClick={() => setCurrentPage((prev) => prev + 1)}
+              key={index}
+              onClick={() => setCurrentPage(index + 1)}
+              className={
+                currentPage === index + 1
+                  ? "bg-cyan-500 text-white"
+                  : "bg-cyan-100 text-black"
+              }
             >
-              Next
+              {index + 1}
             </Button>
-          </div>
+          ))}
+          <Button
+            className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage((prev) => prev + 1)}
+          >
+            Next
+          </Button>
         </div>
-      )}
+      </div>
     </div>
   );
 };

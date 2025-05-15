@@ -1,5 +1,3 @@
-import { SkeletonDemo } from "@/components/skeleton/SkeletonDemo";
-
 import {
   Table,
   TableBody,
@@ -62,46 +60,41 @@ const CategoryData = () => {
           users.
         </p>
       </div>
-      {isLoading ? (
-        <SkeletonDemo />
-      ) : allData?.data?.length === 0 ? (
-        <h2 className="text-4xl text-center pb-5">No Data</h2>
-      ) : (
-        <div>
-          <Table className="font-[inter]">
-            <TableCaption></TableCaption>
-            <TableHeader>
-              <TableRow className="dark:bg-gray-900 bg-gray-300">
-                <TableHead className="max-w-5/6 ">Name</TableHead>
-                <TableHead>imageURL</TableHead>
-                <TableHead className="text-start">Action</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {invoices?.length > 0 ? (
-                invoices?.map((category: ICategory) => (
-                  <TableRow key={category.index}>
-                    <TableCell className="font-medium font-[inter]">
-                      {category.index}. {category.name}
-                    </TableCell>
-                    <TableCell>{category.imageURL}</TableCell>
-                    <TableCell>
-                      <AiOutlineDelete
-                        onClick={() => handleDelete(category.id)}
-                        className="text-2xl hover:text-red-500 cursor-pointer"
-                      />
-                    </TableCell>
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell>No Data</TableCell>
+
+      <div>
+        <Table className="font-[inter]">
+          <TableCaption></TableCaption>
+          <TableHeader>
+            <TableRow className="dark:bg-gray-900 bg-gray-300">
+              <TableHead className="max-w-5/6 ">Name</TableHead>
+              <TableHead>imageURL</TableHead>
+              <TableHead className="text-start">Action</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {invoices?.length > 0 ? (
+              invoices?.map((category: ICategory) => (
+                <TableRow key={category.index}>
+                  <TableCell className="font-medium font-[inter]">
+                    {category.index}. {category.name}
+                  </TableCell>
+                  <TableCell>{category.imageURL}</TableCell>
+                  <TableCell>
+                    <AiOutlineDelete
+                      onClick={() => handleDelete(category.id)}
+                      className="text-2xl hover:text-red-500 cursor-pointer"
+                    />
+                  </TableCell>
                 </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </div>
-      )}
+              ))
+            ) : (
+              <TableRow>
+                <TableCell>No Data</TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 };

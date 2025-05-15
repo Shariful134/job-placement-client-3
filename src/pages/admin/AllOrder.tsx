@@ -93,141 +93,135 @@ const AllOrder = () => {
   }
   return (
     <div className="pt-18">
-      {isLoading ? (
-        <div className="min-h-screen flex justify-center items-center">
-          <SkeletonLoading />
+      <div>
+        <div className="text-center font-[inter] pb-10 pt-5">
+          <h2 className="text-3xl mb-2 text-cyan-500">
+            -- <FaBook className="inline" /> All Orders Data{" "}
+            <FaBook className="inline" /> --
+          </h2>
+          <p>
+            Currently, we have a total of {allData?.data?.length || 0} user
+            orders.
+          </p>
         </div>
-      ) : (
-        <div>
-          <div className="text-center font-[inter] pb-10 pt-5">
-            <h2 className="text-3xl mb-2 text-cyan-500">
-              -- <FaBook className="inline" /> All Orders Data{" "}
-              <FaBook className="inline" /> --
-            </h2>
-            <p>
-              Currently, we have a total of {allData?.data?.length || 0} user
-              orders.
-            </p>
-          </div>
 
-          {!invoices || invoices.length === 0 ? (
-            <h2 className="text-4xl text-center pb-5">No Data Found!</h2>
-          ) : (
-            <div>
-              <div className="flex flex-wrap font-[inter] gap-2 mb-4">
-                <div className="w-60">
-                  <Input
-                    className="w-full border border-gray-400"
-                    type="search"
-                    value={searchTerm}
-                    placeholder="Search here"
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                </div>
-                <div className="w-60">
-                  <SelectForm
-                    options={options}
-                    placeholder="Select"
-                    onChange={setSelectedFilter}
-                  />
-                </div>
+        {!invoices || invoices.length === 0 ? (
+          <h2 className="text-4xl text-center pb-5">No Data Found!</h2>
+        ) : (
+          <div>
+            <div className="flex flex-wrap font-[inter] gap-2 mb-4">
+              <div className="w-60">
+                <Input
+                  className="w-full border border-gray-400"
+                  type="search"
+                  value={searchTerm}
+                  placeholder="Search here"
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
               </div>
-
-              <Table className="font-[inter]">
-                <TableHeader className="bg-gray-200">
-                  <TableRow className="dark:bg-gray-900">
-                    <TableHead>#</TableHead>
-                    <TableHead>Email</TableHead>
-                    <TableHead>OrderId</TableHead>
-                    <TableHead>Method</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>ProductId</TableHead>
-                    <TableHead>Date</TableHead>
-                    <TableHead>Quantity</TableHead>
-                    <TableHead>TotalAmount</TableHead>
-                    <TableHead className="text-start">Action</TableHead>
-                  </TableRow>
-                </TableHeader>
-
-                <TableBody>
-                  {currentOrders?.length > 0 ? (
-                    currentOrders.map((order: TOrder) => (
-                      <TableRow key={order._id}>
-                        <TableCell>{order.index}.</TableCell>
-                        <TableCell>{order.email}</TableCell>
-                        <TableCell>{order.orderId}</TableCell>
-                        <TableCell>{order.method}</TableCell>
-                        <TableCell>{order.status}</TableCell>
-                        <TableCell>{order.productId}</TableCell>
-                        <TableCell>{order.date}</TableCell>
-                        <TableCell>{order.quantity}</TableCell>
-                        <TableCell>{order.totalAmount} BDT</TableCell>
-                        <TableCell className="flex flex-wrap gap-2">
-                          <Button
-                            onClick={() => handleDelete(order._id)}
-                            className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
-                          >
-                            Delete
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  ) : (
-                    <TableRow>
-                      <TableCell colSpan={10} className="text-center">
-                        No Data Found
-                      </TableCell>
-                    </TableRow>
-                  )}
-
-                  {currentOrders?.length > 0 && (
-                    <TableRow>
-                      <TableCell colSpan={8} className="text-right font-bold">
-                        Subtotal:
-                      </TableCell>
-                      <TableCell className="font-bold">
-                        {subtotal.toFixed(2)} BDT
-                      </TableCell>
-                      <TableCell />
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-
-              {/* Pagination Controls */}
-              <div className="flex justify-center mt-4 gap-2">
-                <Button
-                  className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
-                  disabled={currentPage === 1}
-                  onClick={() => setCurrentPage((prev) => prev - 1)}
-                >
-                  Prev
-                </Button>
-                {[...Array(totalPages)].map((_, index) => (
-                  <Button
-                    key={index}
-                    onClick={() => setCurrentPage(index + 1)}
-                    className={
-                      currentPage === index + 1
-                        ? "bg-cyan-500 text-white"
-                        : "bg-cyan-100 text-black"
-                    }
-                  >
-                    {index + 1}
-                  </Button>
-                ))}
-                <Button
-                  className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
-                  disabled={currentPage === totalPages}
-                  onClick={() => setCurrentPage((prev) => prev + 1)}
-                >
-                  Next
-                </Button>
+              <div className="w-60">
+                <SelectForm
+                  options={options}
+                  placeholder="Select"
+                  onChange={setSelectedFilter}
+                />
               </div>
             </div>
-          )}
-        </div>
-      )}
+
+            <Table className="font-[inter]">
+              <TableHeader className="bg-gray-200">
+                <TableRow className="dark:bg-gray-900">
+                  <TableHead>#</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>OrderId</TableHead>
+                  <TableHead>Method</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>ProductId</TableHead>
+                  <TableHead>Date</TableHead>
+                  <TableHead>Quantity</TableHead>
+                  <TableHead>TotalAmount</TableHead>
+                  <TableHead className="text-start">Action</TableHead>
+                </TableRow>
+              </TableHeader>
+
+              <TableBody>
+                {currentOrders?.length > 0 ? (
+                  currentOrders.map((order: TOrder) => (
+                    <TableRow key={order._id}>
+                      <TableCell>{order.index}.</TableCell>
+                      <TableCell>{order.email}</TableCell>
+                      <TableCell>{order.orderId}</TableCell>
+                      <TableCell>{order.method}</TableCell>
+                      <TableCell>{order.status}</TableCell>
+                      <TableCell>{order.productId}</TableCell>
+                      <TableCell>{order.date}</TableCell>
+                      <TableCell>{order.quantity}</TableCell>
+                      <TableCell>{order.totalAmount} BDT</TableCell>
+                      <TableCell className="flex flex-wrap gap-2">
+                        <Button
+                          onClick={() => handleDelete(order._id)}
+                          className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+                        >
+                          Delete
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={10} className="text-center">
+                      No Data Found
+                    </TableCell>
+                  </TableRow>
+                )}
+
+                {currentOrders?.length > 0 && (
+                  <TableRow>
+                    <TableCell colSpan={8} className="text-right font-bold">
+                      Subtotal:
+                    </TableCell>
+                    <TableCell className="font-bold">
+                      {subtotal.toFixed(2)} BDT
+                    </TableCell>
+                    <TableCell />
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+
+            {/* Pagination Controls */}
+            <div className="flex justify-center mt-4 gap-2">
+              <Button
+                className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage((prev) => prev - 1)}
+              >
+                Prev
+              </Button>
+              {[...Array(totalPages)].map((_, index) => (
+                <Button
+                  key={index}
+                  onClick={() => setCurrentPage(index + 1)}
+                  className={
+                    currentPage === index + 1
+                      ? "bg-cyan-500 text-white"
+                      : "bg-cyan-100 text-black"
+                  }
+                >
+                  {index + 1}
+                </Button>
+              ))}
+              <Button
+                className="btn-style px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage((prev) => prev + 1)}
+              >
+                Next
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
