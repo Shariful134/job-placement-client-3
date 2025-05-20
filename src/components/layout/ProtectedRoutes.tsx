@@ -13,7 +13,7 @@ type Tprotected = {
 
 const ProtectedRoutes = ({ children, role }: Tprotected) => {
   const token = useAppSelector(useCurrentToken);
-
+  console.log("protectedRoutes: ", role);
   const dispatch = useAppDispath();
   let user;
   if (token) {

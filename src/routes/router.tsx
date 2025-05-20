@@ -61,10 +61,11 @@ const router = createBrowserRouter([
       {
         path: "my-cart",
         element: (
-          <ProtectedRoutes role="user">
-            {" "}
-            <MyCart></MyCart>
-          </ProtectedRoutes>
+          <MyCart></MyCart>
+          // <ProtectedRoutes role="user">
+          //   {" "}
+          //   <MyCart></MyCart>
+          // </ProtectedRoutes>
         ),
       },
       {

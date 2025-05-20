@@ -70,7 +70,7 @@ export const subtotalSelector = (state: RootState) => {
     return sum + product.price * product.orderQuantity;
   }, 0);
 
-  return subtotal;
+  return subtotal.toFixed(2);
 };
 export const {
   addBook,

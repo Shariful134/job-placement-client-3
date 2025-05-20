@@ -37,7 +37,7 @@ const NavBar = () => {
   };
 
   const categoryData = allData?.data?.map((name: any) => name.name);
-  console.log(categoryData);
+  console.log("NavBarUser: ", user);
   return (
     <div className="  sticky top-0 z-10 w-full bg-slate-300 dark:bg-black">
       <div className="navbar container mx-auto px-4 font-serif ">
@@ -181,8 +181,8 @@ const NavBar = () => {
                 tabIndex={0}
                 className="dropdown-content z-[1] menu  shadow bg-base-100 rounded-box w-52 dark:bg-gray-900 dark:text-gray-300"
               >
-                {categoryData?.map((category: any) => (
-                  <li>
+                {categoryData?.map((category: any, index: number) => (
+                  <li key={index}>
                     <NavLink
                       to={`/category/details/${category}`}
                       className={({ isActive }) =>

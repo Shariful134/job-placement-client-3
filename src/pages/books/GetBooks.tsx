@@ -5,7 +5,7 @@ import { TBook, TUser } from "../../types/type";
 import { IoMdCart } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import { FaBook } from "react-icons/fa";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispath, useAppSelector } from "@/redux/hooks";
 import { useCurrentToken } from "@/redux/auth/authSlice";
 import { verifyToken } from "@/utils/verifyToken";
 import { Input } from "@/components/ui/input";
@@ -17,6 +17,7 @@ import { useGetAllcategoryQuery } from "@/redux/category/categoryApi";
 import { TCategory } from "../admin/CreateCategory";
 
 import { SkeletonLoading } from "@/components/skeletonLoading/SkeletonLoading";
+import { addBook } from "@/redux/cart/cartSlice";
 
 const GetBooks = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,6 +33,8 @@ const GetBooks = () => {
   const admin = user?.role;
 
   const booksRef = useRef<HTMLDivElement | null>(null);
+  const dispatch = useAppDispath();
+
   const [searchTerm, setSearchTerm] = useState("");
   const [categoriesSelect, setCategoriesSelect] = useState<string[]>([]);
   const [authorSelect, setAuthorSelect] = useState<string[]>([]);
@@ -95,6 +98,11 @@ const GetBooks = () => {
       navigate("/login");
     }
     window.scrollTo(0, 0);
+  };
+
+  
+  const handleAddBook = (book: TBook) => {
+    dispatch(addBook(book));
   };
 
   //Handle pagination
@@ -218,7 +226,10 @@ const GetBooks = () => {
                       />
 
                       {/* Add To Cart button inside the image area, centered */}
-                      <button className="absolute inset-0 flex items-center justify-center bg-black/40 sm:bg-transparent sm:opacity-0 sm:group-hover:opacity-100 sm:pointer-events-none sm:group-hover:pointer-events-auto transition-opacity duration-300">
+                      <button
+                        onClick={() => handleAddBook(book)}
+                        className="absolute inset-0 flex items-center justify-center bg-black/40 sm:bg-transparent sm:opacity-0 sm:group-hover:opacity-100 sm:pointer-events-none sm:group-hover:pointer-events-auto transition-opacity duration-300"
+                      >
                         <span className="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-white text-sm font-medium rounded-md shadow flex items-center gap-2">
                           Add To Cart <IoMdCart className="text-lg" />
                         </span>

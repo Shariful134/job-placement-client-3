@@ -8,12 +8,14 @@ import { FaBook } from "react-icons/fa";
 import { IoMdCart } from "react-icons/io";
 import { TBook, TUser } from "../../types/type";
 import { useEffect, useState } from "react";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispath, useAppSelector } from "@/redux/hooks";
 import { useCurrentToken } from "@/redux/auth/authSlice";
 import { verifyToken } from "@/utils/verifyToken";
 import { SkeletonLoading } from "@/components/skeletonLoading/SkeletonLoading";
+import { addBook } from "@/redux/cart/cartSlice";
 
 const Details = () => {
+  const dispatch = useAppDispath();
   const location = useLocation();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -54,6 +56,9 @@ const Details = () => {
     window.scrollTo(0, 0);
   };
 
+  const handleAddBook = (book: TBook) => {
+    dispatch(addBook(book));
+  };
   if (isFetching) {
     return (
       <div className="min-h-screen flex justify-center items-center">
@@ -139,7 +144,10 @@ const Details = () => {
               </Link>
             ) : (
               <>
-                <button className="btn-style flex items-center gap-2 px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700">
+                <button
+                  onClick={() => handleAddBook(book)}
+                  className="btn-style flex items-center gap-2 px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+                >
                   Add To Cart <IoMdCart className="text-xl" />
                 </button>
                 <Link to={`/book-order/${book?._id}`}>
@@ -183,7 +191,10 @@ const Details = () => {
                 />
 
                 {/* Add To Cart button inside the image area, centered */}
-                <button className="absolute inset-0 flex items-center justify-center bg-black/40 sm:bg-transparent sm:opacity-0 sm:group-hover:opacity-100 sm:pointer-events-none sm:group-hover:pointer-events-auto transition-opacity duration-300">
+                <button
+                  onClick={() => handleAddBook(book)}
+                  className="absolute inset-0 flex items-center justify-center bg-black/40 sm:bg-transparent sm:opacity-0 sm:group-hover:opacity-100 sm:pointer-events-none sm:group-hover:pointer-events-auto transition-opacity duration-300"
+                >
                   <span className="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-white text-sm font-medium rounded-md shadow flex items-center gap-2">
                     Add To Cart <IoMdCart className="text-lg" />
                   </span>

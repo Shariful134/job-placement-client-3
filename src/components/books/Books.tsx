@@ -25,6 +25,7 @@ const Books = () => {
   const token = useAppSelector(useCurrentToken);
 
   const dispatch = useAppDispath();
+
   let user;
   if (token) {
     user = verifyToken(token) as TUser;
