@@ -55,7 +55,7 @@ const Order = () => {
   const handleIncrease = () => {
     setQuantity(quantity + 1);
   };
-  const handleLogin = async (e: FieldValues) => {
+  const handleOrder = async (e: FieldValues) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
@@ -134,7 +134,7 @@ const Order = () => {
           </div>
           <hr className="text-gray-400"></hr>
           <fieldset className="fieldset font-[inter]">
-            <form onSubmit={handleLogin}>
+            <form onSubmit={handleOrder}>
               <label className="fieldset-label">Name</label>
               <input
                 name="name"

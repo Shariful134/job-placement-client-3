@@ -11,16 +11,20 @@ import CategorySelect from "../select/CategorySelect";
 import Authorselect from "../select/AuthorSelect";
 import PriceSelect from "../select/PriceSelect";
 import InStockSelect from "../select/InStockSelect";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispath, useAppSelector } from "@/redux/hooks";
 import { useCurrentToken } from "@/redux/auth/authSlice";
 import { verifyToken } from "@/utils/verifyToken";
 import { useGetAllcategoryQuery } from "@/redux/category/categoryApi";
 import { TCategory } from "@/pages/admin/CreateCategory";
 import { Skeleton } from "../ui/skeleton";
+import { addBook } from "@/redux/cart/cartSlice";
+import { SkeletonLoading } from "../skeletonLoading/SkeletonLoading";
 
 const Books = () => {
   const navigate = useNavigate();
   const token = useAppSelector(useCurrentToken);
+
+  const dispatch = useAppDispath();
   let user;
   if (token) {
     user = verifyToken(token) as TUser;
@@ -104,6 +108,11 @@ const Books = () => {
     window.scrollTo(0, 0);
   };
 
+  //  handle Cart
+  const handleAddBook = (book: TBook) => {
+    dispatch(addBook(book));
+  };
+
   if (isFetching) {
     return (
       <div>
@@ -130,16 +139,16 @@ const Books = () => {
         <div ref={booksRef} className=" col-span-1 md:col-span-3 lg:col-span-2">
           {!opoenFiltereing && (
             <button
-              className=" w-full px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+              className="inline sm:hidden w-full px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
               onClick={handleFiltering}
             >
               Show Filtering
             </button>
           )}
           {opoenFiltereing && (
-            <div className="grid grid-cols-1 gap-5">
+            <div className=" grid grid-cols-1 gap-5">
               <button
-                className=" w-full px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+                className="inline sm:hidden w-full px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
                 onClick={handleFiltering}
               >
                 Hide Filtering
@@ -163,6 +172,22 @@ const Books = () => {
               <InStockSelect setInStockSelect={setInStockSelect} />
             </div>
           )}
+          <div className="hidden sm:grid grid-cols-1 gap-5">
+            <Input
+              className="w-full border-gray-500 dark:text-gray-300"
+              type="search"
+              value={searchTerm}
+              placeholder="Search here"
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <CategorySelect
+              categories={categories}
+              setCategoriesSelect={setCategoriesSelect}
+            />
+            <Authorselect authors={authors} setAuthorSelect={setAuthorSelect} />
+            <PriceSelect setPricesSelect={setPricesSelect} />
+            <InStockSelect setInStockSelect={setInStockSelect} />
+          </div>
         </div>
         <div className="col-span-1 md:col-span-9 lg:col-span-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 bg-[#fafafa] dark:bg-black p-4">
@@ -182,7 +207,10 @@ const Books = () => {
                       />
 
                       {/* Add To Cart button inside the image area, centered */}
-                      <button className="absolute inset-0 flex items-center justify-center bg-black/40 sm:bg-transparent sm:opacity-0 sm:group-hover:opacity-100 sm:pointer-events-none sm:group-hover:pointer-events-auto transition-opacity duration-300">
+                      <button
+                        onClick={() => handleAddBook(book)}
+                        className="absolute inset-0 flex items-center justify-center bg-black/40 sm:bg-transparent sm:opacity-0 sm:group-hover:opacity-100 sm:pointer-events-none sm:group-hover:pointer-events-auto transition-opacity duration-300"
+                      >
                         <span className="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-white text-sm font-medium rounded-md shadow flex items-center gap-2">
                           Add To Cart <IoMdCart className="text-lg" />
                         </span>
@@ -233,9 +261,9 @@ const Books = () => {
                 );
               })
             ) : (
-              <p className="text-center text-2xl text-cyan-600 col-span-full dark:text-gray-300">
-                No Book Found!
-              </p>
+              <div className="flex justify-center items-center">
+                <SkeletonLoading />
+              </div>
             )}
           </div>
         </div>

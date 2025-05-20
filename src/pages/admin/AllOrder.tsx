@@ -19,6 +19,7 @@ import { TAllOrder, TOrder } from "./AllOrder.type";
 
 import { Button } from "@/components/ui/button";
 import { SkeletonLoading } from "@/components/skeletonLoading/SkeletonLoading";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const AllOrder = () => {
   const { data: allData, isLoading } = useGetAllOrderQuery(undefined);
@@ -170,7 +171,7 @@ const AllOrder = () => {
                 ) : (
                   <TableRow>
                     <TableCell colSpan={10} className="text-center">
-                      No Data Found
+                      <Skeleton />
                     </TableCell>
                   </TableRow>
                 )}

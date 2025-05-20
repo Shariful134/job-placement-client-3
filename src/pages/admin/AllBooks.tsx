@@ -180,7 +180,9 @@ const AllBookData = () => {
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={10}>No Data Found</TableCell>
+                    <TableCell colSpan={10}>
+                      <SkeletonLoading />
+                    </TableCell>
                   </TableRow>
                 )}
               </TableBody>

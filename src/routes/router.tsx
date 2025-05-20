@@ -27,6 +27,7 @@ import SingleCategoryData from "@/components/cateory/SingleCategoryData";
 import BlogPage from "@/pages/blog/BlogPage";
 import UserLayout from "@/components/layout/UserLayout";
 import UserDashboardPage from "@/components/dashboard/UserDashboardPage"; // You can replace with your actual user dashboard component
+import MyCart from "@/pages/cart/MyCart";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,15 @@ const router = createBrowserRouter([
       {
         path: "/category/details/:category",
         element: <SingleCategoryData></SingleCategoryData>,
+      },
+      {
+        path: "my-cart",
+        element: (
+          <ProtectedRoutes role="user">
+            {" "}
+            <MyCart></MyCart>
+          </ProtectedRoutes>
+        ),
       },
       {
         path: "/book-order/:id",

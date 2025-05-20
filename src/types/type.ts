@@ -66,7 +66,7 @@ export type TRoute = {
   element: ReactNode;
 };
 
-export type TBook = {
+export interface TBook {
   categoryId?: {
     _id?: string;
     name?: string;
@@ -84,8 +84,9 @@ export type TBook = {
   inStock: boolean;
   publicationDate: string;
   publisher: string;
+
   imageURL: string;
-};
+}
 export type TqueryParams = {
   name: string;
   value: boolean | React.Key;

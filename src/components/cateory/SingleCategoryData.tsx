@@ -16,6 +16,7 @@ import { useCurrentToken } from "@/redux/auth/authSlice";
 import { verifyToken } from "@/utils/verifyToken";
 import { useGetAllcategoryQuery } from "@/redux/category/categoryApi";
 import { TCategory } from "@/pages/admin/CreateCategory";
+import { SkeletonLoading } from "../skeletonLoading/SkeletonLoading";
 
 const SingleCategoryData = () => {
   const { category } = useParams();
@@ -128,7 +129,7 @@ const SingleCategoryData = () => {
         <div ref={booksRef} className=" col-span-1 md:col-span-3 lg:col-span-2">
           {!opoenFiltereing && (
             <button
-              className=" w-full px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+              className="inline sm:hidden w-full px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
               onClick={handleFiltering}
             >
               Show Filtering
@@ -137,7 +138,7 @@ const SingleCategoryData = () => {
           {opoenFiltereing && (
             <div className="grid grid-cols-1 gap-5">
               <button
-                className=" w-full px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+                className=" inline sm:hidden w-full px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
                 onClick={handleFiltering}
               >
                 Hide Filtering
@@ -161,7 +162,22 @@ const SingleCategoryData = () => {
               <InStockSelect setInStockSelect={setInStockSelect} />
             </div>
           )}
-          <div className="grid grid-cols-1 gap-5 "></div>
+          <div className="hidden sm:grid grid-cols-1 gap-5">
+            <Input
+              className="w-full border-gray-500 dark:text-gray-300"
+              type="search"
+              value={searchTerm}
+              placeholder="Search here"
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <CategorySelect
+              categories={categories}
+              setCategoriesSelect={setCategoriesSelect}
+            />
+            <Authorselect authors={authors} setAuthorSelect={setAuthorSelect} />
+            <PriceSelect setPricesSelect={setPricesSelect} />
+            <InStockSelect setInStockSelect={setInStockSelect} />
+          </div>
         </div>
         <div className="col-span-1 md:col-span-9 lg:col-span-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 bg-[#fafafa] dark:bg-black">
@@ -232,9 +248,9 @@ const SingleCategoryData = () => {
                 );
               })
             ) : (
-              <p className="text-center text-2xl text-cyan-600">
-                No Book Found!
-              </p>
+              <div className="flex justify-center items-center">
+                <SkeletonLoading />
+              </div>
             )}
           </div>
         </div>

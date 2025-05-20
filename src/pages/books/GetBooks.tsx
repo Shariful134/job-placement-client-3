@@ -97,7 +97,7 @@ const GetBooks = () => {
     window.scrollTo(0, 0);
   };
 
-  //add pagination
+  //Handle pagination
   const totalBooks = allFilteredBooks.length;
   const totalPages = Math.ceil(totalBooks / booksPerPage);
   const startIndex = (currentPage - 1) * booksPerPage;
@@ -112,6 +112,17 @@ const GetBooks = () => {
   useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm, categoriesSelect, authorSelect, pricesSelect, inStockSelect]);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      handlePageChange(currentPage + 1);
+    }
+  };
+  const handlePreviousPage = () => {
+    if (currentPage < totalPages) {
+      handlePageChange(currentPage - 1);
+    }
+  };
 
   if (isFetching) {
     return (
@@ -137,7 +148,7 @@ const GetBooks = () => {
         <div ref={booksRef} className=" col-span-1 md:col-span-3 lg:col-span-2">
           {!openFiltereing && (
             <button
-              className=" w-full px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+              className="inline sm:hidden w-full px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
               onClick={handleFiltering}
             >
               Show Filtering
@@ -146,7 +157,7 @@ const GetBooks = () => {
           {openFiltereing && (
             <div className="grid grid-cols-1 gap-5">
               <button
-                className=" w-full px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+                className="inline sm:hidden w-full px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
                 onClick={handleFiltering}
               >
                 Hide Filtering
@@ -172,6 +183,22 @@ const GetBooks = () => {
               ></InStockSelect>
             </div>
           )}
+          <div className=" hidden sm:grid grid-cols-1 gap-5">
+            <Input
+              className="w-full border-gray-500 dark:text-gray-300"
+              type="search"
+              value={searchTerm}
+              placeholder="Search here"
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <CategorySelect
+              categories={categories}
+              setCategoriesSelect={setCategoriesSelect}
+            />
+            <Authorselect authors={authors} setAuthorSelect={setAuthorSelect} />
+            <PriceSelect setPricesSelect={setPricesSelect} />
+            <InStockSelect setInStockSelect={setInStockSelect} />
+          </div>
         </div>
         <div className="col-span-1 md:col-span-9 lg:col-span-10">
           <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 bg-[#fafafa] dark:bg-black">
@@ -179,65 +206,6 @@ const GetBooks = () => {
               paginatedBooks?.map((book: TBook) => {
                 const inStock = book.inStock;
                 return (
-                  // <div
-                  //   key={book?._id}
-                  //   className="card  max-w-75 relative group shadow"
-                  // >
-                  //   <figure className="px-5 pt-5">
-                  //     <img
-                  //       src={book.imageURL}
-                  //       alt="Shoes"
-                  //       className="rounded-xl"
-                  //     />
-                  //   </figure>
-                  //   <div className="card-body items-center text-center">
-                  //     <h2 className="card-title">{book?.title}</h2>
-                  //     <p className="text-cyan-600 font-bold ">
-                  //       {book?.price} $
-                  //     </p>
-                  //     {inStock ? (
-                  //       <p>InStock: Available</p>
-                  //     ) : (
-                  //       <p>InStock: Unavailable</p>
-                  //     )}
-                  //     {admin === "admin" ? (
-                  //       <div className=" flex flex-wrap justify-center gap-2">
-                  //         <Link to={`/book-details/${book._id}`}>
-                  //           <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
-                  //             Details
-                  //           </button>
-                  //         </Link>
-                  //         <Link to={`/book-update/${book._id}`}>
-                  //           <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
-                  //             Update
-                  //           </button>
-                  //         </Link>
-                  //         <BookDelete id={book._id}></BookDelete>
-                  //       </div>
-                  //     ) : (
-                  //       <div className="flex flex-wrap justify-center gap-2">
-                  //         <Link to={`/book-details/${book._id}`}>
-                  //           <button className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
-                  //             Details
-                  //           </button>
-                  //         </Link>
-                  //         <Link to={`/book-order/${book._id}`}>
-                  //           <button
-                  //             onClick={handleBuy}
-                  //             className="btn border-1 font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200"
-                  //           >
-                  //             Buy Now
-                  //           </button>
-                  //         </Link>
-                  //       </div>
-                  //     )}
-                  //   </div>
-                  //   <div className="absolute top-[40%] invisible group-hover:visible  left-0 w-full">
-                  //     <button className="btn border-1 w-full font-[inter] rounded-md border-gray-600 bg-gray-100 hover:bg-gray-200">
-                  //       Add To Cart <IoMdCart className="text-xl" />
-                  //     </button>
-                  //   </div>
-                  // </div>
                   <div
                     key={book._id}
                     className="relative group bg-white dark:bg-gray-900 rounded shadow  transition-shadow duration-300 overflow-hidden"
@@ -301,15 +269,23 @@ const GetBooks = () => {
                 );
               })
             ) : (
-              <p className="text-center text-2xl text-cyan-600">
-                No Book Found!
-              </p>
+              <div className="flex justify-center items-center">
+                <SkeletonLoading />
+              </div>
             )}
           </div>
         </div>
       </div>
       {totalPages > 1 && (
         <div className="flex justify-center items-center mt-6 gap-2 flex-wrap">
+          {/* =============previouse Button=============== */}
+          <button
+            disabled={currentPage === 1}
+            onClick={handlePreviousPage}
+            className="px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+          >
+            Previous
+          </button>
           {Array.from({ length: totalPages }, (_, i) => (
             <button
               key={i + 1}
@@ -323,6 +299,14 @@ const GetBooks = () => {
               {i + 1}
             </button>
           ))}
+          {/* =============next Button===================== */}
+          <button
+            disabled={currentPage === totalPages}
+            onClick={handleNextPage}
+            className="px-4 py-1.5 text-sm rounded-md font-medium border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+          >
+            Next
+          </button>
         </div>
       )}
     </div>

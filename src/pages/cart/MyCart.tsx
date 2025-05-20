@@ -1,5 +1,11 @@
+import CartComponents from "@/components/cart/CreateCart";
+
 const MyCart = () => {
-  return <div>Heare is your Alll cart Show</div>;
+  return (
+    <div>
+      <CartComponents />
+    </div>
+  );
 };
 
 export default MyCart;

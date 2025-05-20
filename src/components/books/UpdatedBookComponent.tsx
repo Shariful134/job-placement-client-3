@@ -327,7 +327,7 @@ const UpdatedBookComponent = () => {
           {/* Submit Button */}
           <div className="text-center mt-6">
             <Button
-              className="text-black w-full md:w-auto px-6 py-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-semibold rounded-md hover:opacity-90 transition"
+              className="text-black w-full md:w-auto px-6 py-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 dark:text-white font-semibold rounded-md hover:opacity-90 transition"
               type="submit"
             >
               Submit
